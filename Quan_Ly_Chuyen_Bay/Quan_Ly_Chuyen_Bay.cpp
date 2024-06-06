@@ -643,7 +643,38 @@ void sua_thong_tin_mb(int stt, listmb& dsmb, int& trangcurr, ds dscb) {
                 tmp.sodong = stoi(dl_mb[3]);
                 chinhsua(dsmb, stt, tmp);
                 hienthiloi(const_cast<char*>("luu thanh cong"));
-                savefile(dsmb);
+                savefile(dsmb);                ds duyet = NULL; duyet = dscb;
+                for (; duyet != NULL; duyet = duyet->next) {
+                    chuyenbay tmp;
+                    cout << strcmp(duyet->cb.sohieu, dsmb.nodes[stt]->sohieu) << endl;
+                    if (strcmp(duyet->cb.sohieu, dsmb.nodes[stt]->sohieu) == 0) {
+                        int ghemoi = dsmb.nodes[stt]->sodong * dsmb.nodes[stt]->soday;
+                        char** new_danhsachve = new char* [ghemoi];
+                        for (int i = 0; i < ghemoi; ++i) {
+                            new_danhsachve[i] = new char[30];
+                            if (i < duyet->cb.sove) {
+                                for (int j = 0; j < 30; j++) {
+                                    new_danhsachve[i][j] = duyet->cb.danhsachve[i][j];
+
+                                }
+                            }
+                            else {
+                                new_danhsachve[i][0] = '\0';
+                            }
+
+                        }
+                        for (int i = 0; i < duyet->cb.sove; ++i) {
+                            delete duyet->cb.danhsachve[i];
+                        }
+                        delete duyet->cb.danhsachve;
+                        duyet->cb.danhsachve = new_danhsachve;
+                        duyet->cb.sove = ghemoi;
+                        tmp = duyet->cb;
+                        sua_thong_tin_cb(s, tmp);
+                        capnhatdulieu(s);
+                    }
+                }
+            
                 cleardevice();
                 Screen_Default(1);
                 Planes_design();
@@ -4387,6 +4418,7 @@ void AO_THAT_DAY() {
             if (TRANG_THAI_TAB == 1 && xem_thong_ke_mb == 1 && da_search_mb == 0) {
                 if (x >= 130 && x <= 900 && y >= 190 && y <= 680) {
                     int stt = (y - 190) / 49 + trang_mb_hientai * 10;
+                    ds duyet = NULL; duyet = s;
                     sua_thong_tin_mb(stt, ds_mb, trang_mb_hientai, s);
                 }
             }

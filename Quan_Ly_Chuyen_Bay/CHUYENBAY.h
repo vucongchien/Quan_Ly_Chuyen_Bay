@@ -156,7 +156,16 @@ void sua_thong_tin_cb(ds& s, chuyenbay b) {
 				char** new_danhsachve = new char* [b.sove];
 				for (int i = 0; i < b.sove; ++i) {
 					new_danhsachve[i] = new char[30];
-						new_danhsachve[i][0] = '\0';
+					if (i < duyet->cb.sove) {
+						for (int j = 0; j < 30; j++) {
+							new_danhsachve[i][j] = duyet->cb.danhsachve[i][j];
+
+						}
+					}
+					else {
+							new_danhsachve[i][0] = '\0';
+					}
+						
 				}
 				for (int i = 0; i < duyet->cb.sove; ++i) {
 					delete duyet->cb.danhsachve[i];
