@@ -98,7 +98,7 @@ class QLHK {
 private:
     //goc
     Node* root;
-
+    int so_luong;
     int height(Node* N) {
         if (N == NULL) {
             return 0;
@@ -186,9 +186,11 @@ private:
 public:
     QLHK() {
         root = NULL;
+        so_luong = 0;
     }
     Node* insert(HanhKhach hanhkhach) {
         root = insertUtil(root, hanhkhach);
+        so_luong++;
         return root;
     }
     void printf_ds(Node* run) {
@@ -243,11 +245,13 @@ public:
             if (run->left == NULL) {
                 Node* temp = run->right;
                 delete run;
+                so_luong--;
                 return temp;
             }
             else if (run->right == NULL) {
                 Node* temp = run->left;
                 delete run;
+                so_luong--;
                 return temp;
             }
 
@@ -257,6 +261,7 @@ public:
             run->data = temp->data;
 
             run->right = remove(run->right, temp->data.soCMND);
+            so_luong--;
         }
         return run;
     }
@@ -320,6 +325,9 @@ public:
     }
     void cap_nhat_so_ve_hk_da_mua() {
 
+    }
+    int getSo_luong_hk() {
+        return so_luong;
     }
 
 };
