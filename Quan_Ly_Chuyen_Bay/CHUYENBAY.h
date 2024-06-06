@@ -146,13 +146,37 @@ void sua_thong_tin_cb(ds& s, chuyenbay b) {
 		if (strcmp(duyet->cb.macb, b.macb) == 0) {
 			STRCPYY(duyet->cb.sanbay, b.sanbay);
 			STRCPYY(duyet->cb.sohieu, b.sohieu);
-			duyet->cb.sove = b.sove;
 			duyet->cb.trangthai = b.trangthai;
 			duyet->cb.tg.ngay = b.tg.ngay;
 			duyet->cb.tg.thang = b.tg.thang;
 			duyet->cb.tg.nam = b.tg.nam;
 			duyet->cb.tg.gio = b.tg.gio;
 			duyet->cb.tg.phut = b.tg.phut;
+			if (b.sove != duyet->cb.sove) {
+				char** new_danhsachve = new char* [b.sove];
+				for (int i = 0; i < b.sove; ++i) {
+					new_danhsachve[i] = new char[30];
+					if (i < duyet->cb.sove) {
+						for (int j = 0; j < 30; j++) {
+							new_danhsachve[i][j] = duyet->cb.danhsachve[i][j];
+
+						}
+					}
+					else {
+							new_danhsachve[i][0] = '\0';
+					}
+						
+				}
+				for (int i = 0; i < duyet->cb.sove; ++i) {
+					delete duyet->cb.danhsachve[i];
+				}
+				delete duyet->cb.danhsachve;
+				duyet->cb.danhsachve = new_danhsachve;
+				duyet->cb.sove = b.sove;
+			}
+			else {
+				duyet->cb.sove = b.sove;
+			}
 		}
 	}
 }
