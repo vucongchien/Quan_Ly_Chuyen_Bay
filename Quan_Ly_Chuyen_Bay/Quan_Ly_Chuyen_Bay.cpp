@@ -1743,10 +1743,37 @@ void AO_THAT_DAY() {
                     }
                     else {
                         if (dlcb[1][0] == '\0' && dlcb[2][0] == '\0' && dlcb[3][0] == '\0' && dlcb[4][0] == '\0') {
-                            timkiemchuyenbay(s, tmpcb, dlcb[0], 1, capnhapchuyenbaycotmp, cbcotmp);
-                            capnhapchuyenbaycotmp = cbcotmp;
-                            hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
-                            chuyen_trang_tim_kiem = 1;
+                            if (tmpcb != NULL) {
+                                while (tmpcb) {
+                                    ds qq;
+                                    qq = tmpcb->next;
+                                    delete tmpcb;
+                                    tmpcb = qq;
+                                }
+                                tmpcb = NULL;
+                                if (s == NULL) {
+                                    char a[100] = "khong co chuyen bay nao de tim";
+                                    hienthiloi(a);
+                                }
+                                else {
+                                    timkiemchuyenbay(s, tmpcb, dlcb[0], 1, capnhapchuyenbaycotmp, cbcotmp);
+                                    capnhapchuyenbaycotmp = cbcotmp;
+                                    hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                    chuyen_trang_tim_kiem = 1;
+                                }
+                            }
+                            else {
+                                if (s == NULL) {
+                                    char a[100] = "khong co chuyen bay nao de tim";
+                                    hienthiloi(a);
+                                }
+                                else {
+                                    timkiemchuyenbay(s, tmpcb, dlcb[0], 1, capnhapchuyenbaycotmp, cbcotmp);
+                                    capnhapchuyenbaycotmp = cbcotmp;
+                                    hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                    chuyen_trang_tim_kiem = 1;
+                                }
+                            }
                         }
                         else {
                             timkiemchuyenbay1ds(tmpcb, dlcb[0], 1, capnhapchuyenbaycotmp, cbcotmp);
@@ -1771,31 +1798,58 @@ void AO_THAT_DAY() {
                             }
                         } while (b > 31 || b <= 0);
                         STRCPYY(dlcb[1], dl2);
-                        if (dlcb[0][0] == '\0' && dlcb[2][0] == '\0' && dlcb[3][0] == '\0' && dlcb[4][0] == '\0') {
-                            if (s == NULL) {
-                                char a[100] = "khong co chuyen bay nao de tim";
-                                hienthiloi(a);
-                            }
-                            else {
-                                cbtmp = 0, cbcotmp, sotrangtmp = 1;
-                                timkiemchuyenbay(s, tmpcb, dlcb[1], 2, capnhapchuyenbaycotmp, cbcotmp);
-                                capnhapchuyenbaycotmp = cbcotmp;
-                                hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
-                                chuyen_trang_tim_kiem = 1;
-                            }
+                        if (dlcb[1][0] == '\0') {
+                            continue;
                         }
                         else {
-                            if (tmpcb == NULL) {
-                                char a[100] = "khong co chuyen bay nao de tim";
-                                hienthiloi(a);
+                            if (dlcb[0][0] == '\0' && dlcb[2][0] == '\0' && dlcb[3][0] == '\0' && dlcb[4][0] == '\0') {
+                                if (tmpcb != NULL) {
+                                    while (tmpcb) {
+                                        ds qq;
+                                        qq = tmpcb->next;
+                                        delete tmpcb;
+                                        tmpcb = qq;
+                                    }
+                                    tmpcb = NULL;
+                                    if (s == NULL) {
+                                        char a[100] = "khong co chuyen bay nao de tim";
+                                        hienthiloi(a);
+                                    }
+                                    else {
+                                        timkiemchuyenbay(s, tmpcb, dlcb[1], 2, capnhapchuyenbaycotmp, cbcotmp);
+                                        capnhapchuyenbaycotmp = cbcotmp;
+                                        hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                        chuyen_trang_tim_kiem = 1;
+                                    }
+                                }
+                                else {
+                                    if (s == NULL) {
+                                        char a[100] = "khong co chuyen bay nao de tim";
+                                        hienthiloi(a);
+                                    }
+                                    else {
+                                        cbtmp = 0, cbcotmp, sotrangtmp = 1;
+                                        timkiemchuyenbay(s, tmpcb, dlcb[1], 2, capnhapchuyenbaycotmp, cbcotmp);
+                                        capnhapchuyenbaycotmp = cbcotmp;
+                                        hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                        chuyen_trang_tim_kiem = 1;
+                                    }
+                                }
                             }
                             else {
-                                cbtmp = 0, cbcotmp, sotrangtmp = 1;
-                                timkiemchuyenbay1ds(tmpcb, dlcb[1], 2, capnhapchuyenbaycotmp, cbcotmp);
-                                capnhapchuyenbaycotmp = cbcotmp;
-                                hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
-                                chuyen_trang_tim_kiem = 1;
+                                if (tmpcb == NULL) {
+                                    char a[100] = "khong co chuyen bay nao de tim";
+                                    hienthiloi(a);
+                                }
+                                else {
+                                    cbtmp = 0, cbcotmp, sotrangtmp = 1;
+                                    timkiemchuyenbay1ds(tmpcb, dlcb[1], 2, capnhapchuyenbaycotmp, cbcotmp);
+                                    capnhapchuyenbaycotmp = cbcotmp;
+                                    hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                    chuyen_trang_tim_kiem = 1;
+                                }
                             }
+
                         }
                     }
                     if (isMousenhapMONTH(x, y) == 1) {
@@ -1812,31 +1866,56 @@ void AO_THAT_DAY() {
                             }
                         } while (b > 12 || b <= 0);
                         STRCPYY(dlcb[2], dl3);
-
-                        if (dlcb[0][0] == '\0' && dlcb[1][0] == '\0' && dlcb[3][0] == '\0' && dlcb[4][0] == '\0') {
-                            if (s == NULL) {
-                                char a[100] = "khong co chuyen bay nao de tim";
-                                hienthiloi(a);
-                            }
-                            else {
-                                cbtmp = 0, cbcotmp, sotrangtmp = 1;
-                                timkiemchuyenbay(s, tmpcb, dlcb[2], 3, capnhapchuyenbaycotmp, cbcotmp);
-                                capnhapchuyenbaycotmp = cbcotmp;
-                                hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
-                                chuyen_trang_tim_kiem = 1;
-                            }
+                        if (dlcb[2][0] == '\0') {
+                            continue;
                         }
                         else {
-                            if (tmpcb == NULL) {
-                                char a[100] = "khong co chuyen bay nao de tim";
-                                hienthiloi(a);
+                            if (dlcb[0][0] == '\0' && dlcb[1][0] == '\0' && dlcb[3][0] == '\0' && dlcb[4][0] == '\0') {
+                                if (tmpcb != NULL) {
+                                    while (tmpcb) {
+                                        ds qq;
+                                        qq = tmpcb->next;
+                                        delete tmpcb;
+                                        tmpcb = qq;
+                                    }
+                                    tmpcb = NULL;
+                                    if (s == NULL) {
+                                        char a[100] = "khong co chuyen bay nao de tim";
+                                        hienthiloi(a);
+                                    }
+                                    else {
+                                        timkiemchuyenbay(s, tmpcb, dlcb[2], 3, capnhapchuyenbaycotmp, cbcotmp);
+                                        capnhapchuyenbaycotmp = cbcotmp;
+                                        hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                        chuyen_trang_tim_kiem = 1;
+                                    }
+                                }
+                                else {
+                                    if (s == NULL) {
+                                        char a[100] = "khong co chuyen bay nao de tim";
+                                        hienthiloi(a);
+                                    }
+                                    else {
+                                        cbtmp = 0, cbcotmp, sotrangtmp = 1;
+                                        timkiemchuyenbay(s, tmpcb, dlcb[2], 3, capnhapchuyenbaycotmp, cbcotmp);
+                                        capnhapchuyenbaycotmp = cbcotmp;
+                                        hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                        chuyen_trang_tim_kiem = 1;
+                                    }
+                                }
                             }
                             else {
-                                cbtmp = 0, cbcotmp, sotrangtmp = 1;
-                                timkiemchuyenbay1ds(tmpcb, dlcb[2], 3, capnhapchuyenbaycotmp, cbcotmp);
-                                capnhapchuyenbaycotmp = cbcotmp;
-                                hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
-                                chuyen_trang_tim_kiem = 1;
+                                if (tmpcb == NULL) {
+                                    char a[100] = "khong co chuyen bay nao de tim";
+                                    hienthiloi(a);
+                                }
+                                else {
+                                    cbtmp = 0, cbcotmp, sotrangtmp = 1;
+                                    timkiemchuyenbay1ds(tmpcb, dlcb[2], 3, capnhapchuyenbaycotmp, cbcotmp);
+                                    capnhapchuyenbaycotmp = cbcotmp;
+                                    hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                    chuyen_trang_tim_kiem = 1;
+                                }
                             }
                         }
                     }
@@ -1855,18 +1934,42 @@ void AO_THAT_DAY() {
                             }
                         } while (b < 2024);
                         STRCPYY(dlcb[3], dl4);
-
+                        if (dlcb[3][0] == '\0') {
+                            continue;
+                        }
+                        else {
                         if (dlcb[0][0] == '\0' && dlcb[2][0] == '\0' && dlcb[1][0] == '\0' && dlcb[4][0] == '\0') {
-                            if (s == NULL) {
-                                char a[100] = "khong co chuyen bay nao de tim";
-                                hienthiloi(a);
+                            if (tmpcb != NULL) {
+                                while (tmpcb) {
+                                    ds qq;
+                                    qq = tmpcb->next;
+                                    delete tmpcb;
+                                    tmpcb = qq;
+                                }
+                                tmpcb = NULL;
+                                if (s == NULL) {
+                                    char a[100] = "khong co chuyen bay nao de tim";
+                                    hienthiloi(a);
+                                }
+                                else {
+                                    timkiemchuyenbay(s, tmpcb, dlcb[3], 4, capnhapchuyenbaycotmp, cbcotmp);
+                                    capnhapchuyenbaycotmp = cbcotmp;
+                                    hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                    chuyen_trang_tim_kiem = 1;
+                                }
                             }
                             else {
-                                cbtmp = 0, cbcotmp, sotrangtmp = 1;
-                                timkiemchuyenbay(s, tmpcb, dlcb[3], 4, capnhapchuyenbaycotmp, cbcotmp);
-                                capnhapchuyenbaycotmp = cbcotmp;
-                                hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
-                                chuyen_trang_tim_kiem = 1;
+                                if (s == NULL) {
+                                    char a[100] = "khong co chuyen bay nao de tim";
+                                    hienthiloi(a);
+                                }
+                                else {
+                                    cbtmp = 0, cbcotmp, sotrangtmp = 1;
+                                    timkiemchuyenbay(s, tmpcb, dlcb[3], 4, capnhapchuyenbaycotmp, cbcotmp);
+                                    capnhapchuyenbaycotmp = cbcotmp;
+                                    hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                    chuyen_trang_tim_kiem = 1;
+                                }
                             }
                         }
                         else {
@@ -1884,39 +1987,65 @@ void AO_THAT_DAY() {
                         }
                     }
                 }
+            }
                 else if (isMousenhapsomaybay(x, y) == 1) {
 
                     nhapdulieu(886, 150, 886, 1082, 141, 179, dl5, 12, 2);
                     STRCPYY(dlcb[4], dl5);
-
-                    if (dlcb[0][0] == '\0' && dlcb[2][0] == '\0' && dlcb[3][0] == '\0' && dlcb[1][0] == '\0') {
-                        if (s == NULL) {
-                            char a[100] = "khong co chuyen bay nao de tim";
-                            hienthiloi(a);
-                        }
-                        else {
-                            cbtmp = 0, cbcotmp, sotrangtmp = 1;
-                            timkiemchuyenbay(s, tmpcb, dlcb[4], 5, capnhapchuyenbaycotmp, cbcotmp);
-
-                            capnhapchuyenbaycotmp = cbcotmp;
-                            hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
-                            chuyen_trang_tim_kiem = 1;
-                        }
+                    if (dlcb[4][0] == '\0') {
+                        continue;
                     }
                     else {
-                        if (tmpcb == NULL) {
-                            char a[100] = "khong co chuyen bay nao de tim";
-                            hienthiloi(a);
+                        if (dlcb[0][0] == '\0' && dlcb[2][0] == '\0' && dlcb[3][0] == '\0' && dlcb[1][0] == '\0') {
+                            if (tmpcb != NULL) {
+                                while (tmpcb) {
+                                    ds qq;
+                                    qq = tmpcb->next;
+                                    delete tmpcb;
+                                    tmpcb = qq;
+                                }
+                                tmpcb = NULL;
+                                if (s == NULL) {
+                                    char a[100] = "khong co chuyen bay nao de tim";
+                                    hienthiloi(a);
+                                }
+                                else {
+                                    timkiemchuyenbay(s, tmpcb, dlcb[4], 5, capnhapchuyenbaycotmp, cbcotmp);
+                                    capnhapchuyenbaycotmp = cbcotmp;
+                                    hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                    chuyen_trang_tim_kiem = 1;
+                                }
+                            }
+                            else {
+                                if (s == NULL) {
+                                    char a[100] = "khong co chuyen bay nao de tim";
+                                    hienthiloi(a);
+                                }
+                                else {
+                                    cbtmp = 0, cbcotmp, sotrangtmp = 1;
+                                    timkiemchuyenbay(s, tmpcb, dlcb[4], 5, capnhapchuyenbaycotmp, cbcotmp);
+
+                                    capnhapchuyenbaycotmp = cbcotmp;
+                                    hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                    chuyen_trang_tim_kiem = 1;
+                                }
+                            }
                         }
                         else {
-                            cbtmp = 0, cbcotmp, sotrangtmp = 1;
-                            timkiemchuyenbay1ds(tmpcb, dlcb[4], 5, capnhapchuyenbaycotmp, cbcotmp);
-                            capnhapchuyenbaycotmp = cbcotmp;
-                            hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
-                            chuyen_trang_tim_kiem = 1;
+                            if (tmpcb == NULL) {
+                                char a[100] = "khong co chuyen bay nao de tim";
+                                hienthiloi(a);
+                            }
+                            else {
+                                cbtmp = 0, cbcotmp, sotrangtmp = 1;
+                                timkiemchuyenbay1ds(tmpcb, dlcb[4], 5, capnhapchuyenbaycotmp, cbcotmp);
+                                capnhapchuyenbaycotmp = cbcotmp;
+                                hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                chuyen_trang_tim_kiem = 1;
+                            }
                         }
-                    }
 
+                    }
                 }
                 else if (isMouseaddFlight(x, y) == 1) {
                     if (TRANG_THAI_TAB == 2)
@@ -2115,8 +2244,8 @@ void AO_THAT_DAY() {
                                         ds duyet; duyet = s; int demloi = 0;
                                         for (; duyet != NULL; duyet = duyet->next) {
                                             if (strcmp(duyet->cb.sohieu, dlcb[6]) == 0) {
-                                                if (tmptg[0] == duyet->cb.tg.ngay && tmptg[2] == duyet->cb.tg.thang && tmptg[4] == duyet->cb.tg.nam) {
-                                                    if (abs(duyet->cb.tg.gio - tmptg[6]) <= 3) {
+                                                if (tmptg[0] == duyet->cb.tg.ngay && tmptg[1] == duyet->cb.tg.thang && tmptg[2] == duyet->cb.tg.nam) {
+                                                    if (abs(duyet->cb.tg.gio - tmptg[3]) <= 3) {
                                                         demloi++;
                                                     }
                                                 }
@@ -2200,8 +2329,8 @@ void AO_THAT_DAY() {
                 }
 
             }
-            // xem danh sach ve
-            else if (TRANG_THAI_TAB == 2 && chuyen_trang_tim_kiem == 0 && addchuyenbay == false && suathongtin == false && (isMousexemds1(x, y) == 1 || isMousexemds2(x, y) == 1 || isMousexemds3(x, y) == 1 || isMousexemds4(x, y) == 1 || isMousexemds5(x, y) == 1 || isMousexemds6(x, y) == 1 || isMousexemds7(x, y) == 1 || isMousexemds8(x, y) == 1 || isMousexemds9(x, y) == 1 || isMousexemds10(x, y) == 1 || isMouseback(x, y) == 1)) {
+            // xem danh sach ve         
+            else if (TRANG_THAI_TAB == 2 && chuyen_trang_xem_ds==true ) {
                 if (isMouseback(x, y) == 1) {
                     for (int i = 0; i < 13; i++) {
                         dlcb[i][0] = '\0';
@@ -2224,824 +2353,8 @@ void AO_THAT_DAY() {
                     delete dsvtmp; delete vitrighe;
                     sotrangxemdsv = 1, tranghientaixemdsv = 1, sophantudsv = 0, sophantuhiendsv = 0;
                 }                
-               int sothutu;
-               if (isMousexemds1(x, y) == 1) {
-
-                    sothutu = 0;
-                    sothutu = 0 + 10 * (tranghientaicb - 1);
-                    if (sothutu >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de xem ds";
-                        hienthiloi(a);
-                        chuyen_trang_xem_ds = false;
-                    }
-                    else {
-                        xemds = laychuyenbay(s, sothutu);
-                        int j = 0;
-                        dsvtmp = new char* [xemds.sove];
-                        vitrighe = new int[xemds.sove];
-                        for (int i = 0; i < xemds.sove; i++) {
-                            dsvtmp[i] = new char[30];
-                            dsvtmp[i][0] = '\0';
-                            vitrighe[i] = 0;
-                        }
-                        for (int i = 0; i < xemds.sove; i++) {
-                            if (xemds.danhsachve[i][0] == '\0') {
-                                continue;
-                            }
-                            else {
-                                sophantudsv++;
-                                vitrighe[j] = i + 1;
-                                STRCPYY(dsvtmp[j], xemds.danhsachve[i]);
-                                j++;
-                            }
-                        }
-                        float c = sophantudsv / 10.0;
-                        if (sotrangxemdsv < c) {
-                            sotrangxemdsv = (int)c + 1;
-                            hienthidanhsachve(xemds, dsvtmp, 2, sophantuhiendsv, sophantudsv, vitrighe);
-                            chuyen_trang_xem_ds = true;
-                        }
-                        else {
-                            hienthidanhsachve(xemds, dsvtmp, 3, sophantuhiendsv, sophantudsv, vitrighe);
-                            chuyen_trang_xem_ds = true;
-                        }
-                    }
-                }
-                else if (isMousexemds2(x, y) == 1) {
-
-                    sothutu = 0;
-                    sothutu = 1 + 10 * (tranghientaicb - 1);
-                    if (sothutu >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de xem ds";
-                        hienthiloi(a);
-                        chuyen_trang_xem_ds = false;
-                    }
-                    else {
-                        xemds = laychuyenbay(s, sothutu);
-                        int j = 0;
-                        dsvtmp = new char* [xemds.sove];
-                        vitrighe = new int[xemds.sove];
-                        for (int i = 0; i < xemds.sove; i++) {
-                            dsvtmp[i] = new char[30];
-                            dsvtmp[i][0] = '\0';
-                            vitrighe[i] = 0;
-                        }
-                        for (int i = 0; i < xemds.sove; i++) {
-                            if (xemds.danhsachve[i][0] != '\0') {
-                                sophantudsv++;
-                                vitrighe[j] = i + 1;
-                                STRCPYY(dsvtmp[j], xemds.danhsachve[i]);
-                                j++;
-                            }
-                        }
-                        float c = sophantudsv / 10.0;
-                        if (sotrangxemdsv < c) {
-                            sotrangxemdsv = (int)c + 1;
-                            hienthidanhsachve(xemds, dsvtmp, 2, sophantuhiendsv, sophantudsv, vitrighe);
-                            chuyen_trang_xem_ds = true;
-                        }
-                        else {
-                            hienthidanhsachve(xemds, dsvtmp, 3, sophantuhiendsv, sophantudsv, vitrighe);
-                            chuyen_trang_xem_ds = true;
-                        }
-                    }
-                }
-                else if (isMousexemds3(x, y) == 1) {
-
-                    sothutu = 0;
-                    sothutu = 2 + 10 * (tranghientaicb - 1);
-                    if (sothutu >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de xem ds";
-                        hienthiloi(a);
-                        chuyen_trang_xem_ds = false;
-                    }
-                    else {
-                        xemds = laychuyenbay(s, sothutu);
-                        int j = 0;
-                        dsvtmp = new char* [xemds.sove];
-                        vitrighe = new int[xemds.sove];
-                        for (int i = 0; i < xemds.sove; i++) {
-                            dsvtmp[i] = new char[30];
-                            dsvtmp[i][0] = '\0';
-                            vitrighe[i] = 0;
-                        }
-                        for (int i = 0; i < xemds.sove; i++) {
-                            if (xemds.danhsachve[i][0] != '\0') {
-                                sophantudsv++;
-                                vitrighe[j] = i + 1;
-                                STRCPYY(dsvtmp[j], xemds.danhsachve[i]);
-                                j++;
-                            }
-                        }
-                        float c = sophantudsv / 10.0;
-                        if (sotrangxemdsv < c) {
-                            sotrangxemdsv = (int)c + 1;
-                            sophantuhiendsv = 0;
-                            hienthidanhsachve(xemds, dsvtmp, 2, sophantuhiendsv, sophantudsv, vitrighe);
-                            chuyen_trang_xem_ds = true;
-                        }
-                        else {
-                            sophantuhiendsv = 0;
-                            hienthidanhsachve(xemds, dsvtmp, 3, sophantuhiendsv, sophantudsv, vitrighe);
-                            chuyen_trang_xem_ds = true;
-                        }
-                    }
-                }
-                else if (isMousexemds4(x, y) == 1) {
-
-                    sothutu = 0;
-                    sothutu = 3 + 10 * (tranghientaicb - 1);
-                    if (sothutu >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de xem ds";
-                        hienthiloi(a);
-                        chuyen_trang_xem_ds = false;
-                    }
-                    else {
-                        xemds = laychuyenbay(s, sothutu);
-                        int j = 0;
-                        dsvtmp = new char* [xemds.sove];
-                        vitrighe = new int[xemds.sove];
-                        for (int i = 0; i < xemds.sove; i++) {
-                            dsvtmp[i] = new char[30];
-                            dsvtmp[i][0] = '\0';
-                            vitrighe[i] = 0;
-                        }
-                        for (int i = 0; i < xemds.sove; i++) {
-                            if (xemds.danhsachve[i][0] != '\0') {
-                                sophantudsv++;
-                                vitrighe[j] = i + 1;
-                                STRCPYY(dsvtmp[j], xemds.danhsachve[i]);
-                                j++;
-                            }
-                        }
-                        float c = sophantudsv / 10.0;
-                        if (sotrangxemdsv < c) {
-                            sotrangxemdsv = (int)c + 1;
-                            hienthidanhsachve(xemds, dsvtmp, 2, sophantuhiendsv, sophantudsv, vitrighe);
-                            chuyen_trang_xem_ds = true;
-                        }
-                        else {
-                            hienthidanhsachve(xemds, dsvtmp, 3, sophantuhiendsv, sophantudsv, vitrighe);
-                            chuyen_trang_xem_ds = true;
-                        }
-                    }
-                }
-                else if (isMousexemds5(x, y) == 1) {
-
-                    sothutu = 0;
-                    sothutu = 4 + 10 * (tranghientaicb - 1);
-                    if (sothutu >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de xem ds";
-                        hienthiloi(a);
-                        chuyen_trang_xem_ds = false;
-                    }
-                    else {
-                        xemds = laychuyenbay(s, sothutu);
-                        int j = 0;
-                        dsvtmp = new char* [xemds.sove];
-                        vitrighe = new int[xemds.sove];
-                        for (int i = 0; i < xemds.sove; i++) {
-                            dsvtmp[i] = new char[30];
-                            dsvtmp[i][0] = '\0';
-                            vitrighe[i] = 0;
-                        }
-                        for (int i = 0; i < xemds.sove; i++) {
-                            if (xemds.danhsachve[i][0] != '\0') {
-                                sophantudsv++;
-                                vitrighe[j] = i + 1;
-                                STRCPYY(dsvtmp[j], xemds.danhsachve[i]);
-                                j++;
-                            }
-                        }
-                        float c = sophantudsv / 10.0;
-                        if (sotrangxemdsv < c) {
-                            sotrangxemdsv = (int)c + 1;
-                            hienthidanhsachve(xemds, dsvtmp, 2, sophantuhiendsv, sophantudsv, vitrighe);
-                            chuyen_trang_xem_ds = true;
-                        }
-                        else {
-                            hienthidanhsachve(xemds, dsvtmp, 3, sophantuhiendsv, sophantudsv, vitrighe);
-                            chuyen_trang_xem_ds = true;
-                        }
-                    }
-                }
-                else if (isMousexemds6(x, y) == 1) {
-
-                    sothutu = 0;
-                    sothutu = 5 + 10 * (tranghientaicb - 1);
-                    if (sothutu >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de xem ds";
-                        hienthiloi(a);
-                        chuyen_trang_xem_ds = false;
-                    }
-                    else {
-                        xemds = laychuyenbay(s, sothutu);
-                        int j = 0;
-                        dsvtmp = new char* [xemds.sove];
-                        vitrighe = new int[xemds.sove];
-                        for (int i = 0; i < xemds.sove; i++) {
-                            dsvtmp[i] = new char[30];
-                            dsvtmp[i][0] = '\0';
-                            vitrighe[i] = 0;
-                        }
-                        for (int i = 0; i < xemds.sove; i++) {
-                            if (xemds.danhsachve[i][0] != '\0') {
-                                sophantudsv++;
-                                vitrighe[j] = i + 1;
-                                STRCPYY(dsvtmp[j], xemds.danhsachve[i]);
-                                j++;
-                            }
-                        }
-                        float c = sophantudsv / 10.0;
-                        if (sotrangxemdsv < c) {
-                            sotrangxemdsv = (int)c + 1;
-                            hienthidanhsachve(xemds, dsvtmp, 2, sophantuhiendsv, sophantudsv, vitrighe);
-                            chuyen_trang_xem_ds = true;
-                        }
-                        else {
-                            hienthidanhsachve(xemds, dsvtmp, 3, sophantuhiendsv, sophantudsv, vitrighe);
-                            chuyen_trang_xem_ds = true;
-                        }
-                    }
-                }
-                else if (isMousexemds7(x, y) == 1) {
-
-                    sothutu = 0;
-                    sothutu = 6 + 10 * (tranghientaicb - 1);
-                    if (sothutu >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de xem ds";
-                        hienthiloi(a);
-                        chuyen_trang_xem_ds = false;
-                    }
-                    else {
-                        xemds = laychuyenbay(s, sothutu);
-                        int j = 0;
-                        dsvtmp = new char* [xemds.sove];
-                        vitrighe = new int[xemds.sove];
-                        for (int i = 0; i < xemds.sove; i++) {
-                            dsvtmp[i] = new char[30];
-                            dsvtmp[i][0] = '\0';
-                            vitrighe[i] = 0;
-                        }
-                        for (int i = 0; i < xemds.sove; i++) {
-                            if (xemds.danhsachve[i][0] != '\0') {
-                                sophantudsv++;
-                                vitrighe[j] = i + 1;
-                                STRCPYY(dsvtmp[j], xemds.danhsachve[i]);
-                                j++;
-                            }
-                        }
-                        float c = sophantudsv / 10.0;
-                        if (sotrangxemdsv < c) {
-                            sotrangxemdsv = (int)c + 1;
-                            hienthidanhsachve(xemds, dsvtmp, 2, sophantuhiendsv, sophantudsv, vitrighe);
-                            chuyen_trang_xem_ds = true;
-                        }
-                        else {
-                            hienthidanhsachve(xemds, dsvtmp, 3, sophantuhiendsv, sophantudsv, vitrighe);
-                            chuyen_trang_xem_ds = true;
-                        }
-                    }
-                }
-                else if (isMousexemds8(x, y) == 1) {
-
-                    sothutu = 0;
-                    sothutu = 7 + 10 * (tranghientaicb - 1);
-                    if (sothutu >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de xem ds";
-                        hienthiloi(a);
-                        chuyen_trang_xem_ds = false;
-                    }
-                    else {
-                        xemds = laychuyenbay(s, sothutu);
-                        xemds = laychuyenbay(s, sothutu);
-                        int j = 0;
-                        dsvtmp = new char* [xemds.sove];
-                        vitrighe = new int[xemds.sove];
-                        for (int i = 0; i < xemds.sove; i++) {
-                            dsvtmp[i] = new char[30];
-                            dsvtmp[i][0] = '\0';
-                            vitrighe[i] = 0;
-                        }
-                        for (int i = 0; i < xemds.sove; i++) {
-                            if (xemds.danhsachve[i][0] != '\0') {
-                                sophantudsv++;
-                                vitrighe[j] = i + 1;
-                                STRCPYY(dsvtmp[j], xemds.danhsachve[i]);
-                                j++;
-                            }
-                        }
-                        float c = sophantudsv / 10.0;
-                        if (sotrangxemdsv < c) {
-                            sotrangxemdsv = (int)c + 1;
-                            hienthidanhsachve(xemds, dsvtmp, 2, sophantuhiendsv, sophantudsv, vitrighe);
-                            chuyen_trang_xem_ds = true;
-                        }
-                        else {
-                            hienthidanhsachve(xemds, dsvtmp, 3, sophantuhiendsv, sophantudsv, vitrighe);
-                            chuyen_trang_xem_ds = true;
-                        }
-                    }
-                }
-                else if (isMousexemds9(x, y) == 1) {
-
-                    sothutu = 0;
-                    sothutu = 8 + 10 * (tranghientaicb - 1);
-                    if (sothutu >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de xem ds";
-                        hienthiloi(a);
-                        chuyen_trang_xem_ds = false;
-                    }
-                    else {
-                        xemds = laychuyenbay(s, sothutu);
-                        int j = 0;
-                        dsvtmp = new char* [xemds.sove];
-                        vitrighe = new int[xemds.sove];
-                        for (int i = 0; i < xemds.sove; i++) {
-                            dsvtmp[i] = new char[30];
-                            dsvtmp[i][0] = '\0';
-                            vitrighe[i] = 0;
-                        }
-                        for (int i = 0; i < xemds.sove; i++) {
-                            if (xemds.danhsachve[i][0] != '\0') {
-                                sophantudsv++;
-                                vitrighe[j] = i + 1;
-                                STRCPYY(dsvtmp[j], xemds.danhsachve[i]);
-                                j++;
-                            }
-                        }
-                        float c = sophantudsv / 10.0;
-                        if (sotrangxemdsv < c) {
-                            sotrangxemdsv = (int)c + 1;
-                            hienthidanhsachve(xemds, dsvtmp, 2, sophantuhiendsv, sophantudsv, vitrighe);
-                            chuyen_trang_xem_ds = true;
-                        }
-                        else {
-                            hienthidanhsachve(xemds, dsvtmp, 3, sophantuhiendsv, sophantudsv, vitrighe);
-                            chuyen_trang_xem_ds = true;
-                        }
-                    }
-                }
-                else if (isMousexemds10(x, y) == 1) {
-
-                    sothutu = 0;
-                    sothutu = 9 + 10 * (tranghientaicb - 1);
-                    if (sothutu >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de xem ds";
-                        hienthiloi(a);
-                        chuyen_trang_xem_ds = false;
-                    }
-                    else {
-                        xemds = laychuyenbay(s, sothutu);
-                        int j = 0;
-                        dsvtmp = new char* [xemds.sove];
-                        vitrighe = new int[xemds.sove];
-                        for (int i = 0; i < xemds.sove; i++) {
-                            dsvtmp[i] = new char[30];
-                            dsvtmp[i][0] = '\0';
-                            vitrighe[i] = 0;
-                        }
-                        for (int i = 0; i < xemds.sove; i++) {
-                            if (xemds.danhsachve[i][0] != '\0') {
-                                sophantudsv++;
-                                vitrighe[j] = i + 1;
-                                STRCPYY(dsvtmp[j], xemds.danhsachve[i]);
-                                j++;
-                            }
-                        }
-                        float c = sophantudsv / 10.0;
-                        if (sotrangxemdsv < c) {
-                            sotrangxemdsv = (int)c + 1;
-                            hienthidanhsachve(xemds, dsvtmp, 2, sophantuhiendsv, sophantudsv, vitrighe);
-                            chuyen_trang_xem_ds = true;
-                        }
-                        else {
-                            hienthidanhsachve(xemds, dsvtmp, 3, sophantuhiendsv, sophantudsv, vitrighe);
-                            chuyen_trang_xem_ds = true;
-                        }
-                    }
-                }
-            }
-            else if (TRANG_THAI_TAB == 2 && chuyen_trang_tim_kiem == 1 && addchuyenbay == false && suathongtin == false && (isMousexemds1(x, y) == 1 || isMousexemds2(x, y) == 1 || isMousexemds3(x, y) == 1 || isMousexemds4(x, y) == 1 || isMousexemds5(x, y) == 1 || isMousexemds6(x, y) == 1 || isMousexemds7(x, y) == 1 || isMousexemds8(x, y) == 1 || isMousexemds9(x, y) == 1 || isMousexemds10(x, y) == 1 || isMouseback(x, y) == 1)) {
-                            if (isMouseback(x, y) == 1) {
-                                for (int i = 0; i < 13; i++) {
-                                    dlcb[i][0] = '\0';
-                                }
-                                sochuyenbayco = 0;
-                                s = NULL;
-                                tmpcb = NULL;
-                                docdulieu(s, sochuyenbayco);
-                                tmpcb = NULL; addchuyenbay = false; suathongtin = false; chuyen_trang_xem_ds = false;
-                                chuyen_trang_tim_kiem = 0;
-                                TRANG_THAI_TAB = 2;
-                                sochuyenbayhien = 0;
-                                sotrangcb = 1;
-                                capnhapchuyenbaycotmp = sochuyenbayco;
-                                cleardevice();
-                                Screen_Default();
-                                Flight_design();
-                                hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
-                                muaticket = false;
-                                delete dsvtmp; delete vitrighe;
-                                sotrangxemdsv = 1, tranghientaixemdsv = 1, sophantudsv = 0, sophantuhiendsv = 0;
-                            }
-                            int sothutu;
-                            if (isMousexemds1(x, y) == 1) {
-
-                                sothutu = 0;
-                                sothutu = 0 + 10 * (tranghientaicb - 1);
-                                if (sothutu >= sochuyenbayco) {
-                                    char a[30] = "khong co phan tu de xem ds";
-                                    hienthiloi(a);
-                                    chuyen_trang_xem_ds = false;
-                                }
-                                else {
-                                    xemds = laychuyenbay(tmpcb, sothutu);
-                                    int j = 0;
-                                    dsvtmp = new char* [xemds.sove];
-                                    vitrighe = new int[xemds.sove];
-                                    for (int i = 0; i < xemds.sove; i++) {
-                                        dsvtmp[i] = new char[30];
-                                        dsvtmp[i][0] = '\0';
-                                        vitrighe[i] = 0;
-                                    }
-                                    for (int i = 0; i < xemds.sove; i++) {
-                                        if (xemds.danhsachve[i][0] == '\0') {
-                                            continue;
-                                        }
-                                        else {
-                                            sophantudsv++;
-                                            vitrighe[j] = i + 1;
-                                            STRCPYY(dsvtmp[j], xemds.danhsachve[i]);
-                                            j++;
-                                        }
-                                    }
-                                    float c = sophantudsv / 10.0;
-                                    if (sotrangxemdsv < c) {
-                                        sotrangxemdsv = (int)c + 1;
-                                        hienthidanhsachve(xemds, dsvtmp, 2, sophantuhiendsv, sophantudsv, vitrighe);
-                                        chuyen_trang_xem_ds = true;
-                                    }
-                                    else {
-                                        hienthidanhsachve(xemds, dsvtmp, 3, sophantuhiendsv, sophantudsv, vitrighe);
-                                        chuyen_trang_xem_ds = true;
-                                    }
-                                }
-                            }
-                            else if (isMousexemds2(x, y) == 1) {
-
-                                sothutu = 0;
-                                sothutu = 1 + 10 * (tranghientaicb - 1);
-                                if (sothutu >= sochuyenbayco) {
-                                    char a[30] = "khong co phan tu de xem ds";
-                                    hienthiloi(a);
-                                    chuyen_trang_xem_ds = false;
-                                }
-                                else {
-                                    xemds = laychuyenbay(tmpcb, sothutu);
-                                    int j = 0;
-                                    dsvtmp = new char* [xemds.sove];
-                                    vitrighe = new int[xemds.sove];
-                                    for (int i = 0; i < xemds.sove; i++) {
-                                        dsvtmp[i] = new char[30];
-                                        dsvtmp[i][0] = '\0';
-                                        vitrighe[i] = 0;
-                                    }
-                                    for (int i = 0; i < xemds.sove; i++) {
-                                        if (xemds.danhsachve[i][0] != '\0') {
-                                            sophantudsv++;
-                                            vitrighe[j] = i + 1;
-                                            STRCPYY(dsvtmp[j], xemds.danhsachve[i]);
-                                            j++;
-                                        }
-                                    }
-                                    float c = sophantudsv / 10.0;
-                                    if (sotrangxemdsv < c) {
-                                        sotrangxemdsv = (int)c + 1;
-                                        hienthidanhsachve(xemds, dsvtmp, 2, sophantuhiendsv, sophantudsv, vitrighe);
-                                        chuyen_trang_xem_ds = true;
-                                    }
-                                    else {
-                                        hienthidanhsachve(xemds, dsvtmp, 3, sophantuhiendsv, sophantudsv, vitrighe);
-                                        chuyen_trang_xem_ds = true;
-                                    }
-                                }
-                            }
-                            else if (isMousexemds3(x, y) == 1) {
-
-                                sothutu = 0;
-                                sothutu = 2 + 10 * (tranghientaicb - 1);
-                                if (sothutu >= sochuyenbayco) {
-                                    char a[30] = "khong co phan tu de xem ds";
-                                    hienthiloi(a);
-                                    chuyen_trang_xem_ds = false;
-                                }
-                                else {
-                                    xemds = laychuyenbay(tmpcb, sothutu);
-                                    int j = 0;
-                                    dsvtmp = new char* [xemds.sove];
-                                    vitrighe = new int[xemds.sove];
-                                    for (int i = 0; i < xemds.sove; i++) {
-                                        dsvtmp[i] = new char[30];
-                                        dsvtmp[i][0] = '\0';
-                                        vitrighe[i] = 0;
-                                    }
-                                    for (int i = 0; i < xemds.sove; i++) {
-                                        if (xemds.danhsachve[i][0] != '\0') {
-                                            sophantudsv++;
-                                            vitrighe[j] = i + 1;
-                                            STRCPYY(dsvtmp[j], xemds.danhsachve[i]);
-                                            j++;
-                                        }
-                                    }
-                                    float c = sophantudsv / 10.0;
-                                    if (sotrangxemdsv < c) {
-                                        sotrangxemdsv = (int)c + 1;
-                                        sophantuhiendsv = 0;
-                                        hienthidanhsachve(xemds, dsvtmp, 2, sophantuhiendsv, sophantudsv, vitrighe);
-                                        chuyen_trang_xem_ds = true;
-                                    }
-                                    else {
-                                        sophantuhiendsv = 0;
-                                        hienthidanhsachve(xemds, dsvtmp, 3, sophantuhiendsv, sophantudsv, vitrighe);
-                                        chuyen_trang_xem_ds = true;
-                                    }
-                                }
-                            }
-                            else if (isMousexemds4(x, y) == 1) {
-
-                                sothutu = 0;
-                                sothutu = 3 + 10 * (tranghientaicb - 1);
-                                if (sothutu >= sochuyenbayco) {
-                                    char a[30] = "khong co phan tu de xem ds";
-                                    hienthiloi(a);
-                                    chuyen_trang_xem_ds = false;
-                                }
-                                else {
-                                    xemds = laychuyenbay(tmpcb, sothutu);
-                                    int j = 0;
-                                    dsvtmp = new char* [xemds.sove];
-                                    vitrighe = new int[xemds.sove];
-                                    for (int i = 0; i < xemds.sove; i++) {
-                                        dsvtmp[i] = new char[30];
-                                        dsvtmp[i][0] = '\0';
-                                        vitrighe[i] = 0;
-                                    }
-                                    for (int i = 0; i < xemds.sove; i++) {
-                                        if (xemds.danhsachve[i][0] != '\0') {
-                                            sophantudsv++;
-                                            vitrighe[j] = i + 1;
-                                            STRCPYY(dsvtmp[j], xemds.danhsachve[i]);
-                                            j++;
-                                        }
-                                    }
-                                    float c = sophantudsv / 10.0;
-                                    if (sotrangxemdsv < c) {
-                                        sotrangxemdsv = (int)c + 1;
-                                        hienthidanhsachve(xemds, dsvtmp, 2, sophantuhiendsv, sophantudsv, vitrighe);
-                                        chuyen_trang_xem_ds = true;
-                                    }
-                                    else {
-                                        hienthidanhsachve(xemds, dsvtmp, 3, sophantuhiendsv, sophantudsv, vitrighe);
-                                        chuyen_trang_xem_ds = true;
-                                    }
-                                }
-                            }
-                            else if (isMousexemds5(x, y) == 1) {
-
-                                sothutu = 0;
-                                sothutu = 4 + 10 * (tranghientaicb - 1);
-                                if (sothutu >= sochuyenbayco) {
-                                    char a[30] = "khong co phan tu de xem ds";
-                                    hienthiloi(a);
-                                    chuyen_trang_xem_ds = false;
-                                }
-                                else {
-                                    xemds = laychuyenbay(tmpcb, sothutu);
-                                    int j = 0;
-                                    dsvtmp = new char* [xemds.sove];
-                                    vitrighe = new int[xemds.sove];
-                                    for (int i = 0; i < xemds.sove; i++) {
-                                        dsvtmp[i] = new char[30];
-                                        dsvtmp[i][0] = '\0';
-                                        vitrighe[i] = 0;
-                                    }
-                                    for (int i = 0; i < xemds.sove; i++) {
-                                        if (xemds.danhsachve[i][0] != '\0') {
-                                            sophantudsv++;
-                                            vitrighe[j] = i + 1;
-                                            STRCPYY(dsvtmp[j], xemds.danhsachve[i]);
-                                            j++;
-                                        }
-                                    }
-                                    float c = sophantudsv / 10.0;
-                                    if (sotrangxemdsv < c) {
-                                        sotrangxemdsv = (int)c + 1;
-                                        hienthidanhsachve(xemds, dsvtmp, 2, sophantuhiendsv, sophantudsv, vitrighe);
-                                        chuyen_trang_xem_ds = true;
-                                    }
-                                    else {
-                                        hienthidanhsachve(xemds, dsvtmp, 3, sophantuhiendsv, sophantudsv, vitrighe);
-                                        chuyen_trang_xem_ds = true;
-                                    }
-                                }
-                            }
-                            else if (isMousexemds6(x, y) == 1) {
-
-                                sothutu = 0;
-                                sothutu = 5 + 10 * (tranghientaicb - 1);
-                                if (sothutu >= sochuyenbayco) {
-                                    char a[30] = "khong co phan tu de xem ds";
-                                    hienthiloi(a);
-                                    chuyen_trang_xem_ds = false;
-                                }
-                                else {
-                                    xemds = laychuyenbay(tmpcb, sothutu);
-                                    int j = 0;
-                                    dsvtmp = new char* [xemds.sove];
-                                    vitrighe = new int[xemds.sove];
-                                    for (int i = 0; i < xemds.sove; i++) {
-                                        dsvtmp[i] = new char[30];
-                                        dsvtmp[i][0] = '\0';
-                                        vitrighe[i] = 0;
-                                    }
-                                    for (int i = 0; i < xemds.sove; i++) {
-                                        if (xemds.danhsachve[i][0] != '\0') {
-                                            sophantudsv++;
-                                            vitrighe[j] = i + 1;
-                                            STRCPYY(dsvtmp[j], xemds.danhsachve[i]);
-                                            j++;
-                                        }
-                                    }
-                                    float c = sophantudsv / 10.0;
-                                    if (sotrangxemdsv < c) {
-                                        sotrangxemdsv = (int)c + 1;
-                                        hienthidanhsachve(xemds, dsvtmp, 2, sophantuhiendsv, sophantudsv, vitrighe);
-                                        chuyen_trang_xem_ds = true;
-                                    }
-                                    else {
-                                        hienthidanhsachve(xemds, dsvtmp, 3, sophantuhiendsv, sophantudsv, vitrighe);
-                                        chuyen_trang_xem_ds = true;
-                                    }
-                                }
-                            }
-                            else if (isMousexemds7(x, y) == 1) {
-
-                                sothutu = 0;
-                                sothutu = 6 + 10 * (tranghientaicb - 1);
-                                if (sothutu >= sochuyenbayco) {
-                                    char a[30] = "khong co phan tu de xem ds";
-                                    hienthiloi(a);
-                                    chuyen_trang_xem_ds = false;
-                                }
-                                else {
-                                    xemds = laychuyenbay(tmpcb, sothutu);
-                                    int j = 0;
-                                    dsvtmp = new char* [xemds.sove];
-                                    vitrighe = new int[xemds.sove];
-                                    for (int i = 0; i < xemds.sove; i++) {
-                                        dsvtmp[i] = new char[30];
-                                        dsvtmp[i][0] = '\0';
-                                        vitrighe[i] = 0;
-                                    }
-                                    for (int i = 0; i < xemds.sove; i++) {
-                                        if (xemds.danhsachve[i][0] != '\0') {
-                                            sophantudsv++;
-                                            vitrighe[j] = i + 1;
-                                            STRCPYY(dsvtmp[j], xemds.danhsachve[i]);
-                                            j++;
-                                        }
-                                    }
-                                    float c = sophantudsv / 10.0;
-                                    if (sotrangxemdsv < c) {
-                                        sotrangxemdsv = (int)c + 1;
-                                        hienthidanhsachve(xemds, dsvtmp, 2, sophantuhiendsv, sophantudsv, vitrighe);
-                                        chuyen_trang_xem_ds = true;
-                                    }
-                                    else {
-                                        hienthidanhsachve(xemds, dsvtmp, 3, sophantuhiendsv, sophantudsv, vitrighe);
-                                        chuyen_trang_xem_ds = true;
-                                    }
-                                }
-                            }
-                            else if (isMousexemds8(x, y) == 1) {
-
-                                sothutu = 0;
-                                sothutu = 7 + 10 * (tranghientaicb - 1);
-                                if (sothutu >= sochuyenbayco) {
-                                    char a[30] = "khong co phan tu de xem ds";
-                                    hienthiloi(a);
-                                    chuyen_trang_xem_ds = false;
-                                }
-                                else {
-                                    xemds = laychuyenbay(tmpcb, sothutu);
-                                    int j = 0;
-                                    dsvtmp = new char* [xemds.sove];
-                                    vitrighe = new int[xemds.sove];
-                                    for (int i = 0; i < xemds.sove; i++) {
-                                        dsvtmp[i] = new char[30];
-                                        dsvtmp[i][0] = '\0';
-                                        vitrighe[i] = 0;
-                                    }
-                                    for (int i = 0; i < xemds.sove; i++) {
-                                        if (xemds.danhsachve[i][0] != '\0') {
-                                            sophantudsv++;
-                                            vitrighe[j] = i + 1;
-                                            STRCPYY(dsvtmp[j], xemds.danhsachve[i]);
-                                            j++;
-                                        }
-                                    }
-                                    float c = sophantudsv / 10.0;
-                                    if (sotrangxemdsv < c) {
-                                        sotrangxemdsv = (int)c + 1;
-                                        hienthidanhsachve(xemds, dsvtmp, 2, sophantuhiendsv, sophantudsv, vitrighe);
-                                        chuyen_trang_xem_ds = true;
-                                    }
-                                    else {
-                                        hienthidanhsachve(xemds, dsvtmp, 3, sophantuhiendsv, sophantudsv, vitrighe);
-                                        chuyen_trang_xem_ds = true;
-                                    }
-                                }
-                            }
-                            else if (isMousexemds9(x, y) == 1) {
-
-                                sothutu = 0;
-                                sothutu = 8 + 10 * (tranghientaicb - 1);
-                                if (sothutu >= sochuyenbayco) {
-                                    char a[30] = "khong co phan tu de xem ds";
-                                    hienthiloi(a);
-                                    chuyen_trang_xem_ds = false;
-                                }
-                                else {
-                                    xemds = laychuyenbay(tmpcb, sothutu);
-                                    int j = 0;
-                                    dsvtmp = new char* [xemds.sove];
-                                    vitrighe = new int[xemds.sove];
-                                    for (int i = 0; i < xemds.sove; i++) {
-                                        dsvtmp[i] = new char[30];
-                                        dsvtmp[i][0] = '\0';
-                                        vitrighe[i] = 0;
-                                    }
-                                    for (int i = 0; i < xemds.sove; i++) {
-                                        if (xemds.danhsachve[i][0] != '\0') {
-                                            sophantudsv++;
-                                            vitrighe[j] = i + 1;
-                                            STRCPYY(dsvtmp[j], xemds.danhsachve[i]);
-                                            j++;
-                                        }
-                                    }
-                                    float c = sophantudsv / 10.0;
-                                    if (sotrangxemdsv < c) {
-                                        sotrangxemdsv = (int)c + 1;
-                                        hienthidanhsachve(xemds, dsvtmp, 2, sophantuhiendsv, sophantudsv, vitrighe);
-                                        chuyen_trang_xem_ds = true;
-                                    }
-                                    else {
-                                        hienthidanhsachve(xemds, dsvtmp, 3, sophantuhiendsv, sophantudsv, vitrighe);
-                                        chuyen_trang_xem_ds = true;
-                                    }
-                                }
-                            }
-                            else if (isMousexemds10(x, y) == 1) {
-
-                                sothutu = 0;
-                                sothutu = 9 + 10 * (tranghientaicb - 1);
-                                if (sothutu >= sochuyenbayco) {
-                                    char a[30] = "khong co phan tu de xem ds";
-                                    hienthiloi(a);
-                                    chuyen_trang_xem_ds = false;
-                                }
-                                else {
-                                    xemds = laychuyenbay(tmpcb, sothutu);
-                                    int j = 0;
-                                    dsvtmp = new char* [xemds.sove];
-                                    vitrighe = new int[xemds.sove];
-                                    for (int i = 0; i < xemds.sove; i++) {
-                                        dsvtmp[i] = new char[30];
-                                        dsvtmp[i][0] = '\0';
-                                        vitrighe[i] = 0;
-                                    }
-                                    for (int i = 0; i < xemds.sove; i++) {
-                                        if (xemds.danhsachve[i][0] != '\0') {
-                                            sophantudsv++;
-                                            vitrighe[j] = i + 1;
-                                            STRCPYY(dsvtmp[j], xemds.danhsachve[i]);
-                                            j++;
-                                        }
-                                    }
-                                    float c = sophantudsv / 10.0;
-                                    if (sotrangxemdsv < c) {
-                                        sotrangxemdsv = (int)c + 1;
-                                        hienthidanhsachve(xemds, dsvtmp, 2, sophantuhiendsv, sophantudsv, vitrighe);
-                                        chuyen_trang_xem_ds = true;
-                                    }
-                                    else {
-                                        hienthidanhsachve(xemds, dsvtmp, 3, sophantuhiendsv, sophantudsv, vitrighe);
-                                        chuyen_trang_xem_ds = true;
-                                    }
-                                }
-                            }
-                            }
+               
+            }           
             //chuyentrang
             else if ((TRANG_THAI_TAB == 2 || (TRANG_THAI_TAB == 4 && dangmuab1 == 0 && dangmuab2 == 0 && dang_chon_chuyen_bay == 0 && chon_ghe == 0) || (TRANG_THAI_TAB == 4 && dang_chon_chuyen_bay == 1 && chon_ghe == 0)) && chuyen_trang_tim_kiem == 0 && chuyen_trang_xem_ds == false && (isMousexemtrangsau(x, y) == 1 || isMousexemtrangtruoc(x, y) == 1)) {
                 if (isMousexemtrangsau(x, y) == 1) {
@@ -3091,8 +2404,9 @@ void AO_THAT_DAY() {
 
                 //"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
             }
-            else if (TRANG_THAI_TAB == 2 && chuyen_trang_tim_kiem == 0 && chuyen_trang_xem_ds && (isMousexemtrangsau(x, y) == 1 || isMousexemtrangtruoc(x, y) == 1)) {
+            else if (TRANG_THAI_TAB == 2 && chuyen_trang_tim_kiem == 0 && chuyen_trang_xem_ds==true && (isMousexemtrangsau(x, y) == 1 || isMousexemtrangtruoc(x, y) == 1)) {
                 if (isMousexemtrangsau(x, y) == 1) {
+                    cout << "dell" << endl;
                     chuyen_trang_xem_ds = true;
                     if (tranghientaixemdsv < sotrangxemdsv) {
                         tranghientaixemdsv++;
@@ -3117,386 +2431,94 @@ void AO_THAT_DAY() {
                 }
             }
             //tra trang thai bang 1
-            else if (TRANG_THAI_TAB == 2 && chuyen_trang_xem_ds == false && chuyen_trang_tim_kiem == 0 && addchuyenbay == false && suathongtin == false && (isMousechuyenbay1(x, y) == 1 || isMousechuyenbay2(x, y) == 1 || isMousechuyenbay3(x, y) == 1 || isMousechuyenbay4(x, y) == 1 || isMousechuyenbay5(x, y) == 1 || isMousechuyenbay6(x, y) == 1 || isMousechuyenbay7(x, y) == 1 || isMousechuyenbay8(x, y) == 1 || isMousechuyenbay9(x, y) == 1 || isMousechuyenbay10(x, y) == 1)) {               
+            else if (TRANG_THAI_TAB == 2 && chuyen_trang_xem_ds == false && chuyen_trang_tim_kiem == 0 && addchuyenbay == false && suathongtin == false ) {               
                  int sothutu;
-                if (isMousechuyenbay1(x, y) == 1) {
-                    sothutu = 0;
-                    sothutu = 0 + 10 * (tranghientaicb - 1);
-                    if (sothutu >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de huy";
-                        hienthiloi(a);
-                    }
-                    else {
-                        ds duyet = NULL; duyet = s; int dem = 0;
-                        while (duyet != NULL) {
-                            if (dem == sothutu) {
-                                if (duyet->cb.trangthai == 4) {
-                                    char a[130] = "chuyen bay da hoan thanh ko the huy";
-                                    hienthiloi(a);
-                                    break;
-                                }
-                                else {
-                                    duyet->cb.trangthai = 1;
-                                    char a[30] = "chuyen bay da huy";
-                                    hienthiloi(a);
-                                    capnhatdulieu(s);
-                                    break;
-                                }
-                            }
-                            else {
-                                dem++;
-                            }
-                            duyet = duyet->next;
-                        }
+                 if (x >= 100 && x <= 1232 && y <= 689 && y >= 289) {
+                     sothutu = 0;
+                     sothutu = (y - 289) / 40 + 10 * (tranghientaicb - 1);
+                     if (sothutu >= sochuyenbayco) {
+                         char a[30] = "khong co phan tu de huy";
+                         hienthiloi(a);
+                     }
+                     else {
+                         ds duyet = NULL; duyet = s; int dem = 0;
+                         while (duyet != NULL) {
+                             if (dem == sothutu) {
+                                 if (duyet->cb.trangthai == 4) {
+                                     char a[130] = "chuyen bay da hoan thanh ko the huy";
+                                     hienthiloi(a);
+                                     break;
+                                 }
+                                 else {
+                                     duyet->cb.trangthai = 1;
+                                     char a[30] = "chuyen bay da huy";
+                                     hienthiloi(a);
+                                     capnhatdulieu(s);
+                                     break;
+                                 }
+                             }
+                             else {
+                                 dem++;
+                             }
+                             duyet = duyet->next;
+                         }
 
-                        cleardevice();
-                        Screen_Default(TRANG_THAI_TAB);
-                        Flight_design();
-                        sochuyenbayhien = 0;
-                        tranghientaicb = 1;
-                        hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
+                         cleardevice();
+                         Screen_Default(TRANG_THAI_TAB);
+                         Flight_design();
+                         sochuyenbayhien = 0;
+                         tranghientaicb = 1;
+                         hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
 
-                    }
-                }
-                else if (isMousechuyenbay2(x, y) == 1) {
-                    sothutu = 0;
-                    sothutu = 1 + 10 * (tranghientaicb - 1);
-                    if (sothutu >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de huy";
-                        hienthiloi(a);
-                    }
-                    else {
-                        ds duyet = NULL; duyet = s; int dem = 0;
-                        while (duyet != NULL) {
-                            if (dem == sothutu) {
-                                if (duyet->cb.trangthai == 4) {
-                                    char a[130] = "chuyen bay da hoan thanh ko the huy";
-                                    hienthiloi(a);
-                                    break;
-                                }
-                                else {
-                                    duyet->cb.trangthai = 1;
-                                    char a[30] = "chuyen bay da huy";
-                                    hienthiloi(a);
-                                    capnhatdulieu(s);
-                                    break;
-                                }
-                            }
-                            else {
-                                dem++;
-                            }
-                            duyet = duyet->next;
-                        }
-                        cleardevice();
-                        Screen_Default(TRANG_THAI_TAB);
-                        Flight_design();
-                        sochuyenbayhien = 0;
-                        tranghientaicb = 1;
-                        hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
-                    }
-                }
-                else if (isMousechuyenbay3(x, y) == 1) {
-                    sothutu = 0;
-                    sothutu = 2 + 10 * (tranghientaicb - 1);
-                    if (sothutu >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de huy";
-                        hienthiloi(a);
-                    }
-                    else {
-                        ds duyet = NULL; duyet = s; int dem = 0;
-                        while (duyet != NULL) {
-                            if (dem == sothutu) {
-                                if (duyet->cb.trangthai == 4) {
-                                    char a[130] = "chuyen bay da hoan thanh ko the huy";
-                                    hienthiloi(a);
-                                    break;
-                                }
-                                else {
-                                    duyet->cb.trangthai = 1;
-                                    char a[30] = "chuyen bay da huy";
-                                    hienthiloi(a);
-                                    capnhatdulieu(s);
-                                    break;
-                                }
-                            }
-                            else {
-                                dem++;
-                            }
-                            duyet = duyet->next;
-                        }
-                        cleardevice();
-                        Screen_Default(TRANG_THAI_TAB);
-                        Flight_design();
-                        sochuyenbayhien = 0;
-                        tranghientaicb = 1;
-                        hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
-                    }
-                }
-                else if (isMousechuyenbay4(x, y) == 1) {
-                    sothutu = 0;
-                    sothutu = 3 + 10 * (tranghientaicb - 1);
-                    if (sothutu >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de huy";
-                        hienthiloi(a);
-                    }
-                    else {
-                        ds duyet = NULL; duyet = s; int dem = 0;
-                        while (duyet != NULL) {
-                            if (dem == sothutu) {
-                                if (duyet->cb.trangthai == 4) {
-                                    char a[130] = "chuyen bay da hoan thanh ko the huy";
-                                    hienthiloi(a);
-                                    break;
-                                }
-                                else {
-                                    duyet->cb.trangthai = 1;
-                                    char a[30] = "chuyen bay da huy";
-                                    hienthiloi(a);
-                                    capnhatdulieu(s);
-                                    break;
-                                }
-                            }
-                            else {
-                                dem++;
-                            }
-                            duyet = duyet->next;
-                        }
-                        cleardevice();
-                        Screen_Default(TRANG_THAI_TAB);
-                        Flight_design();
-                        sochuyenbayhien = 0;
-                        tranghientaicb = 1;
-                        hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
-                    }
-                }
-                else if (isMousechuyenbay5(x, y) == 1) {
-                    sothutu = 0;
-                    sothutu = 4 + 10 * (tranghientaicb - 1);
-                    if (sothutu >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de huy";
-                        hienthiloi(a);
-                    }
-                    else {
-                        ds duyet = NULL; duyet = s; int dem = 0;
-                        while (duyet != NULL) {
-                            if (dem == sothutu) {
-                                if (duyet->cb.trangthai == 4) {
-                                    char a[130] = "chuyen bay da hoan thanh ko the huy";
-                                    hienthiloi(a);
-                                    break;
-                                }
-                                else {
-                                    duyet->cb.trangthai = 1;
-                                    char a[30] = "chuyen bay da huy";
-                                    hienthiloi(a);
-                                    capnhatdulieu(s);
-                                    break;
-                                }
-                            }
-                            else {
-                                dem++;
-                            }
-                            duyet = duyet->next;
-                        }
-                        Screen_Default(TRANG_THAI_TAB);
-                        Flight_design();
-                        sochuyenbayhien = 0;
-                        tranghientaicb = 1;
-                        hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
-                    }
-                }
-                else if (isMousechuyenbay6(x, y) == 1) {
-                    sothutu = 0;
-                    sothutu = 5 + 10 * (tranghientaicb - 1);
-                    if (sothutu >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de huy";
-                        hienthiloi(a);
-                    }
-                    else {
-                        ds duyet = NULL; duyet = s; int dem = 0;
-                        while (duyet != NULL) {
-                            if (dem == sothutu) {
-                                if (duyet->cb.trangthai == 4) {
-                                    char a[130] = "chuyen bay da hoan thanh ko the huy";
-                                    hienthiloi(a);
-                                    break;
-                                }
-                                else {
-                                    duyet->cb.trangthai = 1;
-                                    char a[30] = "chuyen bay da huy";
-                                    hienthiloi(a);
-                                    capnhatdulieu(s);
-                                    break;
-                                }
-                            }
-                            else {
-                                dem++;
-                            }
-                            duyet = duyet->next;
-                        }
-                        cleardevice();
-                        Screen_Default(TRANG_THAI_TAB);
-                        Flight_design();
-                        sochuyenbayhien = 0;
-                        tranghientaicb = 1;
-                        hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
-                    }
-                }
-                else if (isMousechuyenbay7(x, y) == 1) {
-                    sothutu = 0;
-                    sothutu = 6 + 10 * (tranghientaicb - 1);
-                    if (sothutu >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de huy";
-                        hienthiloi(a);
-                    }
-                    else {
-                        ds duyet = NULL; duyet = s; int dem = 0;
-                        while (duyet != NULL) {
-                            if (dem == sothutu) {
-                                if (duyet->cb.trangthai == 4) {
-                                    char a[130] = "chuyen bay da hoan thanh ko the huy";
-                                    hienthiloi(a);
-                                    break;
-                                }
-                                else {
-                                    duyet->cb.trangthai = 1;
-                                    char a[30] = "chuyen bay da huy";
-                                    hienthiloi(a);
-                                    capnhatdulieu(s);
-                                    break;
-                                }
-                            }
-                            else {
-                                dem++;
-                            }
-                            duyet = duyet->next;
-                        }
-                        cleardevice();
-                        Screen_Default(TRANG_THAI_TAB);
-                        Flight_design();
-                        sochuyenbayhien = 0;
-                        tranghientaicb = 1;
-                        hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
-                    }
-                }
-                else if (isMousechuyenbay8(x, y) == 1) {
-                    sothutu = 0;
-                    sothutu = 7 + 10 * (tranghientaicb - 1);
-                    if (sothutu >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de huy";
-                        hienthiloi(a);
-                    }
-                    else {
-                        ds duyet = NULL; duyet = s; int dem = 0;
-                        while (duyet != NULL) {
-                            if (dem == sothutu) {
-                                if (duyet->cb.trangthai == 4) {
-                                    char a[130] = "chuyen bay da hoan thanh ko the huy";
-                                    hienthiloi(a);
-                                    break;
-                                }
-                                else {
-                                    duyet->cb.trangthai = 1;
-                                    char a[30] = "chuyen bay da huy";
-                                    hienthiloi(a);
-                                    capnhatdulieu(s);
-                                    break;
-                                }
-                            }
-                            else {
-                                dem++;
-                            }
-                            duyet = duyet->next;
-                        }
-                        cleardevice();
-                        Screen_Default(TRANG_THAI_TAB);
-                        Flight_design();
-                        sochuyenbayhien = 0;
-                        tranghientaicb = 1;
-                        hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
-                    }
-                }
-                else if (isMousechuyenbay9(x, y) == 1) {
-                    sothutu = 0;
-                    sothutu = 8 + 10 * (tranghientaicb - 1);
-                    if (sothutu >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de huy";
-                        hienthiloi(a);
-                    }
-                    else {
-                        ds duyet = NULL; duyet = s; int dem = 0;
-                        while (duyet != NULL) {
-                            if (dem == sothutu) {
-                                if (duyet->cb.trangthai == 4) {
-                                    char a[130] = "chuyen bay da hoan thanh ko the huy";
-                                    hienthiloi(a);
-                                    break;
-                                }
-                                else {
-                                    duyet->cb.trangthai = 1;
-                                    char a[30] = "chuyen bay da huy";
-                                    hienthiloi(a);
-                                    capnhatdulieu(s);
-                                    break;
-                                }
-                            }
-                            else {
-                                dem++;
-                            }
-                            duyet = duyet->next;
-                        }
-                        cleardevice();
-                        Screen_Default(TRANG_THAI_TAB);
-                        Flight_design();
-                        sochuyenbayhien = 0;
-                        tranghientaicb = 1;
-                        hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
-                    }
-                }
-                else if (isMousechuyenbay10(x, y) == 1) {
-                    sothutu = 0;
-                    sothutu = 9 + 10 * (tranghientaicb - 1);
-                    if (sothutu >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de huy";
-                        hienthiloi(a);
-                    }
-                    else {
-                        ds duyet = NULL; duyet = s; int dem = 0;
-                        while (duyet != NULL) {
-                            if (dem == sothutu) {
-                                if (duyet->cb.trangthai == 4) {
-                                    char a[130] = "chuyen bay da hoan thanh ko the huy";
-                                    hienthiloi(a);
-                                    break;
-                                }
-                                else {
-                                    duyet->cb.trangthai = 1;
-                                    char a[30] = "chuyen bay da huy";
-                                    hienthiloi(a);
-                                    capnhatdulieu(s);
-                                    break;
-                                }
-                            }
-                            else {
-                                dem++;
-                            }
-                            duyet = duyet->next;
-                        }
-                        cleardevice();
-                        Screen_Default(TRANG_THAI_TAB);
-                        Flight_design();
-                        sochuyenbayhien = 0;
-                        tranghientaicb = 1;
-                        hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
-                    }
-                }
-   
+                     }
+                 }
+                 if (x >= 1232 && x <= 1439 && y <= 689 && y >= 289) {
+                     sothutu = 0;
+                     sothutu = (y - 289) / 40 + 10 * (tranghientaicb - 1);
+                     if (sothutu >= sochuyenbayco) {
+                         char a[30] = "khong co phan tu de xem ds";
+                         hienthiloi(a);
+                         chuyen_trang_xem_ds = false;
+                     }
+                     else {
+                         xemds = laychuyenbay(s, sothutu);
+                         int j = 0;
+                         dsvtmp = new char* [xemds.sove];
+                         vitrighe = new int[xemds.sove];
+                         for (int i = 0; i < xemds.sove; i++) {
+                             dsvtmp[i] = new char[30];
+                             dsvtmp[i][0] = '\0';
+                             vitrighe[i] = 0;
+                         }
+                         for (int i = 0; i < xemds.sove; i++) {
+                             if (xemds.danhsachve[i][0] == '\0') {
+                                 continue;
+                             }
+                             else {
+                                 sophantudsv++;
+                                 vitrighe[j] = i + 1;
+                                 STRCPYY(dsvtmp[j], xemds.danhsachve[i]);
+                                 j++;
+                             }
+                         }
+                         float c = sophantudsv / 10.0;
+                         if (sotrangxemdsv < c) {
+                             sotrangxemdsv = (int)c + 1;
+                             hienthidanhsachve(xemds, dsvtmp, 2, sophantuhiendsv, sophantudsv, vitrighe);
+                             chuyen_trang_xem_ds = true;
+                         }
+                         else {
+                             hienthidanhsachve(xemds, dsvtmp, 3, sophantuhiendsv, sophantudsv, vitrighe);
+                             chuyen_trang_xem_ds = true;
+                         }
+                     }
+                 }
             }
-            else if (TRANG_THAI_TAB == 2 && chuyen_trang_xem_ds == false && chuyen_trang_tim_kiem == 1 && addchuyenbay == false && suathongtin == false && (isMousechuyenbay1(x, y) == 1 || isMousechuyenbay2(x, y) == 1 || isMousechuyenbay3(x, y) == 1 || isMousechuyenbay4(x, y) == 1 || isMousechuyenbay5(x, y) == 1 || isMousechuyenbay6(x, y) == 1 || isMousechuyenbay7(x, y) == 1 || isMousechuyenbay8(x, y) == 1 || isMousechuyenbay9(x, y) == 1 || isMousechuyenbay10(x, y) == 1)) {
+            else if (TRANG_THAI_TAB == 2 && chuyen_trang_xem_ds == false && chuyen_trang_tim_kiem == 1 && addchuyenbay == false && suathongtin == false ) {
                 int sothutu;
-                if (isMousechuyenbay1(x, y) == 1) {
+                if (x >= 100 && x <= 1232 && y <= 689 && y >= 289) {
                     sothutu = 0;
-                    sothutu = 0 + 10 * (sotrangtmp - 1);
+                    sothutu = (y - 289) / 40 + 10 * (tranghientmp - 1);
                     if (sothutu >= cbcotmp) {
                         char a[30] = "khong co phan tu de huy";
                         hienthiloi(a);
@@ -3530,331 +2552,48 @@ void AO_THAT_DAY() {
                         hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
                     }
                 }
-                else if (isMousechuyenbay2(x, y) == 1) {
+                if (x >= 1232 && x <= 1439 && y <= 689 && y >= 289) {
                     sothutu = 0;
-                    sothutu = 1 + 10 * (sotrangtmp - 1);
+                    sothutu = (y - 289) / 40 + 10 * (tranghientmp - 1);
                     if (sothutu >= cbcotmp) {
-                        char a[30] = "khong co phan tu de huy";
+                        char a[30] = "khong co phan tu de xem ds";
                         hienthiloi(a);
+                        chuyen_trang_xem_ds = false;
                     }
                     else {
-                        chuyenbay xoa;
-                        xoa = laychuyenbay(tmpcb, sothutu);
-                        ds duyet = NULL; duyet = s;
-                        while (duyet != NULL) {
-                            if (strcmp(duyet->cb.macb, xoa.macb) == 0) {
-                                if (duyet->cb.trangthai == 4) {
-                                    char a[130] = "chuyen bay da hoan thanh ko the huy";
-                                    hienthiloi(a);
-                                    break;
-                                }
-                                else {
-                                    duyet->cb.trangthai = 1;
-                                    char a[30] = "chuyen bay da huy";
-                                    hienthiloi(a);
-                                    capnhatdulieu(s);
-                                    break;
-                                }
-                            }
-                            duyet = duyet->next;
+                        xemds = laychuyenbay(tmpcb, sothutu);
+                        int j = 0;
+                        dsvtmp = new char* [xemds.sove];
+                        vitrighe = new int[xemds.sove];
+                        for (int i = 0; i < xemds.sove; i++) {
+                            dsvtmp[i] = new char[30];
+                            dsvtmp[i][0] = '\0';
+                            vitrighe[i] = 0;
                         }
-                        cleardevice();
-                        Screen_Default(TRANG_THAI_TAB);
-                        Flight_design();
-                        sochuyenbayhien = 0;
-                        tranghientaicb = 1;
-                        hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
+                        for (int i = 0; i < xemds.sove; i++) {
+                            if (xemds.danhsachve[i][0] == '\0') {
+                                continue;
+                            }
+                            else {
+                                sophantudsv++;
+                                vitrighe[j] = i + 1;
+                                STRCPYY(dsvtmp[j], xemds.danhsachve[i]);
+                                j++;
+                            }
+                        }
+                        float c = sophantudsv / 10.0;
+                        if (sotrangxemdsv < c) {
+                            sotrangxemdsv = (int)c + 1;
+                            hienthidanhsachve(xemds, dsvtmp, 2, sophantuhiendsv, sophantudsv, vitrighe);
+                            chuyen_trang_xem_ds = true;
+                        }
+                        else {
+                            hienthidanhsachve(xemds, dsvtmp, 3, sophantuhiendsv, sophantudsv, vitrighe);
+                            chuyen_trang_xem_ds = true;
+                        }
                     }
                 }
-                else if (isMousechuyenbay3(x, y) == 1) {
-                    sothutu = 0;
-                    sothutu = 2 + 10 * (sotrangtmp - 1);
-                    if (sothutu >= cbcotmp) {
-                        char a[30] = "khong co phan tu de huy";
-                        hienthiloi(a);
-                    }
-                    else {
-                        chuyenbay xoa;
-                        xoa = laychuyenbay(tmpcb, sothutu);
-                        ds duyet = NULL; duyet = s;
-                        while (duyet != NULL) {
-                            if (strcmp(duyet->cb.macb, xoa.macb) == 0) {
-                                if (duyet->cb.trangthai == 4) {
-                                    char a[130] = "chuyen bay da hoan thanh ko the huy";
-                                    hienthiloi(a);
-                                    break;
-                                }
-                                else {
-                                    duyet->cb.trangthai = 1;
-                                    char a[30] = "chuyen bay da huy";
-                                    hienthiloi(a);
-                                    capnhatdulieu(s);
-                                    break;
-                                }
-                            }
-                            duyet = duyet->next;
-                        }
-                        cleardevice();
-                        Screen_Default(TRANG_THAI_TAB);
-                        Flight_design();
-                        sochuyenbayhien = 0;
-                        tranghientaicb = 1;
-                        hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
-                    }
-                }
-                else if (isMousechuyenbay4(x, y) == 1) {
-                    sothutu = 0;
-                    sothutu = 3 + 10 * (sotrangtmp - 1);
-                    if (sothutu >= cbcotmp) {
-                        char a[30] = "khong co phan tu de huy";
-                        hienthiloi(a);
-                    }
-                    else {
-                        chuyenbay xoa;
-                        xoa = laychuyenbay(tmpcb, sothutu);
-                        ds duyet = NULL; duyet = s;
-                        while (duyet != NULL) {
-                            if (strcmp(duyet->cb.macb, xoa.macb) == 0) {
-                                if (duyet->cb.trangthai == 4) {
-                                    char a[130] = "chuyen bay da hoan thanh ko the huy";
-                                    hienthiloi(a);
-                                    break;
-                                }
-                                else {
-                                    duyet->cb.trangthai = 1;
-                                    char a[30] = "chuyen bay da huy";
-                                    hienthiloi(a);
-                                    capnhatdulieu(s);
-                                    break;
-                                }
-                            }
-                            duyet = duyet->next;
-                        }
-                        cleardevice();
-                        Screen_Default(TRANG_THAI_TAB);
-                        Flight_design();
-                        sochuyenbayhien = 0;
-                        tranghientaicb = 1;
-                        hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
-                    }
-                }
-                else if (isMousechuyenbay5(x, y) == 1) {
-                    sothutu = 0;
-                    sothutu = 4 + 10 * (sotrangtmp - 1);
-                    if (sothutu >= cbcotmp) {
-                        char a[30] = "khong co phan tu de huy";
-                        hienthiloi(a);
-                    }
-                    else {
-                        chuyenbay xoa;
-                        xoa = laychuyenbay(tmpcb, sothutu);
-                        ds duyet = NULL; duyet = s;
-                        while (duyet != NULL) {
-                            if (strcmp(duyet->cb.macb, xoa.macb) == 0) {
-                                if (duyet->cb.trangthai == 4) {
-                                    char a[130] = "chuyen bay da hoan thanh ko the huy";
-                                    hienthiloi(a);
-                                    break;
-                                }
-                                else {
-                                    duyet->cb.trangthai = 1;
-                                    char a[30] = "chuyen bay da huy";
-                                    hienthiloi(a);
-                                    capnhatdulieu(s);
-                                    break;
-                                }
-                            }
-                            duyet = duyet->next;
-                        }
-                        cleardevice();
-                        Screen_Default(TRANG_THAI_TAB);
-                        Flight_design();
-                        sochuyenbayhien = 0;
-                        tranghientaicb = 1;
-                        hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
-                    }
-                }
-                else if (isMousechuyenbay6(x, y) == 1) {
-                    sothutu = 0;
-                    sothutu = 5 + 10 * (sotrangtmp - 1);
-                    if (sothutu >= cbcotmp) {
-                        char a[30] = "khong co phan tu de huy";
-                        hienthiloi(a);
-                    }
-                    else {
-                        chuyenbay xoa;
-                        xoa = laychuyenbay(tmpcb, sothutu);
-                        ds duyet = NULL; duyet = s;
-                        while (duyet != NULL) {
-                            if (strcmp(duyet->cb.macb, xoa.macb) == 0) {
-                                if (duyet->cb.trangthai == 4) {
-                                    char a[130] = "chuyen bay da hoan thanh ko the huy";
-                                    hienthiloi(a);
-                                    break;
-                                }
-                                else {
-                                    duyet->cb.trangthai = 1;
-                                    char a[30] = "chuyen bay da huy";
-                                    hienthiloi(a);
-                                    capnhatdulieu(s);
-                                    break;
-                                }
-                            }
-                            duyet = duyet->next;
-                        }
-                        cleardevice();
-                        Screen_Default(TRANG_THAI_TAB);
-                        Flight_design();
-                        sochuyenbayhien = 0;
-                        tranghientaicb = 1;
-                        hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
-                    }
-                }
-                else if (isMousechuyenbay7(x, y) == 1) {
-                    sothutu = 0;
-                    sothutu = 6 + 10 * (sotrangtmp - 1);
-                    if (sothutu >= cbcotmp) {
-                        char a[30] = "khong co phan tu de huy";
-                        hienthiloi(a);
-                    }
-                    else {
-                        chuyenbay xoa;
-                        xoa = laychuyenbay(tmpcb, sothutu);
-                        ds duyet = NULL; duyet = s;
-                        while (duyet != NULL) {
-                            if (strcmp(duyet->cb.macb, xoa.macb) == 0) {
-                                if (duyet->cb.trangthai == 4) {
-                                    char a[130] = "chuyen bay da hoan thanh ko the huy";
-                                    hienthiloi(a);
-                                    break;
-                                }
-                                else {
-                                    duyet->cb.trangthai = 1;
-                                    char a[30] = "chuyen bay da huy";
-                                    hienthiloi(a);
-                                    capnhatdulieu(s);
-                                    break;
-                                }
-                            }
-                            duyet = duyet->next;
-                        }
-                        cleardevice();
-                        Screen_Default(TRANG_THAI_TAB);
-                        Flight_design();
-                        sochuyenbayhien = 0;
-                        tranghientaicb = 1;
-                        hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
-                    }
-                }
-                else if (isMousechuyenbay8(x, y) == 1) {
-                    sothutu = 0;
-                    sothutu = 7 + 10 * (sotrangtmp - 1);
-                    if (sothutu >= cbcotmp) {
-                        char a[30] = "khong co phan tu de huy";
-                        hienthiloi(a);
-                    }
-                    else {
-                        chuyenbay xoa;
-                        xoa = laychuyenbay(tmpcb, sothutu);
-                        ds duyet = NULL; duyet = s;
-                        while (duyet != NULL) {
-                            if (strcmp(duyet->cb.macb, xoa.macb) == 0) {
-                                if (duyet->cb.trangthai == 4) {
-                                    char a[130] = "chuyen bay da hoan thanh ko the huy";
-                                    hienthiloi(a);
-                                    break;
-                                }
-                                else {
-                                    duyet->cb.trangthai = 1;
-                                    char a[30] = "chuyen bay da huy";
-                                    hienthiloi(a);
-                                    capnhatdulieu(s);
-                                    break;
-                                }
-                            }
-                            duyet = duyet->next;
-                        }
-                        cleardevice();
-                        Screen_Default(TRANG_THAI_TAB);
-                        Flight_design();
-                        sochuyenbayhien = 0;
-                        tranghientaicb = 1;
-                        hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
-                    }
-                }
-                else if (isMousechuyenbay9(x, y) == 1) {
-                    sothutu = 0;
-                    sothutu = 8 + 10 * (sotrangtmp - 1);
-                    if (sothutu >= cbcotmp) {
-                        char a[30] = "khong co phan tu de huy";
-                        hienthiloi(a);
-                    }
-                    else {
-                        chuyenbay xoa;
-                        xoa = laychuyenbay(tmpcb, sothutu);
-                        ds duyet = NULL; duyet = s;
-                        while (duyet != NULL) {
-                            if (strcmp(duyet->cb.macb, xoa.macb) == 0) {
-                                if (duyet->cb.trangthai == 4) {
-                                    char a[130] = "chuyen bay da hoan thanh ko the huy";
-                                    hienthiloi(a);
-                                    break;
-                                }
-                                else {
-                                    duyet->cb.trangthai = 1;
-                                    char a[30] = "chuyen bay da huy";
-                                    hienthiloi(a);
-                                    capnhatdulieu(s);
-                                    break;
-                                }
-                            }
-                            duyet = duyet->next;
-                        }
-                        capnhatdulieu(s);
-                        cleardevice();
-                        Screen_Default(TRANG_THAI_TAB);
-                        Flight_design();
-                        sochuyenbayhien = 0;
-                        tranghientaicb = 1;
-                        hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
-                    }
-                }
-                else if (isMousechuyenbay10(x, y) == 1) {
-                    sothutu = 0;
-                    sothutu = 9 + 10 * (sotrangtmp - 1);
-                    if (sothutu >= cbcotmp) {
-                        char a[30] = "khong co phan tu de huy";
-                        hienthiloi(a);
-                    }
-                    else {
-                        chuyenbay xoa;
-                        xoa = laychuyenbay(tmpcb, sothutu);
-                        ds duyet = NULL; duyet = s;
-                        while (duyet != NULL) {
-                            if (strcmp(duyet->cb.macb, xoa.macb) == 0) {
-                                if (duyet->cb.trangthai == 4) {
-                                    char a[130] = "chuyen bay da hoan thanh ko the huy";
-                                    hienthiloi(a);
-                                    break;
-                                }
-                                else {
-                                    duyet->cb.trangthai = 1;
-                                    char a[30] = "chuyen bay da huy";
-                                    hienthiloi(a);
-                                    capnhatdulieu(s);
-                                    break;
-                                }
-                            }
-                            duyet = duyet->next;
-                        }
-                        cleardevice();
-                        Screen_Default(TRANG_THAI_TAB);
-                        Flight_design();
-                        sochuyenbayhien = 0;
-                        tranghientaicb = 1;
-                        hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
-                    }
-                }
+
             }
             //sua
             else if (TRANG_THAI_TAB == 2 && addchuyenbay == false && suathongtin && chon_may_bay && sua_cb == 1) {
@@ -4047,8 +2786,8 @@ void AO_THAT_DAY() {
                                 ds duyet; duyet = s; int demloii = 0;
                                 for (; duyet != NULL; duyet = duyet->next) {
                                     if (strcmp(duyet->cb.sohieu, dlcb[6]) == 0) {
-                                        if (tmptg[0] == duyet->cb.tg.ngay && tmptg[2] == duyet->cb.tg.thang && tmptg[4] == duyet->cb.tg.nam) {
-                                            if (abs(duyet->cb.tg.gio - tmptg[6]) <= 3) {
+                                        if (tmptg[0] == duyet->cb.tg.ngay && tmptg[1] == duyet->cb.tg.thang && tmptg[2] == duyet->cb.tg.nam) {
+                                            if (abs(duyet->cb.tg.gio - tmptg[3]) <= 3) {
                                                 demloi++;
                                             }
                                         }
@@ -4422,10 +3161,10 @@ void AO_THAT_DAY() {
                     sua_thong_tin_mb(stt, ds_mb, trang_mb_hientai, s);
                 }
             }
-            if (TRANG_THAI_TAB == 2 && chuyen_trang_tim_kiem == 0 && addchuyenbay == false && suathongtin == false && (isMousechuyenbay1(x, y) == 1 || isMousechuyenbay2(x, y) == 1 || isMousechuyenbay3(x, y) == 1 || isMousechuyenbay4(x, y) == 1 || isMousechuyenbay5(x, y) == 1 || isMousechuyenbay6(x, y) == 1 || isMousechuyenbay7(x, y) == 1 || isMousechuyenbay8(x, y) == 1 || isMousechuyenbay9(x, y) == 1 || isMousechuyenbay10(x, y) == 1)) {
-                if (isMousechuyenbay1(x, y) == 1) {
+            if (TRANG_THAI_TAB == 2 && chuyen_trang_tim_kiem == 0 && addchuyenbay == false && suathongtin == false ) {
+                if (x >= 100 && x <= 1232 && y <= 689 && y >= 289) {
                     vitrisua = 0;
-                    vitrisua = 0 + 10 * (tranghientaicb - 1);
+                    vitrisua = (y - 289) / 40 + 10 * (tranghientaicb - 1);
                     if (vitrisua >= sochuyenbayco) {
                         char a[30] = "khong co phan tu de sua";
                         hienthiloi(a);
@@ -4473,445 +3212,13 @@ void AO_THAT_DAY() {
                         }
                     }
                 }
-                else if (isMousechuyenbay2(x, y) == 1) {
-                    vitrisua = 0;
-                    vitrisua = 1 + 10 * (tranghientaicb - 1);
-                    if (vitrisua >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de sua";
-                        hienthiloi(a); suathongtin = false;
-                    }
-                    else {
-                        int demvedadat = 0;
-                        tmpsua = laychuyenbay(s, vitrisua);
-                        for (int i = 0; i < tmpsua.sove; i++) {
-                            if (tmpsua.danhsachve[i][0] != '\0') {
-                                demvedadat++;
-                            }
-                        }
-                        if (demvedadat != 0) {
-                            char a[50] = "chuyen bay da co nguoi dat ko the sua";
-                            hienthiloi(a);
-                            suathongtin = false;
-                        }
-                        else {
-                            if (tmpsua.trangthai == 1) {
-                                char a[30] = "chuyen bay da huy ko the sua";
-                                hienthiloi(a);
-                            }
-                            else if (tmpsua.trangthai == 4) {
-                                char a[50] = "chuyen bay da hoan thanh ko the sua";
-                                hienthiloi(a);
-                            }
-                            else {
-                                cleardevice();
-                                hienthemchuyebay();
-                                setbkcolor(COLOR(217, 234, 211));
-                                outtextxy(450, 235, tmpsua.macb); STRCPYY(dlcb[5], tmpsua.macb);
-                                outtextxy(450, 335, tmpsua.sohieu); STRCPYY(dlcb[6], tmpsua.sohieu);
-                                outtextxy(450, 435, tmpsua.sanbay); STRCPYY(dlcb[7], tmpsua.sanbay);
-                                char tg[30];
-                                chuyenintschar(tg, tmpsua.tg.ngay); outtextxy(450, 535, tg); STRCPYY(dlcb[8], tg);
-                                chuyenintschar(tg, tmpsua.tg.thang); outtextxy(527, 535, tg); STRCPYY(dlcb[9], tg);
-                                chuyenintschar(tg, tmpsua.tg.nam); outtextxy(610, 535, tg); STRCPYY(dlcb[10], tg);
-                                chuyenintschar(tg, tmpsua.tg.gio); outtextxy(703, 535, tg); STRCPYY(dlcb[11], tg);
-                                chuyenintschar(tg, tmpsua.tg.phut); outtextxy(785, 535, tg); STRCPYY(dlcb[12], tg);
-                                suathongtin = true;
-                                sua_cb = 1;
-                            }
-                        }
-                    }
-                }
-                else if (isMousechuyenbay3(x, y) == 1) {
-                    vitrisua = 0;
-                    vitrisua = 2 + 10 * (tranghientaicb - 1);
-                    if (vitrisua >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de sua";
-                        hienthiloi(a); suathongtin = false;
-                    }
-                    else {
-                        int demvedadat = 0;
-                        tmpsua = laychuyenbay(s, vitrisua);
-                        for (int i = 0; i < tmpsua.sove; i++) {
-                            if (tmpsua.danhsachve[i][0] != '\0') {
-                                demvedadat++;
-                            }
-                        }
-                        if (demvedadat != 0) {
-                            char a[50] = "chuyen bay da co nguoi dat ko the sua";
-                            hienthiloi(a);
-                            suathongtin = false;
-                        }
-                        else {
-                            if (tmpsua.trangthai == 1) {
-                                char a[30] = "chuyen bay da huy ko the sua";
-                                hienthiloi(a);
-                            }
-                            else if (tmpsua.trangthai == 4) {
-                                char a[50] = "chuyen bay da hoan thanh ko the sua";
-                                hienthiloi(a);
-                            }
-                            else {
-                                cleardevice();
-                                hienthemchuyebay();
-                                setbkcolor(COLOR(217, 234, 211));
-                                outtextxy(450, 235, tmpsua.macb); STRCPYY(dlcb[5], tmpsua.macb);
-                                outtextxy(450, 335, tmpsua.sohieu); STRCPYY(dlcb[6], tmpsua.sohieu);
-                                outtextxy(450, 435, tmpsua.sanbay); STRCPYY(dlcb[7], tmpsua.sanbay);
-                                char tg[30];
-                                chuyenintschar(tg, tmpsua.tg.ngay); outtextxy(450, 535, tg); STRCPYY(dlcb[8], tg);
-                                chuyenintschar(tg, tmpsua.tg.thang); outtextxy(527, 535, tg); STRCPYY(dlcb[9], tg);
-                                chuyenintschar(tg, tmpsua.tg.nam); outtextxy(610, 535, tg); STRCPYY(dlcb[10], tg);
-                                chuyenintschar(tg, tmpsua.tg.gio); outtextxy(703, 535, tg); STRCPYY(dlcb[11], tg);
-                                chuyenintschar(tg, tmpsua.tg.phut); outtextxy(785, 535, tg); STRCPYY(dlcb[12], tg);
-                                suathongtin = true;
-                                sua_cb = 1;
-                            }
-                        }
-                    }
-                }
-                else if (isMousechuyenbay4(x, y) == 1) {
-                    vitrisua = 0;
-                    vitrisua = 3 + 10 * (tranghientaicb - 1);
-                    if (vitrisua >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de sua";
-                        hienthiloi(a); suathongtin = false;
-                    }
-                    else {
-                        int demvedadat = 0;
-                        tmpsua = laychuyenbay(s, vitrisua);
-                        for (int i = 0; i < tmpsua.sove; i++) {
-                            if (tmpsua.danhsachve[i][0] != '\0') {
-                                demvedadat++;
-                            }
-                        }
-                        if (demvedadat != 0) {
-                            char a[50] = "chuyen bay da co nguoi dat ko the sua";
-                            hienthiloi(a);
-                            suathongtin = false;
-                        }
-                        else {
-                            if (tmpsua.trangthai == 1) {
-                                char a[30] = "chuyen bay da huy ko the sua";
-                                hienthiloi(a);
-                            }
-                            else if (tmpsua.trangthai == 4) {
-                                char a[50] = "chuyen bay da hoan thanh ko the sua";
-                                hienthiloi(a);
-                            }
-                            else {
-                                cleardevice();
-                                hienthemchuyebay();
-                                setbkcolor(COLOR(217, 234, 211));
-                                outtextxy(450, 235, tmpsua.macb); STRCPYY(dlcb[5], tmpsua.macb);
-                                outtextxy(450, 335, tmpsua.sohieu); STRCPYY(dlcb[6], tmpsua.sohieu);
-                                outtextxy(450, 435, tmpsua.sanbay); STRCPYY(dlcb[7], tmpsua.sanbay);
-                                char tg[30];
-                                chuyenintschar(tg, tmpsua.tg.ngay); outtextxy(450, 535, tg); STRCPYY(dlcb[8], tg);
-                                chuyenintschar(tg, tmpsua.tg.thang); outtextxy(527, 535, tg); STRCPYY(dlcb[9], tg);
-                                chuyenintschar(tg, tmpsua.tg.nam); outtextxy(610, 535, tg); STRCPYY(dlcb[10], tg);
-                                chuyenintschar(tg, tmpsua.tg.gio); outtextxy(703, 535, tg); STRCPYY(dlcb[11], tg);
-                                chuyenintschar(tg, tmpsua.tg.phut); outtextxy(785, 535, tg); STRCPYY(dlcb[12], tg);
-                                suathongtin = true;
-                                sua_cb = 1;
-                            }
-                        }
-                    }
-                }
-                else if (isMousechuyenbay5(x, y) == 1) {
-                    vitrisua = 0;
-                    vitrisua = 4 + 10 * (tranghientaicb - 1);
-                    if (vitrisua >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de sua";
-                        hienthiloi(a); suathongtin = false;
-                    }
-                    else {
-                        int demvedadat = 0;
-                        tmpsua = laychuyenbay(s, vitrisua);
-                        for (int i = 0; i < tmpsua.sove; i++) {
-                            if (tmpsua.danhsachve[i][0] != '\0') {
-                                demvedadat++;
-                            }
-                        }
-                        if (demvedadat != 0) {
-                            char a[50] = "chuyen bay da co nguoi dat ko the sua";
-                            hienthiloi(a);
-                            suathongtin = false;
-                        }
-                        else {
-                               if (tmpsua.trangthai == 1) {
-                                    char a[30] = "chuyen bay da huy ko the sua";
-                                    hienthiloi(a);
-                                }
-                                else if (tmpsua.trangthai == 4) {
-                                    char a[50] = "chuyen bay da hoan thanh ko the sua";
-                                    hienthiloi(a);
-                                }
-                            else {
-                                cleardevice();
-                                hienthemchuyebay();
-                                setbkcolor(COLOR(217, 234, 211));
-                                outtextxy(450, 235, tmpsua.macb); STRCPYY(dlcb[5], tmpsua.macb);
-                                outtextxy(450, 335, tmpsua.sohieu); STRCPYY(dlcb[6], tmpsua.sohieu);
-                                outtextxy(450, 435, tmpsua.sanbay); STRCPYY(dlcb[7], tmpsua.sanbay);
-                                char tg[30];
-                                chuyenintschar(tg, tmpsua.tg.ngay); outtextxy(450, 535, tg); STRCPYY(dlcb[8], tg);
-                                chuyenintschar(tg, tmpsua.tg.thang); outtextxy(527, 535, tg); STRCPYY(dlcb[9], tg);
-                                chuyenintschar(tg, tmpsua.tg.nam); outtextxy(610, 535, tg); STRCPYY(dlcb[10], tg);
-                                chuyenintschar(tg, tmpsua.tg.gio); outtextxy(703, 535, tg); STRCPYY(dlcb[11], tg);
-                                chuyenintschar(tg, tmpsua.tg.phut); outtextxy(785, 535, tg); STRCPYY(dlcb[12], tg);
-                                suathongtin = true;
-                                sua_cb = 1;
-                            }
-                        }
-                    }
-                }
-                else if (isMousechuyenbay6(x, y) == 1) {
-                    vitrisua = 0;
-                    vitrisua = 5 + 10 * (tranghientaicb - 1);
-                    if (vitrisua >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de sua";
-                        hienthiloi(a); suathongtin = false;
-                    }
-                    else {
-                        int demvedadat = 0;
-                        tmpsua = laychuyenbay(s, vitrisua);
-                        for (int i = 0; i < tmpsua.sove; i++) {
-                            if (tmpsua.danhsachve[i][0] != '\0') {
-                                demvedadat++;
-                            }
-                        }
-                        if (demvedadat != 0) {
-                            char a[50] = "chuyen bay da co nguoi dat ko the sua";
-                            hienthiloi(a);
-                            suathongtin = false;
-                        }
-                        else {
-                            if (tmpsua.trangthai == 1) {
-                                char a[30] = "chuyen bay da huy ko the sua";
-                                hienthiloi(a);
-                            }
-                            else if (tmpsua.trangthai == 4) {
-                                char a[50] = "chuyen bay da hoan thanh ko the sua";
-                                hienthiloi(a);
-                            }
-                            else {
-                                cleardevice();
-                                hienthemchuyebay();
-                                setbkcolor(COLOR(217, 234, 211));
-                                outtextxy(450, 235, tmpsua.macb); STRCPYY(dlcb[5], tmpsua.macb);
-                                outtextxy(450, 335, tmpsua.sohieu); STRCPYY(dlcb[6], tmpsua.sohieu);
-                                outtextxy(450, 435, tmpsua.sanbay); STRCPYY(dlcb[7], tmpsua.sanbay);
-                                char tg[30];
-                                chuyenintschar(tg, tmpsua.tg.ngay); outtextxy(450, 535, tg); STRCPYY(dlcb[8], tg);
-                                chuyenintschar(tg, tmpsua.tg.thang); outtextxy(527, 535, tg); STRCPYY(dlcb[9], tg);
-                                chuyenintschar(tg, tmpsua.tg.nam); outtextxy(610, 535, tg); STRCPYY(dlcb[10], tg);
-                                chuyenintschar(tg, tmpsua.tg.gio); outtextxy(703, 535, tg); STRCPYY(dlcb[11], tg);
-                                chuyenintschar(tg, tmpsua.tg.phut); outtextxy(785, 535, tg); STRCPYY(dlcb[12], tg);
-                                suathongtin = true;
-                                sua_cb = 1;
-                            }
-                        }
-                    }
-                }
-                else if (isMousechuyenbay7(x, y) == 1) {
-                    vitrisua = 0;
-                    vitrisua = 6 + 10 * (tranghientaicb - 1);
-                    if (vitrisua >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de sua";
-                        hienthiloi(a); suathongtin = false;
-                    }
-                    else {
-                        int demvedadat = 0;
-                        tmpsua = laychuyenbay(s, vitrisua);
-                        for (int i = 0; i < tmpsua.sove; i++) {
-                            if (tmpsua.danhsachve[i][0] != '\0') {
-                                demvedadat++;
-                            }
-                        }
-                        if (demvedadat != 0) {
-                            char a[50] = "chuyen bay da co nguoi dat ko the sua";
-                            hienthiloi(a);
-                            suathongtin = false;
-                        }
-                        else {
-                            if (tmpsua.trangthai == 1) {
-                                char a[30] = "chuyen bay da huy ko the sua";
-                                hienthiloi(a);
-                            }
-                            else if (tmpsua.trangthai == 4) {
-                                char a[50] = "chuyen bay da hoan thanh ko the sua";
-                                hienthiloi(a);
-                            }
-                            else {
-                                cleardevice();
-                                hienthemchuyebay();
-                                setbkcolor(COLOR(217, 234, 211));
-                                outtextxy(450, 235, tmpsua.macb); STRCPYY(dlcb[5], tmpsua.macb);
-                                outtextxy(450, 335, tmpsua.sohieu); STRCPYY(dlcb[6], tmpsua.sohieu);
-                                outtextxy(450, 435, tmpsua.sanbay); STRCPYY(dlcb[7], tmpsua.sanbay);
-                                char tg[30];
-                                chuyenintschar(tg, tmpsua.tg.ngay); outtextxy(450, 535, tg); STRCPYY(dlcb[8], tg);
-                                chuyenintschar(tg, tmpsua.tg.thang); outtextxy(527, 535, tg); STRCPYY(dlcb[9], tg);
-                                chuyenintschar(tg, tmpsua.tg.nam); outtextxy(610, 535, tg); STRCPYY(dlcb[10], tg);
-                                chuyenintschar(tg, tmpsua.tg.gio); outtextxy(703, 535, tg); STRCPYY(dlcb[11], tg);
-                                chuyenintschar(tg, tmpsua.tg.phut); outtextxy(785, 535, tg); STRCPYY(dlcb[12], tg);
-                                suathongtin = true;
-                                sua_cb = 1;
-                            }
-                        }
-                    }
-                }
-                else if (isMousechuyenbay8(x, y) == 1) {
-                    vitrisua = 0;
-                    vitrisua = 7 + 10 * (tranghientaicb - 1);
-                    if (vitrisua >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de sua";
-                        hienthiloi(a); suathongtin = false;
-                    }
-                    else {
-                        int demvedadat = 0;
-                        tmpsua = laychuyenbay(s, vitrisua);
-                        for (int i = 0; i < tmpsua.sove; i++) {
-                            if (tmpsua.danhsachve[i][0] != '\0') {
-                                demvedadat++;
-                            }
-                        }
-                        if (demvedadat != 0) {
-                            char a[50] = "chuyen bay da co nguoi dat ko the sua";
-                            hienthiloi(a);
-                            suathongtin = false;
-                        }
-                        else {
-                            if (tmpsua.trangthai == 1) {
-                                char a[30] = "chuyen bay da huy ko the sua";
-                                hienthiloi(a);
-                            }
-                            else if (tmpsua.trangthai == 4) {
-                                char a[50] = "chuyen bay da hoan thanh ko the sua";
-                                hienthiloi(a);
-                            }
-                            else {
-                                cleardevice();
-                                hienthemchuyebay();
-                                setbkcolor(COLOR(217, 234, 211));
-                                outtextxy(450, 235, tmpsua.macb); STRCPYY(dlcb[5], tmpsua.macb);
-                                outtextxy(450, 335, tmpsua.sohieu); STRCPYY(dlcb[6], tmpsua.sohieu);
-                                outtextxy(450, 435, tmpsua.sanbay); STRCPYY(dlcb[7], tmpsua.sanbay);
-                                char tg[30];
-                                chuyenintschar(tg, tmpsua.tg.ngay); outtextxy(450, 535, tg); STRCPYY(dlcb[8], tg);
-                                chuyenintschar(tg, tmpsua.tg.thang); outtextxy(527, 535, tg); STRCPYY(dlcb[9], tg);
-                                chuyenintschar(tg, tmpsua.tg.nam); outtextxy(610, 535, tg); STRCPYY(dlcb[10], tg);
-                                chuyenintschar(tg, tmpsua.tg.gio); outtextxy(703, 535, tg); STRCPYY(dlcb[11], tg);
-                                chuyenintschar(tg, tmpsua.tg.phut); outtextxy(785, 535, tg); STRCPYY(dlcb[12], tg);
-                                suathongtin = true;
-                                sua_cb = 1;
-                            }
-                        }
-                    }
-                }
-                else if (isMousechuyenbay9(x, y) == 1) {
-                    vitrisua = 0;
-                    vitrisua = 8 + 10 * (tranghientaicb - 1);
-                    if (vitrisua >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de sua";
-                        hienthiloi(a); suathongtin = false;
-                    }
-                    else {
-                        int demvedadat = 0;
-                        tmpsua = laychuyenbay(s, vitrisua);
-                        for (int i = 0; i < tmpsua.sove; i++) {
-                            if (tmpsua.danhsachve[i][0] != '\0') {
-                                demvedadat++;
-                            }
-                        }
-                        if (demvedadat != 0) {
-                            char a[50] = "chuyen bay da co nguoi dat ko the sua";
-                            hienthiloi(a);
-                            suathongtin = false;
-                        }
-                        else {
-                            if (tmpsua.trangthai == 1) {
-                                char a[30] = "chuyen bay da huy ko the sua";
-                                hienthiloi(a);
-                            }
-                            else if (tmpsua.trangthai == 4) {
-                                char a[50] = "chuyen bay da hoan thanh ko the sua";
-                                hienthiloi(a);
-                            }
-                            else {
-                                cleardevice();
-                                hienthemchuyebay();
-                                setbkcolor(COLOR(217, 234, 211));
-                                outtextxy(450, 235, tmpsua.macb); STRCPYY(dlcb[5], tmpsua.macb);
-                                outtextxy(450, 335, tmpsua.sohieu); STRCPYY(dlcb[6], tmpsua.sohieu);
-                                outtextxy(450, 435, tmpsua.sanbay); STRCPYY(dlcb[7], tmpsua.sanbay);
-                                char tg[30];
-                                chuyenintschar(tg, tmpsua.tg.ngay); outtextxy(450, 535, tg); STRCPYY(dlcb[8], tg);
-                                chuyenintschar(tg, tmpsua.tg.thang); outtextxy(527, 535, tg); STRCPYY(dlcb[9], tg);
-                                chuyenintschar(tg, tmpsua.tg.nam); outtextxy(610, 535, tg); STRCPYY(dlcb[10], tg);
-                                chuyenintschar(tg, tmpsua.tg.gio); outtextxy(703, 535, tg); STRCPYY(dlcb[11], tg);
-                                chuyenintschar(tg, tmpsua.tg.phut); outtextxy(785, 535, tg); STRCPYY(dlcb[12], tg);
-                                suathongtin = true;
-                                sua_cb = 1;
-                            }
-                        }
-                    }
-                }
-                else if (isMousechuyenbay10(x, y) == 1) {
-                    vitrisua = 0;
-                    vitrisua = 9 + 10 * (tranghientaicb - 1);
-                    if (vitrisua >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de sua";
-                        hienthiloi(a);
-                        suathongtin = false;
-                    }
-                    else {
-                        int demvedadat = 0;
-                        tmpsua = laychuyenbay(s, vitrisua);
-                        for (int i = 0; i < tmpsua.sove; i++) {
-                            if (tmpsua.danhsachve[i][0] != '\0') {
-                                demvedadat++;
-                            }
-                        }
-                        if (demvedadat != 0) {
-                            char a[50] = "chuyen bay da co nguoi dat ko the sua";
-                            hienthiloi(a);
-                            suathongtin = false;
-                        }
-                        else {
-                            if (tmpsua.trangthai == 1) {
-                                char a[30] = "chuyen bay da huy ko the sua";
-                                hienthiloi(a);
-                            }
-                            else if (tmpsua.trangthai == 4) {
-                                char a[50] = "chuyen bay da hoan thanh ko the sua";
-                                hienthiloi(a);
-                            }
-                            else {
-                                cleardevice();
-                                hienthemchuyebay();
-                                setbkcolor(COLOR(217, 234, 211));
-                                outtextxy(450, 235, tmpsua.macb); STRCPYY(dlcb[5], tmpsua.macb);
-                                outtextxy(450, 335, tmpsua.sohieu); STRCPYY(dlcb[6], tmpsua.sohieu);
-                                outtextxy(450, 435, tmpsua.sanbay); STRCPYY(dlcb[7], tmpsua.sanbay);
-                                char tg[30];
-                                chuyenintschar(tg, tmpsua.tg.ngay); outtextxy(450, 535, tg); STRCPYY(dlcb[8], tg);
-                                chuyenintschar(tg, tmpsua.tg.thang); outtextxy(527, 535, tg); STRCPYY(dlcb[9], tg);
-                                chuyenintschar(tg, tmpsua.tg.nam); outtextxy(610, 535, tg); STRCPYY(dlcb[10], tg);
-                                chuyenintschar(tg, tmpsua.tg.gio); outtextxy(703, 535, tg); STRCPYY(dlcb[11], tg);
-                                chuyenintschar(tg, tmpsua.tg.phut); outtextxy(785, 535, tg); STRCPYY(dlcb[12], tg);
-                                suathongtin = true;
-                                sua_cb = 1;
-                            }
-                        }
-                    }
-                }
+               
 
             }
-            else if (TRANG_THAI_TAB == 2 && chuyen_trang_tim_kiem == 1 && addchuyenbay == false && suathongtin == false && (isMousechuyenbay1(x, y) == 1 || isMousechuyenbay2(x, y) == 1 || isMousechuyenbay3(x, y) == 1 || isMousechuyenbay4(x, y) == 1 || isMousechuyenbay5(x, y) == 1 || isMousechuyenbay6(x, y) == 1 || isMousechuyenbay7(x, y) == 1 || isMousechuyenbay8(x, y) == 1 || isMousechuyenbay9(x, y) == 1 || isMousechuyenbay10(x, y) == 1)) {
-                if (isMousechuyenbay1(x, y) == 1) {
+            else if (TRANG_THAI_TAB == 2 && chuyen_trang_tim_kiem == 1 && addchuyenbay == false && suathongtin == false ) {
+                if (x >= 100 && x <= 1232 && y <= 689 && y >= 289) {
                     vitrisua = 0;
-                    vitrisua = 0 + 10 * (tranghientmp - 1);
+                    vitrisua = (y - 289) / 40 + 10 * (tranghientmp - 1);
                     if (vitrisua >= cbcotmp) {
                         char a[30] = "khong co phan tu de sua";
                         hienthiloi(a);
@@ -4953,442 +3260,12 @@ void AO_THAT_DAY() {
                                 chuyenintschar(tg, tmpsua.tg.gio); outtextxy(703, 535, tg); STRCPYY(dlcb[11], tg);
                                 chuyenintschar(tg, tmpsua.tg.phut); outtextxy(785, 535, tg); STRCPYY(dlcb[12], tg);
                                 suathongtin = true;
+                                sua_cb = 1;
                             }
                         }
                     }
                 }
-                else if (isMousechuyenbay2(x, y) == 1) {
-                    vitrisua = 0;
-                    vitrisua = 1 + 10 * (tranghientmp - 1);
-                    if (vitrisua >= cbcotmp) {
-                        char a[30] = "khong co phan tu de sua";
-                        hienthiloi(a);
-                        suathongtin = false;
-                    }
-                    else {
-                        int demvedadat = 0;
-                        tmpsua = laychuyenbay(tmpcb, vitrisua);
-                        for (int i = 0; i < tmpsua.sove; i++) {
-                            if (tmpsua.danhsachve[i][0] != '\0') {
-                                demvedadat++;
-                            }
-                        }
-                        if (demvedadat != 0) {
-                            char a[50] = "chuyen bay da co nguoi dat ko the sua";
-                            hienthiloi(a);
-                            suathongtin = false;
-                        }
-                        else {
-                            if (tmpsua.trangthai == 1) {
-                                char a[30] = "chuyen bay da huy ko the sua";
-                                hienthiloi(a);
-                            }
-                            else if (tmpsua.trangthai == 4) {
-                                char a[50] = "chuyen bay da hoan thanh ko the sua";
-                                hienthiloi(a);
-                            }
-                            else {
-                                cleardevice();
-                                hienthemchuyebay();
-                                setbkcolor(COLOR(217, 234, 211));
-                                outtextxy(450, 235, tmpsua.macb); STRCPYY(dlcb[5], tmpsua.macb);
-                                outtextxy(450, 335, tmpsua.sohieu); STRCPYY(dlcb[6], tmpsua.sohieu);
-                                outtextxy(450, 435, tmpsua.sanbay); STRCPYY(dlcb[7], tmpsua.sanbay);
-                                char tg[30];
-                                chuyenintschar(tg, tmpsua.tg.ngay); outtextxy(450, 535, tg); STRCPYY(dlcb[8], tg);
-                                chuyenintschar(tg, tmpsua.tg.thang); outtextxy(527, 535, tg); STRCPYY(dlcb[9], tg);
-                                chuyenintschar(tg, tmpsua.tg.nam); outtextxy(610, 535, tg); STRCPYY(dlcb[10], tg);
-                                chuyenintschar(tg, tmpsua.tg.gio); outtextxy(703, 535, tg); STRCPYY(dlcb[11], tg);
-                                chuyenintschar(tg, tmpsua.tg.phut); outtextxy(785, 535, tg); STRCPYY(dlcb[12], tg);
-                                suathongtin = true;
-                            }
-                        }
-                    }
-                }
-                else if (isMousechuyenbay3(x, y) == 1) {
-                    vitrisua = 0;
-                    vitrisua = 2 + 10 * (tranghientmp - 1);
-                    if (vitrisua >= cbcotmp) {
-                        char a[30] = "khong co phan tu de sua";
-                        hienthiloi(a);
-                        suathongtin = false;
-                    }
-                    else {
-                        int demvedadat = 0;
-                        tmpsua = laychuyenbay(tmpcb, vitrisua);
-                        for (int i = 0; i < tmpsua.sove; i++) {
-                            if (tmpsua.danhsachve[i][0] != '\0') {
-                                demvedadat++;
-                            }
-                        }
-                        if (demvedadat != 0) {
-                            char a[50] = "chuyen bay da co nguoi dat ko the sua";
-                            hienthiloi(a);
-                            suathongtin = false;
-                        }
-                        else {
-                            if (tmpsua.trangthai == 1) {
-                                char a[30] = "chuyen bay da huy ko the sua";
-                                hienthiloi(a);
-                            }
-                            else if (tmpsua.trangthai == 4) {
-                                char a[50] = "chuyen bay da hoan thanh ko the sua";
-                                hienthiloi(a);
-                            }
-                            else {
-                                cleardevice();
-                                hienthemchuyebay();
-                                setbkcolor(COLOR(217, 234, 211));
-                                outtextxy(450, 235, tmpsua.macb); STRCPYY(dlcb[5], tmpsua.macb);
-                                outtextxy(450, 335, tmpsua.sohieu); STRCPYY(dlcb[6], tmpsua.sohieu);
-                                outtextxy(450, 435, tmpsua.sanbay); STRCPYY(dlcb[7], tmpsua.sanbay);
-                                char tg[30];
-                                chuyenintschar(tg, tmpsua.tg.ngay); outtextxy(450, 535, tg); STRCPYY(dlcb[8], tg);
-                                chuyenintschar(tg, tmpsua.tg.thang); outtextxy(527, 535, tg); STRCPYY(dlcb[9], tg);
-                                chuyenintschar(tg, tmpsua.tg.nam); outtextxy(610, 535, tg); STRCPYY(dlcb[10], tg);
-                                chuyenintschar(tg, tmpsua.tg.gio); outtextxy(703, 535, tg); STRCPYY(dlcb[11], tg);
-                                chuyenintschar(tg, tmpsua.tg.phut); outtextxy(785, 535, tg); STRCPYY(dlcb[12], tg);
-                                suathongtin = true;
-                            }
-                        }
-                    }
-                }
-                else if (isMousechuyenbay4(x, y) == 1) {
-                    vitrisua = 0;
-                    vitrisua = 3 + 10 * (tranghientmp - 1);
-                    if (vitrisua >= cbcotmp) {
-                        char a[30] = "khong co phan tu de sua";
-                        hienthiloi(a);
-                        suathongtin = false;
-                    }
-                    else {
-                        int demvedadat = 0;
-                        tmpsua = laychuyenbay(tmpcb, vitrisua);
-                        for (int i = 0; i < tmpsua.sove; i++) {
-                            if (tmpsua.danhsachve[i][0] != '\0') {
-                                demvedadat++;
-                            }
-                        }
-                        if (demvedadat != 0) {
-                            char a[50] = "chuyen bay da co nguoi dat ko the sua";
-                            hienthiloi(a);
-                            suathongtin = false;
-                        }
-                        else {
-                            if (tmpsua.trangthai == 1) {
-                                char a[30] = "chuyen bay da huy ko the sua";
-                                hienthiloi(a);
-                            }
-                            else if (tmpsua.trangthai == 4) {
-                                char a[50] = "chuyen bay da hoan thanh ko the sua";
-                                hienthiloi(a);
-                            }
-                            else {
-                                cleardevice();
-                                hienthemchuyebay();
-                                setbkcolor(COLOR(217, 234, 211));
-                                outtextxy(450, 235, tmpsua.macb); STRCPYY(dlcb[5], tmpsua.macb);
-                                outtextxy(450, 335, tmpsua.sohieu); STRCPYY(dlcb[6], tmpsua.sohieu);
-                                outtextxy(450, 435, tmpsua.sanbay); STRCPYY(dlcb[7], tmpsua.sanbay);
-                                char tg[30];
-                                chuyenintschar(tg, tmpsua.tg.ngay); outtextxy(450, 535, tg); STRCPYY(dlcb[8], tg);
-                                chuyenintschar(tg, tmpsua.tg.thang); outtextxy(527, 535, tg); STRCPYY(dlcb[9], tg);
-                                chuyenintschar(tg, tmpsua.tg.nam); outtextxy(610, 535, tg); STRCPYY(dlcb[10], tg);
-                                chuyenintschar(tg, tmpsua.tg.gio); outtextxy(703, 535, tg); STRCPYY(dlcb[11], tg);
-                                chuyenintschar(tg, tmpsua.tg.phut); outtextxy(785, 535, tg); STRCPYY(dlcb[12], tg);
-                                suathongtin = true;
-                            }
-                        }
-                    }
-                }
-                else if (isMousechuyenbay5(x, y) == 1) {
-                    vitrisua = 0;
-                    vitrisua = 4 + 10 * (tranghientmp - 1);
-                    if (vitrisua >= cbcotmp) {
-                        char a[30] = "khong co phan tu de sua";
-                        hienthiloi(a);
-                        suathongtin = false;
-                    }
-                    else {
-                        int demvedadat = 0;
-                        tmpsua = laychuyenbay(tmpcb, vitrisua);
-                        for (int i = 0; i < tmpsua.sove; i++) {
-                            if (tmpsua.danhsachve[i][0] != '\0') {
-                                demvedadat++;
-                            }
-                        }
-                        if (demvedadat != 0) {
-                            char a[50] = "chuyen bay da co nguoi dat ko the sua";
-                            hienthiloi(a);
-                            suathongtin = false;
-                        }
-                        else {
-                            if (tmpsua.trangthai == 1) {
-                                char a[30] = "chuyen bay da huy ko the sua";
-                                hienthiloi(a);
-                            }
-                            else if (tmpsua.trangthai == 4) {
-                                char a[50] = "chuyen bay da hoan thanh ko the sua";
-                                hienthiloi(a);
-                            }
-                            else {
-                                cleardevice();
-                                hienthemchuyebay();
-                                setbkcolor(COLOR(217, 234, 211));
-                                outtextxy(450, 235, tmpsua.macb); STRCPYY(dlcb[5], tmpsua.macb);
-                                outtextxy(450, 335, tmpsua.sohieu); STRCPYY(dlcb[6], tmpsua.sohieu);
-                                outtextxy(450, 435, tmpsua.sanbay); STRCPYY(dlcb[7], tmpsua.sanbay);
-                                char tg[30];
-                                chuyenintschar(tg, tmpsua.tg.ngay); outtextxy(450, 535, tg); STRCPYY(dlcb[8], tg);
-                                chuyenintschar(tg, tmpsua.tg.thang); outtextxy(527, 535, tg); STRCPYY(dlcb[9], tg);
-                                chuyenintschar(tg, tmpsua.tg.nam); outtextxy(610, 535, tg); STRCPYY(dlcb[10], tg);
-                                chuyenintschar(tg, tmpsua.tg.gio); outtextxy(703, 535, tg); STRCPYY(dlcb[11], tg);
-                                chuyenintschar(tg, tmpsua.tg.phut); outtextxy(785, 535, tg); STRCPYY(dlcb[12], tg);
-                                suathongtin = true;
-                            }
-                        }
-                    }
-                }
-                else if (isMousechuyenbay6(x, y) == 1) {
-                    vitrisua = 0;
-                    vitrisua = 5 + 10 * (tranghientmp - 1);
-                    if (vitrisua >= cbcotmp) {
-                        char a[30] = "khong co phan tu de sua";
-                        hienthiloi(a);
-                        suathongtin = false;
-                    }
-                    else {
-                        int demvedadat = 0;
-                        tmpsua = laychuyenbay(tmpcb, vitrisua);
-                        for (int i = 0; i < tmpsua.sove; i++) {
-                            if (tmpsua.danhsachve[i][0] != '\0') {
-                                demvedadat++;
-                            }
-                        }
-                        if (demvedadat != 0) {
-                            char a[50] = "chuyen bay da co nguoi dat ko the sua";
-                            hienthiloi(a);
-                            suathongtin = false;
-                        }
-                        else {
-                            if (tmpsua.trangthai == 1) {
-                                char a[30] = "chuyen bay da huy ko the sua";
-                                hienthiloi(a);
-                            }
-                            else if (tmpsua.trangthai == 4) {
-                                char a[50] = "chuyen bay da hoan thanh ko the sua";
-                                hienthiloi(a);
-                            }
-                            else {
-                                cleardevice();
-                                hienthemchuyebay();
-                                setbkcolor(COLOR(217, 234, 211));
-                                outtextxy(450, 235, tmpsua.macb); STRCPYY(dlcb[5], tmpsua.macb);
-                                outtextxy(450, 335, tmpsua.sohieu); STRCPYY(dlcb[6], tmpsua.sohieu);
-                                outtextxy(450, 435, tmpsua.sanbay); STRCPYY(dlcb[7], tmpsua.sanbay);
-                                char tg[30];
-                                chuyenintschar(tg, tmpsua.tg.ngay); outtextxy(450, 535, tg); STRCPYY(dlcb[8], tg);
-                                chuyenintschar(tg, tmpsua.tg.thang); outtextxy(527, 535, tg); STRCPYY(dlcb[9], tg);
-                                chuyenintschar(tg, tmpsua.tg.nam); outtextxy(610, 535, tg); STRCPYY(dlcb[10], tg);
-                                chuyenintschar(tg, tmpsua.tg.gio); outtextxy(703, 535, tg); STRCPYY(dlcb[11], tg);
-                                chuyenintschar(tg, tmpsua.tg.phut); outtextxy(785, 535, tg); STRCPYY(dlcb[12], tg);
-                                suathongtin = true;
-                            }
-                        }
-                    }
-                }
-                else if (isMousechuyenbay7(x, y) == 1) {
-                    vitrisua = 0;
-                    vitrisua = 6 + 10 * (tranghientmp - 1);
-                    if (vitrisua >= cbcotmp) {
-                        char a[30] = "khong co phan tu de sua";
-                        hienthiloi(a);
-                        suathongtin = false;
-                    }
-                    else {
-                        int demvedadat = 0;
-                        tmpsua = laychuyenbay(tmpcb, vitrisua);
-                        for (int i = 0; i < tmpsua.sove; i++) {
-                            if (tmpsua.danhsachve[i][0] != '\0') {
-                                demvedadat++;
-                            }
-                        }
-                        if (demvedadat != 0) {
-                            char a[50] = "chuyen bay da co nguoi dat ko the sua";
-                            hienthiloi(a);
-                            suathongtin = false;
-                        }
-                        else {
-                            if (tmpsua.trangthai == 1) {
-                                char a[30] = "chuyen bay da huy ko the sua";
-                                hienthiloi(a);
-                            }
-                            else if (tmpsua.trangthai == 4) {
-                                char a[50] = "chuyen bay da hoan thanh ko the sua";
-                                hienthiloi(a);
-                            }
-                            else {
-                                cleardevice();
-                                hienthemchuyebay();
-                                setbkcolor(COLOR(217, 234, 211));
-                                outtextxy(450, 235, tmpsua.macb); STRCPYY(dlcb[5], tmpsua.macb);
-                                outtextxy(450, 335, tmpsua.sohieu); STRCPYY(dlcb[6], tmpsua.sohieu);
-                                outtextxy(450, 435, tmpsua.sanbay); STRCPYY(dlcb[7], tmpsua.sanbay);
-                                char tg[30];
-                                chuyenintschar(tg, tmpsua.tg.ngay); outtextxy(450, 535, tg); STRCPYY(dlcb[8], tg);
-                                chuyenintschar(tg, tmpsua.tg.thang); outtextxy(527, 535, tg); STRCPYY(dlcb[9], tg);
-                                chuyenintschar(tg, tmpsua.tg.nam); outtextxy(610, 535, tg); STRCPYY(dlcb[10], tg);
-                                chuyenintschar(tg, tmpsua.tg.gio); outtextxy(703, 535, tg); STRCPYY(dlcb[11], tg);
-                                chuyenintschar(tg, tmpsua.tg.phut); outtextxy(785, 535, tg); STRCPYY(dlcb[12], tg);
-                                suathongtin = true;
-                            }
-                        }
-                    }
-                }
-                else if (isMousechuyenbay8(x, y) == 1) {
-                    vitrisua = 0;
-                    vitrisua = 7 + 10 * (tranghientmp - 1);
-                    if (vitrisua >= cbcotmp) {
-                        char a[30] = "khong co phan tu de sua";
-                        hienthiloi(a);
-                        suathongtin = false;
-                    }
-                    else {
-                        int demvedadat = 0;
-                        tmpsua = laychuyenbay(tmpcb, vitrisua);
-                        for (int i = 0; i < tmpsua.sove; i++) {
-                            if (tmpsua.danhsachve[i][0] != '\0') {
-                                demvedadat++;
-                            }
-                        }
-                        if (demvedadat != 0) {
-                            char a[50] = "chuyen bay da co nguoi dat ko the sua";
-                            hienthiloi(a);
-                            suathongtin = false;
-                        }
-                        else {
-                            if (tmpsua.trangthai == 1) {
-                                char a[30] = "chuyen bay da huy ko the sua";
-                                hienthiloi(a);
-                            }
-                            else if (tmpsua.trangthai == 4) {
-                                char a[50] = "chuyen bay da hoan thanh ko the sua";
-                                hienthiloi(a);
-                            }
-                            else {
-                                cleardevice();
-                                hienthemchuyebay();
-                                setbkcolor(COLOR(217, 234, 211));
-                                outtextxy(450, 235, tmpsua.macb); STRCPYY(dlcb[5], tmpsua.macb);
-                                outtextxy(450, 335, tmpsua.sohieu); STRCPYY(dlcb[6], tmpsua.sohieu);
-                                outtextxy(450, 435, tmpsua.sanbay); STRCPYY(dlcb[7], tmpsua.sanbay);
-                                char tg[30];
-                                chuyenintschar(tg, tmpsua.tg.ngay); outtextxy(450, 535, tg); STRCPYY(dlcb[8], tg);
-                                chuyenintschar(tg, tmpsua.tg.thang); outtextxy(527, 535, tg); STRCPYY(dlcb[9], tg);
-                                chuyenintschar(tg, tmpsua.tg.nam); outtextxy(610, 535, tg); STRCPYY(dlcb[10], tg);
-                                chuyenintschar(tg, tmpsua.tg.gio); outtextxy(703, 535, tg); STRCPYY(dlcb[11], tg);
-                                chuyenintschar(tg, tmpsua.tg.phut); outtextxy(785, 535, tg); STRCPYY(dlcb[12], tg);
-                                suathongtin = true;
-                            }
-                        }
-                    }
-                }
-                else if (isMousechuyenbay9(x, y) == 1) {
-                    vitrisua = 0;
-                    vitrisua = 8 + 10 * (tranghientmp - 1);
-                    if (vitrisua >= cbcotmp) {
-                        char a[30] = "khong co phan tu de sua";
-                        hienthiloi(a);
-                        suathongtin = false;
-                    }
-                    else {
-                        int demvedadat = 0;
-                        tmpsua = laychuyenbay(tmpcb, vitrisua);
-                        for (int i = 0; i < tmpsua.sove; i++) {
-                            if (tmpsua.danhsachve[i][0] != '\0') {
-                                demvedadat++;
-                            }
-                        }
-                        if (demvedadat != 0) {
-                            char a[50] = "chuyen bay da co nguoi dat ko the sua";
-                            hienthiloi(a);
-                            suathongtin = false;
-                        }
-                        else {
-                            if (tmpsua.trangthai == 1) {
-                                char a[30] = "chuyen bay da huy ko the sua";
-                                hienthiloi(a);
-                            }
-                            else if (tmpsua.trangthai == 4) {
-                                char a[50] = "chuyen bay da hoan thanh ko the sua";
-                                hienthiloi(a);
-                            }
-                            else {
-                                cleardevice();
-                                hienthemchuyebay();
-                                setbkcolor(COLOR(217, 234, 211));
-                                outtextxy(450, 235, tmpsua.macb); STRCPYY(dlcb[5], tmpsua.macb);
-                                outtextxy(450, 335, tmpsua.sohieu); STRCPYY(dlcb[6], tmpsua.sohieu);
-                                outtextxy(450, 435, tmpsua.sanbay); STRCPYY(dlcb[7], tmpsua.sanbay);
-                                char tg[30];
-                                chuyenintschar(tg, tmpsua.tg.ngay); outtextxy(450, 535, tg); STRCPYY(dlcb[8], tg);
-                                chuyenintschar(tg, tmpsua.tg.thang); outtextxy(527, 535, tg); STRCPYY(dlcb[9], tg);
-                                chuyenintschar(tg, tmpsua.tg.nam); outtextxy(610, 535, tg); STRCPYY(dlcb[10], tg);
-                                chuyenintschar(tg, tmpsua.tg.gio); outtextxy(703, 535, tg); STRCPYY(dlcb[11], tg);
-                                chuyenintschar(tg, tmpsua.tg.phut); outtextxy(785, 535, tg); STRCPYY(dlcb[12], tg);
-                                suathongtin = true;
-                            }
-                        }
-                    }
-                }
-                else if (isMousechuyenbay10(x, y) == 1) {
-                    vitrisua = 0;
-                    vitrisua = 9 + 10 * (tranghientmp - 1);
-                    if (vitrisua >= cbcotmp) {
-                        char a[30] = "khong co phan tu de sua";
-                        hienthiloi(a);
-                        suathongtin = false;
-                    }
-                    else {
-                        int demvedadat = 0;
-                        tmpsua = laychuyenbay(tmpcb, vitrisua);
-                        for (int i = 0; i < tmpsua.sove; i++) {
-                            if (tmpsua.danhsachve[i][0] != '\0') {
-                                demvedadat++;
-                            }
-                        }
-                        if (demvedadat != 0) {
-                            char a[50] = "chuyen bay da co nguoi dat ko the sua";
-                            hienthiloi(a);
-                            suathongtin = false;
-                        }
-                        else {
-                            if (tmpsua.trangthai == 1) {
-                                char a[30] = "chuyen bay da huy ko the sua";
-                                hienthiloi(a);
-                            }
-                            else if (tmpsua.trangthai == 4) {
-                                char a[50] = "chuyen bay da hoan thanh ko the sua";
-                                hienthiloi(a);
-                            }
-                            else {
-                                cleardevice();
-                                hienthemchuyebay();
-                                setbkcolor(COLOR(217, 234, 211));
-                                outtextxy(450, 235, tmpsua.macb); STRCPYY(dlcb[5], tmpsua.macb);
-                                outtextxy(450, 335, tmpsua.sohieu); STRCPYY(dlcb[6], tmpsua.sohieu);
-                                outtextxy(450, 435, tmpsua.sanbay); STRCPYY(dlcb[7], tmpsua.sanbay);
-                                char tg[30];
-                                chuyenintschar(tg, tmpsua.tg.ngay); outtextxy(450, 535, tg); STRCPYY(dlcb[8], tg);
-                                chuyenintschar(tg, tmpsua.tg.thang); outtextxy(527, 535, tg); STRCPYY(dlcb[9], tg);
-                                chuyenintschar(tg, tmpsua.tg.nam); outtextxy(610, 535, tg); STRCPYY(dlcb[10], tg);
-                                chuyenintschar(tg, tmpsua.tg.gio); outtextxy(703, 535, tg); STRCPYY(dlcb[11], tg);
-                                chuyenintschar(tg, tmpsua.tg.phut); outtextxy(785, 535, tg); STRCPYY(dlcb[12], tg);
-                                suathongtin = true;
-                            }
-                        }
-                    }
-                }
+                
 
             }
             //chuot phai de tim ghe    
