@@ -1467,7 +1467,7 @@ void hiendsmbchay(dsmbc& chay, int& phantuhien, int trangthai) {
 
 //--------------------------------------dieu khien -----------------------------------
 void AO_THAT_DAY() {
-    float TRANG_THAI_TAB = 1;
+    int TRANG_THAI_TAB = 1;
     //1=PLANEs| 2=FLIGHT| 3=CUSTOMER... 3.1=XEM_THONG_TIN |4=TICKET| 5=STATIC
     // khai bao cho plane
     openfile(ds_mb);
@@ -1496,6 +1496,10 @@ void AO_THAT_DAY() {
     bool da_search_hk = 0;
     int so_luong_hanh_khach_tim_thay = 0;
     int trang_curr = 0, trang_max = 0;
+
+    string* xuat_search= new string[ds_hk.getSo_luong_hk() * 4];
+    int cout_for_search=0;
+
     //khai bao cho tiket...........................................
     bool dangmuab1 = 0, dangmuab2 = 0, dang_chon_chuyen_bay = 0, da_chon_phai = 0, da_nhap_du_in4 = 0, da_nhap_CMND = 0, trung_cmnd = 0, chon_ghe = 0;
     char ho[60], ten[30], CMND[30], idFlight_mua_ve[30]; bool phai; ho[0] = '\0'; ten[0] = '\0'; CMND[0] = '\0', idFlight_mua_ve[0] = '\0';
@@ -2840,24 +2844,26 @@ void AO_THAT_DAY() {
                 char dl1[30], dl2[30], dl3[30];
                 dl1[0] = '\0'; dl2[0] = '\0'; dl3[0] = '\0';
                 if (isMouseSearchIdcustomer(x, y)) {
-                    nhapdulieu(205, 140, 201, 399, 131, 169, dl1, 11, 3);
+                    nhapdulieu(205, 140, 201, 399, 131, 169, dl1, 12, 3);
+
                     STRCPYY(Search[0], dl1);
-                    Search_hanh_khach(Search[0], Search[1], Search[2], danh_sach_HK_O_tren_man_hinh, so_luong_hanh_khach_tim_thay, trang_curr, trang_max);
+                    Search_hanh_khach(Search[0], Search[1], Search[2], danh_sach_HK_O_tren_man_hinh, so_luong_hanh_khach_tim_thay, trang_curr, trang_max,xuat_search,cout_for_search);
+                    PRINTF_SEARCH_CUSTOMER(so_luong_hanh_khach_tim_thay, trang_curr, trang_max, xuat_search, cout_for_search);
                     da_search_hk = 1;
                     trang_hien_tai = 0;
                 }
                 else if (isMouseSearchLastNamecustomer(x, y)) {
                     nhapdulieu(502, 140, 501, 699, 131, 169, dl2, 30, 4);
                     STRCPYY(Search[1], dl2);
-                    Search_hanh_khach(Search[0], Search[1], Search[2], danh_sach_HK_O_tren_man_hinh, so_luong_hanh_khach_tim_thay, trang_curr, trang_max);
-                    da_search_hk = 1;
+                    Search_hanh_khach(Search[0], Search[1], Search[2], danh_sach_HK_O_tren_man_hinh, so_luong_hanh_khach_tim_thay, trang_curr, trang_max, xuat_search, cout_for_search);
+                    PRINTF_SEARCH_CUSTOMER(so_luong_hanh_khach_tim_thay, trang_curr, trang_max, xuat_search, cout_for_search);                    da_search_hk = 1;
                     trang_hien_tai = 0;
                 }
                 else if (isMouseSearchFirstNameCustomer(x, y)) {
                     nhapdulieu(802, 140, 801, 949, 131, 169, dl3, 30, 5);
                     STRCPYY(Search[2], dl3);
-                    Search_hanh_khach(Search[0], Search[1], Search[2], danh_sach_HK_O_tren_man_hinh, so_luong_hanh_khach_tim_thay, trang_curr, trang_max);
-                    da_search_hk = 1;
+                    Search_hanh_khach(Search[0], Search[1], Search[2], danh_sach_HK_O_tren_man_hinh, so_luong_hanh_khach_tim_thay, trang_curr, trang_max, xuat_search, cout_for_search);
+                    PRINTF_SEARCH_CUSTOMER(so_luong_hanh_khach_tim_thay, trang_curr, trang_max, xuat_search, cout_for_search);                    da_search_hk = 1;
                     trang_hien_tai = 0;
                 }
                 else if (da_search_hk == 0 && isMouseCHUYEN_TRANG_SANG_PHAI(x, y) && trang_hien_tai < so_trang_hanh_khach) {
@@ -2876,13 +2882,13 @@ void AO_THAT_DAY() {
                 }
                 else if (da_search_hk == 1 && isMouseCHUYEN_TRANG_SANG_PHAI(x, y) && trang_curr < trang_max) {
                     trang_curr++;
-                    Search_hanh_khach(Search[0], Search[1], Search[2], danh_sach_HK_O_tren_man_hinh, so_luong_hanh_khach_tim_thay, trang_curr, trang_max);
+                    PRINTF_SEARCH_CUSTOMER(so_luong_hanh_khach_tim_thay, trang_curr, trang_max, xuat_search, cout_for_search);
                 }
-                else if (da_search_hk == 1 && isMouseCHUYEN_TRANG_SANG_PHAI(x, y) && trang_curr > 0) {
+                else if (da_search_hk == 1 && isMouseCHUYEN_TRANG_SANG_TRAI(x, y) && trang_curr > 0) {
                     trang_curr--;
-                    Search_hanh_khach(Search[0], Search[1], Search[2], danh_sach_HK_O_tren_man_hinh, so_luong_hanh_khach_tim_thay, trang_curr, trang_max);
+                    PRINTF_SEARCH_CUSTOMER(so_luong_hanh_khach_tim_thay, trang_curr, trang_max, xuat_search, cout_for_search);
                 }
-
+                
             }
             //chuyen qua buoc 1:
             else if (TRANG_THAI_TAB == 4 && dangmuab1 == 0 && dangmuab2 == 0 && dang_chon_chuyen_bay == 0 && chon_ghe == 0) {
@@ -3402,6 +3408,8 @@ void AO_THAT_DAY() {
 
 int main() {
 
+
+
     initwindow(1540, 800, "install_graphics_h");
     Screen_Default(0);
     AO_THAT_DAY();
@@ -3409,13 +3417,12 @@ int main() {
     getch();
     closegraph();
 
+
+
     //ds_hk.lay_du_lieu_tu_file();
     //QLHK tmp = ds_hk;
-
     //ds_hk.printf_ds(ds_hk.getRoot());
-
-    //int dem = 0;
-    //printf_dshk(tmp.getRoot(), 0,dem);
+    
     //dem = 0;
     //printf_dshk(tmp.getRoot(), 1, dem);
     //dem = 0;

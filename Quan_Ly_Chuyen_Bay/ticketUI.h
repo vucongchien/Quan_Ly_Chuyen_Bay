@@ -50,7 +50,7 @@ bool TRC_30p(chuyenbay cb) {
 void ve_hinh_vuong(int xright, int ytop, int xleft, int ybot, int colorbar, int colorrectangle, char text[], int mode = 0, int colortext = 0) {
     setfillstyle(SOLID_FILL, colorbar);
     bar(xright, ytop, xleft, ybot);
-    setlinestyle(0, 0, 2);
+    setlinestyle(0, 0, 1);
     setcolor(colorrectangle);
     rectangle(xright, ytop, xleft, ybot);
     setbkcolor(colorbar);
@@ -137,8 +137,9 @@ void them_hanh_khach(dschuyenbay* ds, const char* macb, char* cmnd, int seat_num
                     ve_hinh_vuong(510, 440, 590, 480, COLOR(217, 234, 211), 0, const_cast<char*>("YES"), 1, 0);
                     ve_hinh_vuong(850, 440, 920, 480, COLOR(217, 234, 211), 0, const_cast<char*>("NO"), 1, 0);
                     while (1) {
+                        int xx, yy;
                         if (ismouseclick(WM_LBUTTONDOWN)) {
-                            int xx, yy;
+                            
                             getmouseclick(WM_LBUTTONDOWN, xx, yy);
                             if (isMouse_Yes_huy_ve(xx, yy)) {
                                 temp->cb.danhsachve[j][0] = '\0';
@@ -147,6 +148,26 @@ void them_hanh_khach(dschuyenbay* ds, const char* macb, char* cmnd, int seat_num
                             }
                             else if (isMouse_No_huy_ve(xx, yy)) {
                                 return;
+                            }
+                        }
+                        static bool doi_mau = 0;
+                        if (ismouseclick(WM_MOUSEMOVE))
+                        {
+                            getmouseclick(WM_MOUSEMOVE, xx, yy);
+                            if (isMouse_Yes_huy_ve(xx, yy) && doi_mau == 0) {
+                                doi_mau = 1;
+                                ve_hinh_vuong(510, 440, 590, 480, COLOR(160, 196, 157), 0, const_cast<char*>("YES"), 1, 0);
+
+                            }
+                            else if (isMouse_No_huy_ve(xx, yy) && doi_mau == 0) {
+                                doi_mau = 1;
+                                ve_hinh_vuong(850, 440, 920, 480, COLOR(160, 196, 157), 0, const_cast<char*>("NO"), 1, 0);
+                            }
+                            else if (isMouse_Yes_huy_ve(xx, yy) == 0 && isMouse_No_huy_ve(xx, yy) == 0 && doi_mau == 1) {
+
+                                ve_hinh_vuong(510, 440, 590, 480, COLOR(217, 234, 211), 0, const_cast<char*>("YES"), 1, 0);
+                                ve_hinh_vuong(850, 440, 920, 480, COLOR(217, 234, 211), 0, const_cast<char*>("NO"), 1, 0);
+                                doi_mau = 0;
                             }
                         }
                     }

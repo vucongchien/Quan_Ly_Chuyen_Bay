@@ -225,16 +225,64 @@ void xoa_di_lam_lai() {
     //bar(1027, 291, 1231, 689);
     //bar(1233, 291, 1439, 689);
 }
-void Search_hanh_khach(char id[], char lname[], char fname[], int*& danh_sach_HK_O_tren_man_hinh, int& so_luong_hanh_khach_tim_thay, int trang_curr, int& trang_max) {
+
+
+
+void PRINTF_SEARCH_CUSTOMER(int so_luong_hanh_khach_tim_thay, int trang_curr, int trang_max,string xuat[],int tmp) {
+
     xoa_di_lam_lai();
+    int so_luong_hk_duoc_in_ra = 0;
+    if (trang_curr < trang_max) {
+        so_luong_hk_duoc_in_ra = 10;
+    }
+    else if (trang_curr = trang_max) {
+        so_luong_hk_duoc_in_ra = so_luong_hanh_khach_tim_thay % 10;
+    }
+
+    int x = 350, y = 300 - 40;
+    int  ynum = 290 + 40;
+    int xSTT = 160, ySTT = 300;
+    int count = trang_curr * 10;
+    int aduvippro = trang_curr * 10 * 4;
+
+
+    
+    for (int i = aduvippro; i < tmp; i++) {
+        if (i % 4 == 0)
+        {
+            x = 350;
+            y += 40;
+            line(100, ynum, 1198, ynum);
+            ynum += 40;
+            string m = to_string(i / 4 + 1);
+            outtextxy(xSTT, ySTT, const_cast<char*>(m.c_str()));
+            count++;
+            ySTT += 40;
+
+            
+        }
+        x -= textwidth(const_cast<char*>(xuat[i].c_str())) / 2;
+        outtextxy(x, y, const_cast<char*>(xuat[i].c_str()));
+        x += textwidth(const_cast<char*>(xuat[i].c_str())) / 2;
+        x += 245;
+        if (i - aduvippro == 39) {
+            break;
+        }
+    }
+}
+
+
+
+void Search_hanh_khach(char id[], char lname[], char fname[], int*& danh_sach_HK_O_tren_man_hinh, int& so_luong_hanh_khach_tim_thay, int trang_curr, int& trang_max, string xuat[], int& tmp) {
+    
     setbkcolor(COLOR(208, 224, 227));
-    //--------------------------
-    dem_so_luong_hk(ds_hk.getRoot());
+    
+    delete[]xuat;
     delete[]danh_sach_HK_O_tren_man_hinh;
-    danh_sach_HK_O_tren_man_hinh = new int[so_luong_hanh_khach];
-    string* xuat = new string[so_luong_hanh_khach * 4];
-    //-------------------------danh_sach_hk_o_tren_man_hinh bao gom cac sothutu cua hanhkhach tim thay
-    int tmp = 0;
+    xuat = new string[ds_hk.getSo_luong_hk() * 4];
+    danh_sach_HK_O_tren_man_hinh = new int[ds_hk.getSo_luong_hk()];
+    tmp = 0;
+
     string cmnd, ho, ten, phai;
     string data;
     ifstream file("hanhkhach.txt");
@@ -251,8 +299,8 @@ void Search_hanh_khach(char id[], char lname[], char fname[], int*& danh_sach_HK
         getline(ss, data, ',');
         phai = data;
         dem1++;
-
         if ((id[0] != '\0' && cmnd.compare(id) != 0) || (lname[0] != '\0' && ho.compare(lname) != 0) || (fname[0] != '\0' && ten.compare(fname) != 0)) {
+            
             continue;
         }
 
@@ -266,58 +314,26 @@ void Search_hanh_khach(char id[], char lname[], char fname[], int*& danh_sach_HK
         tmp++;
         danh_sach_HK_O_tren_man_hinh[dem2] = dem1;
         dem2++;
+        
         so_luong_hanh_khach_tim_thay++;
 
     }
     file.close();
-
+    
 
     trang_max = so_luong_hanh_khach_tim_thay / 10;
-    int so_luong_hk_duoc_in_ra = 0;
-    if (trang_curr < trang_max) {
-        so_luong_hk_duoc_in_ra = 10;
-    }
-    else if (trang_curr = trang_max) {
-        so_luong_hk_duoc_in_ra = so_luong_hanh_khach_tim_thay % 10;
-    }
-    int x = 350, y = 300 - 40;
-    int  ynum = 290 + 40;
-    int xSTT = 160, ySTT = 300;
-    int count = trang_curr * 10;
-    int aduvippro = trang_curr * 10 * 4;
-    for (int i = aduvippro; i < tmp; i++) {
-        if (i % 4 == 0)
-        {
-            x = 350;
-            y += 40;
-            line(100, ynum, 1198, ynum);
-            ynum += 40;
-            string m = to_string(i / 4 + 1);
-            outtextxy(xSTT, ySTT, const_cast<char*>(m.c_str()));
-            count++;
-            ySTT += 40;
-        }
-        x -= textwidth(const_cast<char*>(xuat[i].c_str())) / 2;
-        outtextxy(x, y, const_cast<char*>(xuat[i].c_str()));
-        x += textwidth(const_cast<char*>(xuat[i].c_str())) / 2;
-        x += 245;
-        if (ynum == 690) {
-            break;
-        }
-    }
-    delete[]xuat;
 }
 void Customer_design() {
     setfillstyle(SOLID_FILL, COLOR(159, 197, 232));
     bar(101, 220, 1197, 290);
     //taoButton(520, 10, 730, 80, "CUSTOMER");
-    setlinestyle(0, 0, 2);
+    setlinestyle(0, 0, 1);
     setcolor(0);
     rectangle(100, 220, 1026 + 70 + 34 + 34 + 34, 690);
     setbkcolor(COLOR(159, 197, 232));
     line(200 + 34, 220, 200 + 34, 690); char a[8] = "NUMBERS"; outtextxy(116 + 14, 240, a);
     line(406 + 70, 220, 406 + 70, 690); char a1[20] = "ID"; outtextxy(295 + 34 + 15, 240, a1);
-    setlinestyle(0, 0, 2);
+    setlinestyle(0, 0, 1);
     line(612 + 70 + 34, 220, 612 + 70 + 34, 690); char a2[20] = "LAST NAME"; outtextxy(489 + 34 + 34, 240, a2);
     line(820 + 70 + 34 + 34, 220, 820 + 70 + 34 + 34, 690); char a3[11] = "FIRST NAME"; outtextxy(688 + 34 + 34 + 34 + 15, 240, a3);
     line(1026 + 70 + 34 + 34 + 34, 220, 1026 + 70 + 34 + 34 + 34, 690); char a4[20] = "GENDER"; outtextxy(890 + 34 + 28 + 34 + 34 + 34, 240, a4);
