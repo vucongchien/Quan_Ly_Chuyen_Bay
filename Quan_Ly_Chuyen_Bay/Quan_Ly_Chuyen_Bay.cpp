@@ -456,6 +456,14 @@ void hienthemmaybay() {
 bool check_mb(int stt, listmb dsmb, ds dscb) {
     while (dscb != NULL) {
         if (strcmp(dsmb.nodes[stt]->sohieu, dscb->cb.sohieu) == 0) {
+            ve_hinh_vuong(833, 205 - 3, 898, 205 + 22, COLOR(205, 250, 219) , COLOR(205, 250, 219), const_cast<char*>("ko the xoa"), 1, 0);
+            delay(20);
+            ve_hinh_vuong(833, 205 - 3, 898, 205 + 22, COLOR(250, 112, 112), COLOR(250, 112, 112), const_cast<char*>("ko the xoa"), 1, 0);
+            delay(20);
+            ve_hinh_vuong(833, 205 - 3, 898, 205 + 22, COLOR(205, 250, 219), COLOR(205, 250, 219), const_cast<char*>("ko the xoa"), 1, 0);
+            delay(20);
+            ve_hinh_vuong(833, 205 - 3, 898, 205 + 22, COLOR(250, 112, 112), COLOR(250, 112, 112), const_cast<char*>("ko the xoa"), 1, 0);
+
             return 0;
         }
         dscb = dscb->next;
@@ -511,7 +519,7 @@ void hien_ds_mb(int trangcurr, listmb ds_mb, ds dscb) {
 
 }
 void xoa_mb_theo_stt(int stt, listmb& dsmb, int trangcurr, ds dscb) {
-    if (stt > dsmb.n)
+    if (stt >= dsmb.n)
         return;
 
     if (check_mb(stt, dsmb, dscb) == 0)
@@ -1490,9 +1498,9 @@ void AO_THAT_DAY() {
     docdulieu(s, sochuyenbayco);
 
     //khai bao cho customer........................................
-    int trang_hien_tai = 0; ds_hk.lay_du_lieu_tu_file(); dem_so_luong_hk(ds_hk.getRoot());
+    int trang_hien_tai = 0; ds_hk.lay_du_lieu_tu_file();// dem_so_luong_hk(ds_hk.getRoot());
     char Search[3][30]; for (int i = 0; i < 3; i++) Search[i][0] = '\0';
-    int* danh_sach_HK_O_tren_man_hinh = new int[so_luong_hanh_khach];
+    int* danh_sach_HK_O_tren_man_hinh = new int[ds_hk.getSo_luong_hk()];
     bool da_search_hk = 0;
     int so_luong_hanh_khach_tim_thay = 0;
     int trang_curr = 0, trang_max = 0;
@@ -2977,7 +2985,7 @@ void AO_THAT_DAY() {
                 char dl1[30]; dl1[0] = '\0'; trung_cmnd = 0;
                 if (isMouseNhapCMND_MUA_VE(x, y)) {
                     setcolor(0);
-                    nhapdulieu(405, 305, 400, 1000, 290, 340, dl1, 12, 3);
+                    nhapdulieu(405, 305, 401, 1000, 291, 340, dl1, 12, 3);
                     if (dl1[11] == '\0') {
                         hienthiloi(const_cast<char*>("vui long nhap du 12 so"));
                     }
@@ -3023,11 +3031,11 @@ void AO_THAT_DAY() {
                 char dl1[60], dl2[30]; dl1[0] = '\0'; dl2[0] = '\0';
                 bool dl3;//dl3 =0 nam =1 nu
                 if (isMouseNhapHo_mua_ve(x, y) && dangmuab2) {
-                    nhapdulieu(414, 235, 409, 1009, 220, 265, dl1, 60, 4);
+                    nhapdulieu(414, 235, 410, 1009, 221, 265, dl1, 60, 4);
                     STRCPYY(ho, dl1);
                 }
                 if (isMouseNhapTen_mua_ve(x, y) && dangmuab2) {
-                    nhapdulieu(414, 335, 409, 1009, 320, 365, dl2, 30, 5);
+                    nhapdulieu(414, 335, 410, 1009, 321, 365, dl2, 30, 5);
                     STRCPYY(ten, dl2);
                 }
                 if (isMouseLaNam(x, y) && dangmuab2) {

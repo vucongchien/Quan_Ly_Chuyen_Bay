@@ -97,9 +97,9 @@ void Hien_thi_hanh_khach(int trang_hien_tai = 0) {
     int x = 350, y = 300, xnumber = 160, ynumber = 300;
     int count = 0;
     so_luong_hanh_khach = 0;
-    dem_so_luong_hk(ds_hk.getRoot());
-    so_trang_hanh_khach = so_luong_hanh_khach / 10;
-    if (so_luong_hanh_khach % 10 == 0) so_trang_hanh_khach -= 1;
+    //dem_so_luong_hk(ds_hk.getRoot());
+    so_trang_hanh_khach = ds_hk.getSo_luong_hk() / 10;
+    if (ds_hk.getSo_luong_hk() % 10 == 0) so_trang_hanh_khach -= 1;
     //for (int i = 0; i < trang_hien_tai; i++) {
     //    for (int j = 0; j < 10; j++) {
     //        getline(file, data);
