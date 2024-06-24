@@ -1743,7 +1743,21 @@ void AO_THAT_DAY() {
                     nhapdulieu(185, 150, 184, 382, 141, 179, dl1, 12, 2);
                     STRCPYY(dlcb[0], dl1);
                     if (dlcb[0][0] == '\0') {
-                        continue;
+                        while (tmpcb) {
+                            ds qq;
+                            qq = tmpcb->next;
+                            delete tmpcb;
+                            tmpcb = qq;
+                        }
+                        tmpcb = NULL;
+                        tranghientaicb = 1;
+                        sochuyenbayhien = 0;
+                        sotrangcb = 1;
+                        cleardevice();
+                        Screen_Default(TRANG_THAI_TAB);
+                        Flight_design();
+                        hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
+                        chuyen_trang_tim_kiem = 0;
                     }
                     else {
                         if (dlcb[1][0] == '\0' && dlcb[2][0] == '\0' && dlcb[3][0] == '\0' && dlcb[4][0] == '\0') {
@@ -1997,7 +2011,21 @@ void AO_THAT_DAY() {
                     nhapdulieu(886, 150, 886, 1082, 141, 179, dl5, 12, 2);
                     STRCPYY(dlcb[4], dl5);
                     if (dlcb[4][0] == '\0') {
-                        continue;
+                        while (tmpcb) {
+                            ds qq;
+                            qq = tmpcb->next;
+                            delete tmpcb;
+                            tmpcb = qq;
+                        }
+                        tmpcb = NULL;
+                        tranghientaicb = 1;
+                        sochuyenbayhien = 0;
+                        sotrangcb = 1;
+                        cleardevice();
+                        Screen_Default(TRANG_THAI_TAB);
+                        Flight_design();
+                        hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
+                        chuyen_trang_tim_kiem = 0;
                     }
                     else {
                         if (dlcb[0][0] == '\0' && dlcb[2][0] == '\0' && dlcb[3][0] == '\0' && dlcb[1][0] == '\0') {
@@ -2346,6 +2374,7 @@ void AO_THAT_DAY() {
                     tmpcb = NULL; addchuyenbay = false; suathongtin = false; chuyen_trang_xem_ds = false;
                     chuyen_trang_tim_kiem = 0;
                     TRANG_THAI_TAB = 2;
+                    tranghientaicb = 1;
                     sochuyenbayhien = 0;
                     sotrangcb = 1;
                     capnhapchuyenbaycotmp = sochuyenbayco;
@@ -2441,24 +2470,47 @@ void AO_THAT_DAY() {
                      sothutu = 0;
                      sothutu = (y - 289) / 40 + 10 * (tranghientaicb - 1);
                      if (sothutu >= sochuyenbayco) {
-                         char a[30] = "khong co phan tu de huy";
-                         hienthiloi(a);
+                         continue;
                      }
                      else {
                          ds duyet = NULL; duyet = s; int dem = 0;
                          while (duyet != NULL) {
-                             if (dem == sothutu) {
-                                 if (duyet->cb.trangthai == 4) {
-                                     char a[130] = "chuyen bay da hoan thanh ko the huy";
-                                     hienthiloi(a);
+                             if (dem == sothutu) {                               
+                                 if (duyet->cb.trangthai == 4 || duyet->cb.trangthai == 1) {
+                                     char a[200] = "chuyen bay ko the huy";
+                                     hienthiloi(a);                                                                        
+                                     dem++;
                                      break;
                                  }
                                  else {
-                                     duyet->cb.trangthai = 1;
+                                     dem++;
+                                     string n = "ban co chac muon xoa cb ";
+                                     string m=duyet->cb.macb;
+                                     n += m;
+                                     n += "khong";
+                                     are_you_sure(n);
+                                     while (1) {
+                                         if (ismouseclick(WM_LBUTTONDOWN)) {
+                                             int xx, yy;
+                                             getmouseclick(WM_LBUTTONDOWN, xx, yy);
+                                             if (isMouse_Yes_huy_ve(xx, yy)) {
+                                                 duyet->cb.trangthai = 1;
+                                                /* char a[30] = "chuyen bay da huy";
+                                                 hienthiloi(a);*/
+                                                 capnhatdulieu(s);                                                 
+                                                 break;
+                                             }
+                                             else if (isMouse_No_huy_ve(xx, yy)) {
+                                                 break;                                                 
+                                             }
+                                         }
+                                     }
+ /*                                    duyet->cb.trangthai = 1;
                                      char a[30] = "chuyen bay da huy";
                                      hienthiloi(a);
                                      capnhatdulieu(s);
-                                     break;
+                                     break;*/
+                                  
                                  }
                              }
                              else {
@@ -2479,10 +2531,9 @@ void AO_THAT_DAY() {
                  if (x >= 1232 && x <= 1439 && y <= 689 && y >= 289) {
                      sothutu = 0;
                      sothutu = (y - 289) / 40 + 10 * (tranghientaicb - 1);
-                     if (sothutu >= sochuyenbayco) {
-                         char a[30] = "khong co phan tu de xem ds";
-                         hienthiloi(a);
-                         chuyen_trang_xem_ds = false;
+                     if (sothutu >= sochuyenbayco) {                     
+                         chuyen_trang_xem_ds = false; 
+                         continue;
                      }
                      else {
                          xemds = laychuyenbay(s, sothutu);
@@ -2524,8 +2575,7 @@ void AO_THAT_DAY() {
                     sothutu = 0;
                     sothutu = (y - 289) / 40 + 10 * (tranghientmp - 1);
                     if (sothutu >= cbcotmp) {
-                        char a[30] = "khong co phan tu de huy";
-                        hienthiloi(a);
+                        continue;
                     }
                     else {
                         chuyenbay xoa;
@@ -2533,17 +2583,36 @@ void AO_THAT_DAY() {
                         ds duyet = NULL; duyet = s;
                         while (duyet != NULL) {
                             if (strcmp(duyet->cb.macb, xoa.macb) == 0) {
-                                if (duyet->cb.trangthai == 4) {
-                                    char a[130] = "chuyen bay da hoan thanh ko the huy";
+                                if (duyet->cb.trangthai == 4|| duyet->cb.trangthai == 1) {
+                                    char a[130] = "chuyen bay ko the huy";
                                     hienthiloi(a);
+                                    chuyen_trang_tim_kiem = 0;
                                     break;
                                 }
                                 else {
-                                    duyet->cb.trangthai = 1;
-                                    char a[30] = "chuyen bay da huy";
-                                    hienthiloi(a);
-                                    capnhatdulieu(s);
-                                    break;
+                                    string n = "ban co chac muon xoa cb ";
+                                    string m = duyet->cb.macb;
+                                    n += m;
+                                    n += "khong";
+                                    are_you_sure(n);
+                                    while (1) {
+                                        if (ismouseclick(WM_LBUTTONDOWN)) {
+                                            int xx, yy;
+                                            getmouseclick(WM_LBUTTONDOWN, xx, yy);
+                                            if (isMouse_Yes_huy_ve(xx, yy)) {
+                                                duyet->cb.trangthai = 1;
+                                                /* char a[30] = "chuyen bay da huy";
+                                                 hienthiloi(a);*/
+                                                capnhatdulieu(s);
+                                                chuyen_trang_tim_kiem = 0;
+                                                break;
+                                            }
+                                            else if (isMouse_No_huy_ve(xx, yy)) {
+                                                chuyen_trang_tim_kiem = 0;
+                                                break;
+                                            }
+                                        }
+                                    }
                                 }
                             }
                             duyet = duyet->next;
@@ -2559,10 +2628,9 @@ void AO_THAT_DAY() {
                 if (x >= 1232 && x <= 1439 && y <= 689 && y >= 289) {
                     sothutu = 0;
                     sothutu = (y - 289) / 40 + 10 * (tranghientmp - 1);
-                    if (sothutu >= cbcotmp) {
-                        char a[30] = "khong co phan tu de xem ds";
-                        hienthiloi(a);
+                    if (sothutu >= cbcotmp) {                       
                         chuyen_trang_xem_ds = false;
+                        continue;
                     }
                     else {
                         xemds = laychuyenbay(tmpcb, sothutu);
