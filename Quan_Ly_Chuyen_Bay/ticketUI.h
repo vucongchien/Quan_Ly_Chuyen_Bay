@@ -1,16 +1,25 @@
 ﻿#pragma once
-#include "graphics.h"
 #include<stdio.h>
 #include<iostream>
 #include<fstream>
-#include"hanhkhach.h"
-#include"maybay.h"
-#include"CHUYENBAY.h"
 #include<string>
 #include<sstream>
-#include"lickchuot.h"
 #include <iomanip>
+#include<thread>
+#include<chrono>
+
+#include"maybay.h"
+#include"CHUYENBAY.h"
+#include"hanhkhach.h"
+#include"lickchuot.h"
+
 #include"hanhkhachUI.h"
+#include"graphics.h"
+#include"chuyenbayUI.h"
+#include"maybayUI.h"
+#include"doimau.h"
+
+#include"FUNTION.h"
 using namespace std;
 
 void cap_nhat_trang_thai_cb(ds capnhat) {
@@ -18,84 +27,6 @@ void cap_nhat_trang_thai_cb(ds capnhat) {
         update_trang_thai(capnhat->cb);
     }
     capnhatdulieu(s);
-}
-bool TRC_30p(chuyenbay cb) {
-    time_t thoigianhientai = time(nullptr);
-    tm ltm;
-    localtime_s(&ltm, &thoigianhientai);
-    int namcurr, thangcurr, ngaycurr, giocurr, phutcurr;
-    namcurr = 1900 + ltm.tm_year;
-    thangcurr = 1 + ltm.tm_mon;
-    ngaycurr = ltm.tm_mday;
-    giocurr = ltm.tm_hour;
-    phutcurr = ltm.tm_min;
-
-    if (cb.tg.nam > namcurr) {
-        return 1;
-    }
-    else if (cb.tg.thang > thangcurr) {
-        return 1;
-    }
-    else if (cb.tg.ngay > ngaycurr) {
-        return 1;
-    }
-    else if (cb.tg.gio > giocurr) {
-        return 1;
-    }
-    else if (cb.tg.phut > phutcurr - 30) {
-        return 1;
-    }
-    return 0;
-}
-void ve_hinh_vuong(int xright, int ytop, int xleft, int ybot, int colorbar, int colorrectangle, char text[], int mode = 0, int colortext = 0) {
-    setfillstyle(SOLID_FILL, colorbar);
-    bar(xright, ytop, xleft, ybot);
-    setlinestyle(0, 0, 1);
-    setcolor(colorrectangle);
-    rectangle(xright, ytop, xleft, ybot);
-    setbkcolor(colorbar);
-    setcolor(colortext);
-    if (mode == 1) {
-        outtextxy((xright + xleft) / 2 - (textwidth(const_cast<char*>(text)) / 2), (ytop + ybot) / 2 - 10, const_cast<char*>(text));
-        return;
-    }
-    outtextxy(xright + 5, (ytop + ybot) / 2 - 10, const_cast<char*>(text));
-}
-void Screen_Default(int TRANGTHAITAB = 0) {
-    setfillstyle(SOLID_FILL, 15);
-    bar(0, 0, 1540, 800);
-    ve_hinh_vuong(40, 10, 250, 80, COLOR(255, 229, 229), 0, const_cast<char*>("PLANES"), 1, 0);
-    ve_hinh_vuong(280, 10, 490, 80, COLOR(255, 229, 229), 0, const_cast<char*>("FLIGHTS"), 1, 0);
-    ve_hinh_vuong(520, 10, 730, 80, COLOR(255, 229, 229), 0, const_cast<char*>("CUSTOMER"), 1, 0);
-    ve_hinh_vuong(760, 10, 970, 80, COLOR(255, 229, 229), 0, const_cast<char*>("TIKCET"), 1, 0);
-    ve_hinh_vuong(1000, 10, 1210, 80, COLOR(255, 229, 229), 0, const_cast<char*>("STATISIC"), 1, 0);
-    if (TRANGTHAITAB == 1) {
-        ve_hinh_vuong(40, 10, 250, 80, COLOR(255, 191, 191), 0, const_cast<char*>("PLANES"), 1, 0);
-    }
-    else if (TRANGTHAITAB == 2) {
-        ve_hinh_vuong(280, 10, 490, 80, COLOR(255, 191, 191), 0, const_cast<char*>("FLIGHTS"), 1, 0);
-    }
-    else if (TRANGTHAITAB == 3) {
-        ve_hinh_vuong(520, 10, 730, 80, COLOR(255, 191, 191), 0, const_cast<char*>("CUSTOMER"), 1, 0);
-    }
-    else if (TRANGTHAITAB == 4) {
-        ve_hinh_vuong(760, 10, 970, 80, COLOR(255, 191, 191), 0, const_cast<char*>("TIKCET"), 1, 0);
-    }
-    else if (TRANGTHAITAB == 5) {
-        ve_hinh_vuong(1000, 10, 1210, 80, COLOR(255, 191, 191), 0, const_cast<char*>("STATISIC"), 1, 0);
-    }
-    //setcolor(0);
-    setfillstyle(SOLID_FILL, COLOR(208, 224, 227));
-    bar(40, 100, 1500, 780);
-    setlinestyle(0, 0, 3);
-    setcolor(COLOR(140, 194, 243));
-    rectangle(40, 100, 1500, 780);
-
-}
-void are_you_sure(string m) {
-    ve_hinh_vuong(480, 250, 1000, 520, COLOR(218, 221, 177), COLOR(179, 164, 146), const_cast<char*>(m.c_str()), 1, 0);
-    ve_hinh_vuong(510, 440, 590, 480, COLOR(217, 234, 211), 0, const_cast<char*>("YES"), 1, 0);
-    ve_hinh_vuong(850, 440, 920, 480, COLOR(217, 234, 211), 0, const_cast<char*>("NO"), 1, 0);
 }
 bool check_so_ghe(int soday, int sodong, char so_ghe[30]) {
     if (so_ghe[0] >= 'A' && so_ghe[0] <= 'Z') {

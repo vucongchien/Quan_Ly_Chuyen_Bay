@@ -1,16 +1,25 @@
 #pragma once
-#include "graphics.h"
 #include<stdio.h>
 #include<iostream>
 #include<fstream>
-#include"hanhkhach.h"
-#include"maybay.h"
-#include"CHUYENBAY.h"
 #include<string>
 #include<sstream>
-#include"lickchuot.h"
 #include <iomanip>
-#include"hanhkhachUI.h"
+#include<thread>
+#include<chrono>
+
+#include"maybay.h"
+#include"CHUYENBAY.h"
+#include"hanhkhach.h"
+#include"lickchuot.h"
+
+#include"ticketUI.h"
+#include"graphics.h"
+#include"chuyenbayUI.h"
+#include"maybayUI.h"
+#include"doimau.h"
+
+#include"FUNTION.h"
 
 
 //customer---------------------------------------------------------------

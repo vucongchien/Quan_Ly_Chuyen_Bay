@@ -131,10 +131,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CHUYENBAY.h" />
+    <ClInclude Include="chuyenbayUI.h" />
+    <ClInclude Include="doimau.h" />
+    <ClInclude Include="FUNTION.h" />
     <ClInclude Include="hanhkhach.h" />
     <ClInclude Include="hanhkhachUI.h" />
     <ClInclude Include="lickchuot.h" />
     <ClInclude Include="maybay.h" />
+    <ClInclude Include="maybayUI.h" />
     <ClInclude Include="ticketUI.h" />
   </ItemGroup>
   <ItemGroup>

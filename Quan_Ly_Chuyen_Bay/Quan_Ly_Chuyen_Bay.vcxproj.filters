@@ -41,6 +41,18 @@
     <ClInclude Include="lickchuot.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="doimau.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="FUNTION.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="maybayUI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="chuyenbayUI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="hanhkhach.txt">
