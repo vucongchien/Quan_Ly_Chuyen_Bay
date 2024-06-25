@@ -30,8 +30,11 @@ void threadFunction(int& TRANG_THAI_TAB, bool& keepRunning, dieukienpage& dieuki
 
     enum button_page1 { next, back };
     bool doimau_page1[2];
-    doimau_page1[next] = 0; doimau_page1[back] = 0;
-
+    for (int i = 0; i < 2; i++) {
+        doimau_page1[i] = 0;
+    }
+    int xx1 = 88, yy1 = 214, rr=10;
+    //900 680 fillellipse(xx, yy, rr, rr); 88 214
 
     enum button_page2 { ID, LASTNAME, FIRSTNAME };
     bool doimau_page2[3];
@@ -42,6 +45,7 @@ void threadFunction(int& TRANG_THAI_TAB, bool& keepRunning, dieukienpage& dieuki
         int y = mousey();
         if (TRANG_THAI_TAB == 1 && dieukien == LISTPLANE)
         {
+          
             if (isMouseNEXT_PAGE_MB(x, y)) {
                 if (doimau_page1[next] == 0)
                 {
@@ -73,34 +77,9 @@ void threadFunction(int& TRANG_THAI_TAB, bool& keepRunning, dieukienpage& dieuki
                 }
             }
 
-        }
-        //if (TRANG_THAI_TAB == 3 && dieukien == LISTCUSTOMER) {
-        //    if (isMouseSearchIdcustomer(x, y)) {
-        //        if(doimau_page2[ID] == 0)
-        //        {
-        //            setfillstyle(SOLID_FILL, COLOR(159, 197, 232));
-        //            setbkcolor(COLOR(159, 197, 232));
-        //            xoavungchidinh(201, 169, 399, 131);
-        //            doimau_page2[ID] = 1;
-        //            if(Search[ID][0]=='\0')
-        //            {
-        //                
-        //                continue;
-        //                
-        //            }
-        //            hienchinhgiua(201, 169, 399, 131,Search[ID]);
-        //        }
-        //    }
-        //    else {
-        //        if (doimau_page2[ID] == 1) {
-        //            setfillstyle(SOLID_FILL, COLOR(243, 208, 215));
-        //            setbkcolor(COLOR(243, 208, 215));
-        //            xoavungchidinh(201, 169, 399, 131);
-        //            doimau_page2[ID] = 0;
-        //        }
-        //    }
-        //}
 
+        
+        }
 
     }
 }

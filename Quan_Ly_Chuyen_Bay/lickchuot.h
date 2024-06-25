@@ -420,3 +420,65 @@ bool isMouseBACK_PAGE_MB(int x, int y) {
     }
     return 0;
 }
+
+
+bool isMouseLine0MB(int x, int y) {
+    if (x >= 132 && x <= 900 && y >= 192 && y <= 240) {
+        return 1;
+    }
+    return 0;
+}
+bool isMouseLine1MB(int x, int y) {
+    if (x >= 132 && x <= 900 && y >= 192+49 && y <= 240+49) {
+        return 1;
+    }
+    return 0;
+}
+bool isMouseLine2MB(int x, int y) {
+    if (x >= 132 && x <= 900 && y >= 192+49*2 && y <= 240+49*2) {
+        return 1;
+    }
+    return 0;
+}
+bool isMouseLine3MB(int x, int y) {
+    if (x >= 132 && x <= 900 && y >= 192+49*3 && y <= 240+49*3) {
+        return 1;
+    }
+    return 0;
+}
+bool isMouseLine4MB(int x, int y) {
+    if (x >= 132 && x <= 900 && y >= 192+49*4 && y <= 240+49*4) {
+        return 1;
+    }
+    return 0;
+}
+bool isMouseLine5MB(int x, int y) {
+    if (x >= 132 && x <= 900 && y >= 192+49*5 && y <= 240+49*5) {
+        return 1;
+    }
+    return 0;
+}
+bool isMouseLine6MB(int x, int y) {
+    if (x >= 132 && x <= 900 && y >= 192+49*6 && y <= 240+49 *6) {
+        return 1;
+    }
+    return 0;
+}
+bool isMouseLine7MB(int x, int y) {
+    if (x >= 132 && x <= 900 && y >= 192 + 49 *7 && y <= 240 + 49 *7) {
+        return 1;
+    }
+    return 0;
+}
+bool isMouseLine8MB(int x, int y) {
+    if (x >= 132 && x <= 900 && y >= 192 + 49 *8 && y <= 240 + 49 *8) {
+        return 1;
+    }
+    return 0;
+}
+bool isMouseLine9MB(int x, int y) {
+    if (x >= 132 && x <= 900 && y >= 192 + 49 *9 && y <= 240 + 49 *9) {
+        return 1;
+    }
+    return 0;
+}
