@@ -2081,6 +2081,12 @@ int main() {
 
 
     //ds_hk.lay_du_lieu_tu_file();
+    //ds_hk.printf_ds(ds_hk.getRoot());
+
+    //ds_hk.remove(ds_hk.getRoot(), const_cast<char*>("000000000011"));
+    //cout << "\n dda remove \n";
+    //ds_hk.printf_ds(ds_hk.getRoot());
+
     //QLHK tmp = ds_hk;
     //ds_hk.printf_ds(ds_hk.getRoot());
     

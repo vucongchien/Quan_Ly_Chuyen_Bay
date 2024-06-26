@@ -227,6 +227,8 @@ public:
         cout << "!trung" << endl;
         return empty;
     }
+
+       
     Node* remove(Node* run, char CMND[30]) {
         if (run == NULL) {
             return run;
@@ -262,6 +264,29 @@ public:
 
             run->right = remove(run->right, temp->data.soCMND);
             so_luong--;
+        }
+        if (run == NULL) {
+            return run;
+        }
+        //can bang cayyyyyyyyyyyyyy wtf
+        run->height = 1 + max(height(run->left), height(run->right));
+
+        int balance = getBlance(run);
+
+        if (balance > 1 && getBlance(run->left) >= 0)
+            return rightRotate(run);
+
+        if (balance < -1 && getBlance(run->right) <= 0)
+            return leftRotate(run);
+
+        if (balance > 1 && getBlance(run->left) < 0) {
+            run->left = leftRotate(run->left);
+            return rightRotate(run);
+        }
+
+        if (balance < -1 && getBlance(run->right) > 0) {
+            run->right = rightRotate(run->right);
+            return leftRotate(run);
         }
         return run;
     }
