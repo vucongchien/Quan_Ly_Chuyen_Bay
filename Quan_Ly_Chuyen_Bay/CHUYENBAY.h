@@ -77,7 +77,7 @@ void push(ds& a, chuyenbay x) {
 }
 void deletecb(ds& a, int p) {
 	if (a == NULL) {
-		return; // Ki?m tra danh sách có r?ng không
+		return;
 	}
 	if (p == 0) {
 		ds temp = a;
@@ -94,14 +94,14 @@ void deletecb(ds& a, int p) {
 		tmp++;
 	}
 	if (q == NULL) {
-		return; // Tr??ng h?p v? trí p không h?p l?
+		return;
 	}
 	sau->next = q->next;
 	delete q;
 }
 chuyenbay laychuyenbay(ds& s, int p) {
 	if (s == NULL) {
-		return chuyenbay(); // Ki?m tra danh sách có r?ng không
+		return chuyenbay();
 	}
 	if (p == 0) {
 		chuyenbay temp = s->cb;
@@ -110,9 +110,7 @@ chuyenbay laychuyenbay(ds& s, int p) {
 	int tmp = 0;
 	chuyenbay tra;
 	ds q = s;
-	ds sau = NULL;
 	while (q != NULL && tmp < p) {
-		sau = q;
 		q = q->next;
 		tmp++;
 	}
@@ -123,17 +121,17 @@ chuyenbay laychuyenbay(ds& s, int p) {
 	return tra;
 }
 // l?y ???c chuy?n bay a
-char** cap_phat(int size) {
-	return new char* [size];
-}
+//char** cap_phat(int size) {
+//	return new char* [size];
+//}
 
 // Hàm gi?i phóng b? nh? c?a m?ng 2 chi?u (char **)
-void giai_phong(char** arr, int size) {
-	for (int i = 0; i < size; ++i) {
-		delete[] arr[i];
-	}
-	delete[] arr;
-}
+//void giai_phong(char** arr, int size) {
+//	for (int i = 0; i < size; ++i) {
+//		delete[] arr[i];
+//	}
+//	delete[] arr;
+//}
 
 // Hàm thêm hành khách vào danh sách vé c?a m?t chuy?n bay
 
@@ -180,16 +178,16 @@ void sua_thong_tin_cb(ds& s, chuyenbay b) {
 		}
 	}
 }
-int sovecon(chuyenbay cb) {
-	int tmp = 0;
-	for (int i = 0; i < cb.sove; i++) {
-		if (cb.danhsachve[i] != 0) {
-			tmp++;
-		}
-	}
-	return cb.sove - tmp;
-
-}
+//int sovecon(chuyenbay cb) {
+//	int tmp = 0;
+//	for (int i = 0; i < cb.sove; i++) {
+//		if (cb.danhsachve[i] != 0) {
+//			tmp++;
+//		}
+//	}
+//	return cb.sove - tmp;
+//
+//}
 void update_trang_thai(chuyenbay& cb) {
 	if (cb.trangthai == 1 || cb.trangthai == 4) {
 		return;
@@ -424,16 +422,14 @@ void docdulieu(ds& dscb, int& dem) {
 		stringstream ss(line);
 		ss >> a.tg.gio >> a.tg.phut >> a.tg.ngay >> a.tg.thang >> a.tg.nam >> a.sove >> a.trangthai;
 
-		// Ð?c d? li?u cho các trý?ng thông tin
-		ss.ignore(); // B? qua d?u cách sau trý?ng tr?ng thái
-		ss.getline(a.sanbay, sizeof(a.sanbay), ' '); // Ð?c vào m?ng kí t? a.sanbay
-		ss.getline(a.macb, sizeof(a.macb), ' '); // Ð?c vào m?ng kí t? a.macb
-		ss.getline(a.sohieu, sizeof(a.sohieu), ' '); // Ð?c vào m?ng kí t? a.sohieu
+		ss.ignore(); 
+		ss.getline(a.sanbay, sizeof(a.sanbay), ' ');
+		ss.getline(a.macb, sizeof(a.macb), ' '); 
+		ss.getline(a.sohieu, sizeof(a.sohieu), ' '); 
 		chuanhoachu(a.sanbay);
 		chuanhoachu(a.macb);
 		chuanhoachu(a.sohieu);
 
-		// Ð?c d? li?u cho danh sách vé
 		a.danhsachve = new char* [a.sove];
 		for (int i = 0; i < a.sove; i++) {
 			a.danhsachve[i] = new char[30];
