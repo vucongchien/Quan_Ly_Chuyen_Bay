@@ -891,10 +891,12 @@ void hienthidanhsachve(chuyenbay a, char** dsvtmp, int trangthai, int& phantuhie
             chuyenintschar(tmpcc[0], phantuhien);
             hienchinhgiua(100, y, 190, y + 40, tmpcc[0]);
             int vitri = 65;
-            while (vitrighe[i] > sodong) { vitrighe[i] -= sodong;  vitri++; }
+            int vitrisau;
+            vitrisau = vitrighe[i];
+            while (vitrisau > sodong) { vitrisau -= sodong;  vitri++; }
             string m;
             m += static_cast<char>(vitri);
-            m += to_string(vitrighe[i]);
+            m += to_string(vitrisau);
             hienchinhgiua(190, y, 326, y + 40, const_cast<char*>(m.c_str()));
             HanhKhach tmp;
             tmp = ds_hk.search(dsvtmp[i]);
@@ -945,10 +947,12 @@ void hienthidanhsachve(chuyenbay a, char** dsvtmp, int trangthai, int& phantuhie
             chuyenintschar(tmpcc[0], phantuhien);
             hienchinhgiua(100, y, 190, y + 40, tmpcc[0]);
             int vitri = 65;
-            while (vitrighe[i] > sodong) { vitrighe[i] -= sodong;  vitri++; }
+            int vitrisau;
+            vitrisau = vitrighe[i];
+            while (vitrisau > sodong) { vitrisau -= sodong;  vitri++; }
             string m;
             m += static_cast<char>(vitri);
-            m += to_string(vitrighe[i]);
+            m += to_string(vitrisau);
             hienchinhgiua(190, y, 326, y + 40, const_cast<char*>(m.c_str()));
             HanhKhach tmp;
             tmp = ds_hk.search(dsvtmp[i]);
@@ -2394,7 +2398,27 @@ void AO_THAT_DAY() {
                     delete dsvtmp; delete vitrighe;
                     sotrangxemdsv = 1, tranghientaixemdsv = 1, sophantudsv = 0, sophantuhiendsv = 0;
                 }                
-               
+                if (isMousexemtrangsau(x, y) == 1) {
+                    chuyen_trang_xem_ds = true;
+                    if (tranghientaixemdsv < sotrangxemdsv) {
+                        tranghientaixemdsv++;
+                        sophantuhiendsv = (tranghientaixemdsv - 1) * 10;
+                        if (tranghientaixemdsv == sotrangxemdsv) {
+                            hienthidanhsachve(xemds, dsvtmp, 3, sophantuhiendsv, sophantudsv, vitrighe);
+                        }
+                        else {
+                            hienthidanhsachve(xemds, dsvtmp, 2, sophantuhiendsv, sophantudsv, vitrighe);
+
+                        }
+                    }
+                }
+                else if (isMousexemtrangtruoc(x, y) == 1) {
+                    if (tranghientaixemdsv > 1) {
+                        tranghientaixemdsv--;
+                        sophantuhiendsv = (tranghientaixemdsv - 1) * 10;
+                        hienthidanhsachve(xemds, dsvtmp, 2, sophantuhiendsv, sophantudsv, vitrighe);
+                    }
+                }
             }           
             //chuyentrang
             else if ((TRANG_THAI_TAB == 2 || (TRANG_THAI_TAB == 4 && dangmuab1 == 0 && dangmuab2 == 0 && dang_chon_chuyen_bay == 0 && chon_ghe == 0) || (TRANG_THAI_TAB == 4 && dang_chon_chuyen_bay == 1 && chon_ghe == 0)) && chuyen_trang_tim_kiem == 0 && chuyen_trang_xem_ds == false && (isMousexemtrangsau(x, y) == 1 || isMousexemtrangtruoc(x, y) == 1)) {
@@ -2445,14 +2469,13 @@ void AO_THAT_DAY() {
 
                 //"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
             }
-            else if (TRANG_THAI_TAB == 2 && chuyen_trang_tim_kiem == 0 && chuyen_trang_xem_ds==true && (isMousexemtrangsau(x, y) == 1 || isMousexemtrangtruoc(x, y) == 1)) {
+            /*else if (TRANG_THAI_TAB == 2 && chuyen_trang_tim_kiem == 0 && chuyen_trang_xem_ds==true && (isMousexemtrangsau(x, y) == 1 || isMousexemtrangtruoc(x, y) == 1)) {
                 if (isMousexemtrangsau(x, y) == 1) {
                     cout << "dell" << endl;
                     chuyen_trang_xem_ds = true;
                     if (tranghientaixemdsv < sotrangxemdsv) {
                         tranghientaixemdsv++;
                         sophantuhiendsv = (tranghientaixemdsv - 1) * 10;
-                        /*cout << sophantuhiendsv << endl << tranghientaixemdsv << endl << sotrangxemdsv << endl;*/
                         if (tranghientaixemdsv == sotrangxemdsv) {
                             hienthidanhsachve(xemds, dsvtmp, 3, sophantuhiendsv, sophantudsv, vitrighe);
                         }
@@ -2463,14 +2486,13 @@ void AO_THAT_DAY() {
                     }
                 }
                 else if (isMousexemtrangtruoc(x, y) == 1) {
-                    //tranghientaicb,sotrangcb,sochuyenbayco
                     if (tranghientaixemdsv > 1) {
                         tranghientaixemdsv--;
                         sophantuhiendsv = (tranghientaixemdsv - 1) * 10;
                         hienthidanhsachve(xemds, dsvtmp, 2, sophantuhiendsv, sophantudsv, vitrighe);
                     }
                 }
-            }
+            }*/
             //tra trang thai bang 1
             else if (TRANG_THAI_TAB == 2 && chuyen_trang_xem_ds == false && chuyen_trang_tim_kiem == 0 && addchuyenbay == false && suathongtin == false ) {               
                  int sothutu;
@@ -2569,10 +2591,12 @@ void AO_THAT_DAY() {
                              sotrangxemdsv = (int)c + 1;
                              hienthidanhsachve(xemds, dsvtmp, 2, sophantuhiendsv, sophantudsv, vitrighe);
                              chuyen_trang_xem_ds = true;
+                             chuyen_trang_tim_kiem = false;
                          }
                          else {
                              hienthidanhsachve(xemds, dsvtmp, 3, sophantuhiendsv, sophantudsv, vitrighe);
                              chuyen_trang_xem_ds = true;
+                             chuyen_trang_tim_kiem = false;
                          }
                      }
                  }

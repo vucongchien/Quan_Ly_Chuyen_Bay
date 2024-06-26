@@ -77,7 +77,7 @@ void push(ds& a, chuyenbay x) {
 }
 void deletecb(ds& a, int p) {
 	if (a == NULL) {
-		return; // Ki?m tra danh sách có r?ng không
+		return;
 	}
 	if (p == 0) {
 		ds temp = a;
@@ -94,14 +94,14 @@ void deletecb(ds& a, int p) {
 		tmp++;
 	}
 	if (q == NULL) {
-		return; // Tr??ng h?p v? trí p không h?p l?
+		return;
 	}
 	sau->next = q->next;
 	delete q;
 }
 chuyenbay laychuyenbay(ds& s, int p) {
 	if (s == NULL) {
-		return chuyenbay(); // Ki?m tra danh sách có r?ng không
+		return chuyenbay();
 	}
 	if (p == 0) {
 		chuyenbay temp = s->cb;
@@ -110,9 +110,7 @@ chuyenbay laychuyenbay(ds& s, int p) {
 	int tmp = 0;
 	chuyenbay tra;
 	ds q = s;
-	ds sau = NULL;
 	while (q != NULL && tmp < p) {
-		sau = q;
 		q = q->next;
 		tmp++;
 	}
