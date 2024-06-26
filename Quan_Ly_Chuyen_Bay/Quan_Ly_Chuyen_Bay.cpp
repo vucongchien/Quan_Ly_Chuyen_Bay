@@ -804,6 +804,29 @@ void hienthidanhsachve(chuyenbay a, char** dsvtmp, int trangthai, int& phantuhie
     mergeArrays(chinh2pp, strlen(chinh2pp), a.sohieu, strlen(a.sohieu), chinh2);
     hienchinhgiua(42, 160, 1500, 190, chinh2);
     hienchinhgiua(42, 130, 1500, 160, chinh);
+    setfillstyle(SOLID_FILL, COLOR(159, 197, 232));
+    bar(99, 220, 1440, 688);
+    setfillstyle(SOLID_FILL, COLOR(208, 224, 227));
+    bar(99, 289, 1440, 688);
+    setlinestyle(0, 0, 2);
+    setbkcolor(COLOR(159, 197, 232));
+    line(190, 220, 190, 698); char a0[10] = "NUMBERS"; outtextxy(110, 240, a0);
+    line(326, 220, 326, 689); char a1[20] = "SO GHE"; outtextxy(230, 240, a1);
+    setlinestyle(0, 0, 2);
+    line(570, 220, 570, 689); char a2[30] = "HO"; outtextxy(455, 240, a2);
+    line(710, 220, 710, 689); char a3[30] = "TEN"; outtextxy(620, 240, a3);
+    line(1056, 220, 1056, 689); char a4[20] = "SO CCCD"; outtextxy(843, 240, a4);
+    line(1232, 220, 1232, 689); char a5[20] = "PHAI";   outtextxy(1105, 240, a5);
+    char a6[20] = "DANH SACH VE"; outtextxy(1295, 240, a6);
+    line(99, 220, 99, 689);
+    line(1440, 220, 1440, 689);
+    setfillstyle(SOLID_FILL, COLOR(159, 197, 232));
+    bar(688, 719, 748, 765);
+    bar(820, 719, 880, 765);
+    line(727, 726, 698, 742);
+    line(698, 742, 727, 760);
+    line(836, 726, 866, 742);
+    line(866, 742, 836, 760);
     /*if(trangthai==1){
      setfillstyle(SOLID_FILL, COLOR(159, 197, 232));
      bar(99, 220, 1440, 688);
@@ -858,30 +881,7 @@ void hienthidanhsachve(chuyenbay a, char** dsvtmp, int trangthai, int& phantuhie
 
      }
     }else*/ if (trangthai == 2) {
-        setfillstyle(SOLID_FILL, COLOR(159, 197, 232));
-        bar(99, 220, 1440, 688);
-        setfillstyle(SOLID_FILL, COLOR(208, 224, 227));
-        bar(99, 289, 1440, 688);
-        setlinestyle(0, 0, 2);
-        setbkcolor(COLOR(159, 197, 232));
-        line(190, 220, 190, 698); char a0[10] = "NUMBERS"; outtextxy(110, 240, a0);
-        line(326, 220, 326, 689); char a1[20] = "SO GHE"; outtextxy(230, 240, a1);
-        setlinestyle(0, 0, 2);
-        line(570, 220, 570, 689); char a2[30] = "HO"; outtextxy(455, 240, a2);
-        line(710, 220, 710, 689); char a3[30] = "TEN"; outtextxy(620, 240, a3);
-        line(1056, 220, 1056, 689); char a4[20] = "SO CCCD"; outtextxy(843, 240, a4);
-        line(1232, 220, 1232, 689); char a5[20] = "PHAI";   outtextxy(1105, 240, a5);
-        char a6[20] = "DANH SACH VE"; outtextxy(1295, 240, a6);
-        line(99, 220, 99, 689);
-        line(1440, 220, 1440, 689);
-        setfillstyle(SOLID_FILL, COLOR(159, 197, 232));
-        bar(688, 719, 748, 765);
-        bar(820, 719, 880, 765);
-        line(727, 726, 698, 742);
-        line(698, 742, 727, 760);
-        line(836, 726, 866, 742);
-        line(866, 742, 836, 760);
-        int dem = phantuhien;
+             int dem = phantuhien;
         /*cout << dem << "cocaidaubui" << endl;*/
         for (int i = dem; i < dem + 10; i++) {
             phantuhien++;
@@ -914,30 +914,7 @@ void hienthidanhsachve(chuyenbay a, char** dsvtmp, int trangthai, int& phantuhie
             line(100, y, 1440, y);
         }
     }
-    else if (trangthai == 3) {
-        setfillstyle(SOLID_FILL, COLOR(159, 197, 232));
-        bar(99, 220, 1440, 688);
-        setfillstyle(SOLID_FILL, COLOR(208, 224, 227));
-        bar(99, 289, 1440, 688);
-        setlinestyle(0, 0, 2);
-        setbkcolor(COLOR(159, 197, 232));
-        line(190, 220, 190, 698); char a0[10] = "NUMBERS"; outtextxy(110, 240, a0);
-        line(326, 220, 326, 689); char a1[20] = "SO GHE"; outtextxy(230, 240, a1);
-        setlinestyle(0, 0, 2);
-        line(570, 220, 570, 689); char a2[30] = "HO"; outtextxy(455, 240, a2);
-        line(710, 220, 710, 689); char a3[30] = "TEN"; outtextxy(620, 240, a3);
-        line(1056, 220, 1056, 689); char a4[20] = "SO CCCD"; outtextxy(843, 240, a4);
-        line(1232, 220, 1232, 689); char a5[20] = "PHAI";   outtextxy(1105, 240, a5);
-        char a6[20] = "DANH SACH VE"; outtextxy(1295, 240, a6);
-        line(99, 220, 99, 689);
-        line(1440, 220, 1440, 689);
-        setfillstyle(SOLID_FILL, COLOR(159, 197, 232));
-        bar(688, 719, 748, 765);
-        bar(820, 719, 880, 765);
-        line(727, 726, 698, 742);
-        line(698, 742, 727, 760);
-        line(836, 726, 866, 742);
-        line(866, 742, 836, 760);
+    else if (trangthai == 3) {        
         int dem = phantuhien;
         for (int i = dem; i < sophanthuco; i++) {
             phantuhien++;
@@ -987,24 +964,24 @@ void hienthidschuyenbay(ds& s, int& dem, int trangthai) {
         tmp[i][0] = '\0';
     }
     ds dscb = s;
+    xoavungchidinh(99, 289, 1440, 688);
+    setfillstyle(SOLID_FILL, COLOR(159, 197, 232));
+    bar(99, 220, 1440, 688);
+    setfillstyle(SOLID_FILL, COLOR(208, 224, 227));
+    bar(99, 289, 1440, 688);
+    setlinestyle(0, 0, 2);
+    setbkcolor(COLOR(159, 197, 232));
+    line(190, 220, 190, 698); char a[8] = "NUMBERS"; outtextxy(110, 240, a);
+    line(326, 220, 326, 689); char a1[20] = "ID FLIGHT"; outtextxy(230, 240, a1);
+    setlinestyle(0, 0, 2);
+    line(462, 220, 462, 689); char a2[30] = "SO HIEU MB"; outtextxy(355, 240, a2);
+    line(760, 220, 760, 689); char a3[30] = "SAN BAY DEN"; outtextxy(560, 240, a3);
+    line(1026, 220, 1026, 689); char a4[20] = "TIME"; outtextxy(873, 240, a4);
+    line(1232, 220, 1232, 689); char a5[20] = "TRANG THAI";   outtextxy(1085, 240, a5);
+    char a6[20] = "DANH SACH VE"; outtextxy(1295, 240, a6);
+    line(99, 220, 99, 689);
+    line(1440, 220, 1440, 689);
     if (trangthai == 1) {
-        xoavungchidinh(99, 289, 1440, 688);
-        setfillstyle(SOLID_FILL, COLOR(159, 197, 232));
-        bar(99, 220, 1440, 688);
-        setfillstyle(SOLID_FILL, COLOR(208, 224, 227));
-        bar(99, 289, 1440, 688);
-        setlinestyle(0, 0, 2);
-        setbkcolor(COLOR(159, 197, 232));
-        line(190, 220, 190, 698); char a[8] = "NUMBERS"; outtextxy(110, 240, a);
-        line(326, 220, 326, 689); char a1[20] = "ID FLIGHT"; outtextxy(230, 240, a1);
-        setlinestyle(0, 0, 2);
-        line(462, 220, 462, 689); char a2[30] = "SO HIEU MB"; outtextxy(355, 240, a2);
-        line(760, 220, 760, 689); char a3[30] = "SAN BAY DEN"; outtextxy(560, 240, a3);
-        line(1026, 220, 1026, 689); char a4[20] = "TIME"; outtextxy(873, 240, a4);
-        line(1232, 220, 1232, 689); char a5[20] = "TRANG THAI";   outtextxy(1085, 240, a5);
-        char a6[20] = "DANH SACH VE"; outtextxy(1295, 240, a6);
-        line(99, 220, 99, 689);
-        line(1440, 220, 1440, 689);
         for (; dscb != NULL; dscb = dscb->next) {
             dem++;
             chuyenintschar(tmp[0], dem);
@@ -1056,23 +1033,6 @@ void hienthidschuyenbay(ds& s, int& dem, int trangthai) {
 
         }
     }if (trangthai == 2) {
-        xoavungchidinh(99, 289, 1440, 688);
-        setfillstyle(SOLID_FILL, COLOR(159, 197, 232));
-        bar(99, 220, 1440, 688);
-        setfillstyle(SOLID_FILL, COLOR(208, 224, 227));
-        bar(99, 289, 1440, 688);
-        setlinestyle(0, 0, 2);
-        setbkcolor(COLOR(159, 197, 232));
-        line(190, 220, 190, 698); char a[8] = "NUMBERS"; outtextxy(110, 240, a);
-        line(326, 220, 326, 689); char a1[20] = "ID FLIGHT"; outtextxy(230, 240, a1);
-        setlinestyle(0, 0, 2);
-        line(462, 220, 462, 689); char a2[30] = "SO HIEU MB"; outtextxy(355, 240, a2);
-        line(760, 220, 760, 689); char a3[30] = "SAN BAY DEN"; outtextxy(560, 240, a3);
-        line(1026, 220, 1026, 689); char a4[20] = "TIME"; outtextxy(873, 240, a4);
-        line(1232, 220, 1232, 689); char a5[20] = "TRANG THAI";   outtextxy(1085, 240, a5);
-        char a6[20] = "DANH SACH VE"; outtextxy(1295, 240, a6);
-        line(99, 220, 99, 689);
-        line(1440, 220, 1440, 689);
         for (int i = 0; i < dem; i++) {
             dscb = dscb->next;
         }
@@ -1126,24 +1086,7 @@ void hienthidschuyenbay(ds& s, int& dem, int trangthai) {
 
         }
     }
-    if (trangthai == 3) {
-        xoavungchidinh(99, 289, 1440, 688);
-        setfillstyle(SOLID_FILL, COLOR(159, 197, 232));
-        bar(99, 220, 1440, 688);
-        setfillstyle(SOLID_FILL, COLOR(208, 224, 227));
-        bar(99, 289, 1440, 688);
-        setlinestyle(0, 0, 2);
-        setbkcolor(COLOR(159, 197, 232));
-        line(190, 220, 190, 698); char a[8] = "NUMBERS"; outtextxy(110, 240, a);
-        line(326, 220, 326, 689); char a1[20] = "ID FLIGHT"; outtextxy(230, 240, a1);
-        setlinestyle(0, 0, 2);
-        line(462, 220, 462, 689); char a2[30] = "SO HIEU MB"; outtextxy(355, 240, a2);
-        line(760, 220, 760, 689); char a3[30] = "SAN BAY DEN"; outtextxy(560, 240, a3);
-        line(1026, 220, 1026, 689); char a4[20] = "TIME"; outtextxy(873, 240, a4);
-        line(1232, 220, 1232, 689); char a5[20] = "TRANG THAI";   outtextxy(1085, 240, a5);
-        char a6[20] = "DANH SACH VE"; outtextxy(1295, 240, a6);
-        line(99, 220, 99, 689);
-        line(1440, 220, 1440, 689);
+    if (trangthai == 3) {        
         for (int i = 0; i < dem; i++) {
             dscb = dscb->next;
         }
