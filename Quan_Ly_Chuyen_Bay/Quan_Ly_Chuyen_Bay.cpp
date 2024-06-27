@@ -89,15 +89,28 @@ void hiendsmbchay(dsmbc& chay, int& phantuhien, int trangthai) {
         }
     }
 }
+void lay_chuyen_bay_co_the_dat_ve(ds vao, ds& ra, int& dem) {
+    dem = 0;
+    while (vao != NULL) {
+        if (vao->cb.trangthai == 2) {
+            push(ra, vao->cb);
+            dem++;
+            vao = vao->next;
+        }
+        else {
+            vao = vao->next;
+        }
+    }
+}
 
 
 //--------------------------------------dieu khien -----------------------------------
 void AO_THAT_DAY() {
     int TRANG_THAI_TAB = 1;
     bool keepRunning = true;
-    
+
     dieukienpage dieukien = LISTPLANE;
-    thread t(threadFunction, ref(TRANG_THAI_TAB), ref(keepRunning),ref(dieukien));
+    thread t(threadFunction, ref(TRANG_THAI_TAB), ref(keepRunning), ref(dieukien));
     //1=PLANEs| 2=FLIGHT| 3=CUSTOMER... 3.1=XEM_THONG_TIN |4=TICKET| 5=STATIC
     // khai bao cho plane
     openfile(ds_mb);
@@ -127,15 +140,14 @@ void AO_THAT_DAY() {
     int so_luong_hanh_khach_tim_thay = 0;
     int trang_curr = 0, trang_max = 0;
 
-    string* xuat_search= new string[ds_hk.getSo_luong_hk() * 4];
-    int cout_for_search=0;
-
+    string* xuat_search = new string[ds_hk.getSo_luong_hk() * 4];
+    int cout_for_search = 0;
+    ds chuyenbaycothedat; chuyenbaycothedat = NULL; int sochuyenbayhien1, sochuyenbayco1, sotrangcb1, tranghientaicb1;
     //khai bao cho tiket...........................................
     bool dangmuab1 = 0, dangmuab2 = 0, dang_chon_chuyen_bay = 0, da_chon_phai = 0, da_nhap_du_in4 = 0, da_nhap_CMND = 0, trung_cmnd = 0, chon_ghe = 0;
     char ho[60], ten[30], CMND[30], idFlight_mua_ve[30]; bool phai; ho[0] = '\0'; ten[0] = '\0'; CMND[0] = '\0', idFlight_mua_ve[0] = '\0';
     //khai bao cho InStatic 
     dsmbc chay; int trangmaxmb = 1, somaybaymax = 0, tranghientaimb = 0, somayhienmb = 0;
-    //'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     clearmouseclick(WM_LBUTTONDOWN);
     while (true) {
         if (ismouseclick(WM_LBUTTONDOWN)) {
@@ -191,7 +203,7 @@ void AO_THAT_DAY() {
                 for (int i = 0; i < 3; i++) Search[i][0] = '\0';
             }
             else if (isMouseInTicket(x, y) == 1) {
-                tranghientaicb = 1;
+                tranghientaicb1 = 1;
                 TRANG_THAI_TAB = 4;
                 cleardevice();
                 Screen_Default(TRANG_THAI_TAB);
@@ -202,19 +214,28 @@ void AO_THAT_DAY() {
                 sochuyenbayco = 0;
                 s = NULL;
                 docdulieu(s, sochuyenbayco);
+                if (chuyenbaycothedat != NULL) {
+                    while (chuyenbaycothedat) {
+                        ds qq;
+                        qq = chuyenbaycothedat->next;
+                        delete chuyenbaycothedat;
+                        chuyenbaycothedat = qq;
+                    }
+                }
+                lay_chuyen_bay_co_the_dat_ve(s, chuyenbaycothedat, sochuyenbayco1);
                 tmpcb = NULL; addchuyenbay = false; suathongtin = false; chuyen_trang_xem_ds = false;
                 chuyen_trang_tim_kiem = 0;
-                sochuyenbayhien = 0;
-                sotrangcb = 1;
+                sochuyenbayhien1 = 0;
+                sotrangcb1 = 1;
                 muaticket = false;
-                capnhapchuyenbaycotmp = sochuyenbayco;
+                capnhapchuyenbaycotmp = sochuyenbayco1;
                 dangmuab1 = 0;
                 dangmuab2 = 0;
                 dang_chon_chuyen_bay = 0;
                 da_nhap_CMND = 0;
                 chon_ghe = 0;
                 cap_nhat_trang_thai_cb(s);
-                hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
+                hientrangdau(chuyenbaycothedat, sochuyenbayhien1, sochuyenbayco1, sotrangcb1);
             }
             else if (isMouseInStatic(x, y) == 1) {
                 cap_nhat_trang_thai_cb(s);
@@ -285,7 +306,7 @@ void AO_THAT_DAY() {
 
 
 
-//------------------------PLANE
+            //------------------------PLANE
 
 
             else if (TRANG_THAI_TAB == 1 && xem_thong_ke_mb == 1 && themmb == 0) {
@@ -366,95 +387,36 @@ void AO_THAT_DAY() {
 
             }
 
-//------------------------FLIGHT
+            //------------------------FLIGHT
 
-            //timkiem
+                        //timkiem
             else if ((TRANG_THAI_TAB == 2 && addchuyenbay == false && chuyen_trang_xem_ds == false || (TRANG_THAI_TAB == 4 && dangmuab1 == 0 && dangmuab2 == 0 && dang_chon_chuyen_bay == 0 && chon_ghe == 0) || (TRANG_THAI_TAB == 4 && dang_chon_chuyen_bay == 1 && chon_ghe == 0)) && (isMousenhapidFlight(x, y) == 1 || isMouseaddFlight(x, y) == 1 || isMousenhapDAY(x, y) == 1 || isMousenhapMONTH(x, y) == 1 || isMousenhapYEAR(x, y) == 1 || isMousenhapsomaybay(x, y) == 1)) {
-                char dl1[30], dl2[30], dl3[30], dl4[30], dl5[30];
-                dl1[0] = '\0'; dl2[0] = '\0'; dl3[0] = '\0'; dl4[0] = '\0'; dl5[0] = '\0';
-                if (isMousenhapidFlight(x, y) == 1) {
-                    cbtmp = 0, cbcotmp, sotrangtmp = 1;
-                    nhapdulieu(185, 150, 184, 382, 141, 179, dl1, 12, 2);
-                    STRCPYY(dlcb[0], dl1);
-                    if (dlcb[0][0] == '\0') {
-                        while (tmpcb) {
-                            ds qq;
-                            qq = tmpcb->next;
-                            delete tmpcb;
-                            tmpcb = qq;
-                        }
-                        tmpcb = NULL;
-                        tranghientaicb = 1;
-                        sochuyenbayhien = 0;
-                        sotrangcb = 1;
-                        cleardevice();
-                        Screen_Default(TRANG_THAI_TAB);
-                        Flight_design();
-                        hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
-                        chuyen_trang_tim_kiem = 0;
-                    }
-                    else {
-                        if (dlcb[1][0] == '\0' && dlcb[2][0] == '\0' && dlcb[3][0] == '\0' && dlcb[4][0] == '\0') {
-                            if (tmpcb != NULL) {
-                                while (tmpcb) {
-                                    ds qq;
-                                    qq = tmpcb->next;
-                                    delete tmpcb;
-                                    tmpcb = qq;
-                                }
-                                tmpcb = NULL;
-                                if (s == NULL) {
-                                    char a[100] = "khong co chuyen bay nao de tim";
-                                    hienthiloi(a);
-                                }
-                                else {
-                                    timkiemchuyenbay(s, tmpcb, dlcb[0], 1, capnhapchuyenbaycotmp, cbcotmp);
-                                    capnhapchuyenbaycotmp = cbcotmp;
-                                    hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
-                                    chuyen_trang_tim_kiem = 1;
-                                }
+                if (TRANG_THAI_TAB == 2) {
+                    char dl1[30], dl2[30], dl3[30], dl4[30], dl5[30];
+                    dl1[0] = '\0'; dl2[0] = '\0'; dl3[0] = '\0'; dl4[0] = '\0'; dl5[0] = '\0';
+                    if (isMousenhapidFlight(x, y) == 1) {
+                        cbtmp = 0, cbcotmp, sotrangtmp = 1;
+                        nhapdulieu(185, 150, 184, 382, 141, 179, dl1, 12, 2);
+                        STRCPYY(dlcb[0], dl1);
+                        if (dlcb[0][0] == '\0') {
+                            while (tmpcb) {
+                                ds qq;
+                                qq = tmpcb->next;
+                                delete tmpcb;
+                                tmpcb = qq;
                             }
-                            else {
-                                if (s == NULL) {
-                                    char a[100] = "khong co chuyen bay nao de tim";
-                                    hienthiloi(a);
-                                }
-                                else {
-                                    timkiemchuyenbay(s, tmpcb, dlcb[0], 1, capnhapchuyenbaycotmp, cbcotmp);
-                                    capnhapchuyenbaycotmp = cbcotmp;
-                                    hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
-                                    chuyen_trang_tim_kiem = 1;
-                                }
-                            }
+                            tmpcb = NULL;
+                            tranghientaicb = 1;
+                            sochuyenbayhien = 0;
+                            sotrangcb = 1;
+                            cleardevice();
+                            Screen_Default(TRANG_THAI_TAB);
+                            Flight_design();
+                            hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
+                            chuyen_trang_tim_kiem = 0;
                         }
                         else {
-                            timkiemchuyenbay1ds(tmpcb, dlcb[0], 1, capnhapchuyenbaycotmp, cbcotmp);
-                            capnhapchuyenbaycotmp = cbcotmp;
-                            hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
-                            chuyen_trang_tim_kiem = 1;
-                        }
-                    }
-                }
-                if (isMousenhapDAY(x, y) == 1 || isMousenhapMONTH(x, y) == 1 || isMousenhapYEAR(x, y) == 1) {
-                    int b;
-                    if (isMousenhapDAY(x, y) == 1) {
-
-                        do {
-
-                            b = 0;
-                            char a[30] = "nhap >0 va <30";
-                            nhapdulieu(469, 150, 468, 514, 141, 179, dl2, 2, 3);
-                            chuyencharsint(dl2, b);
-                            if (b > 31 || b <= 0) {
-                                hienthiloi(a);
-                            }
-                        } while (b > 31 || b <= 0);
-                        STRCPYY(dlcb[1], dl2);
-                        if (dlcb[1][0] == '\0') {
-                            continue;
-                        }
-                        else {
-                            if (dlcb[0][0] == '\0' && dlcb[2][0] == '\0' && dlcb[3][0] == '\0' && dlcb[4][0] == '\0') {
+                            if (dlcb[1][0] == '\0' && dlcb[2][0] == '\0' && dlcb[3][0] == '\0' && dlcb[4][0] == '\0') {
                                 if (tmpcb != NULL) {
                                     while (tmpcb) {
                                         ds qq;
@@ -468,7 +430,7 @@ void AO_THAT_DAY() {
                                         hienthiloi(a);
                                     }
                                     else {
-                                        timkiemchuyenbay(s, tmpcb, dlcb[1], 2, capnhapchuyenbaycotmp, cbcotmp);
+                                        timkiemchuyenbay(s, tmpcb, dlcb[0], 1, capnhapchuyenbaycotmp, cbcotmp);
                                         capnhapchuyenbaycotmp = cbcotmp;
                                         hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
                                         chuyen_trang_tim_kiem = 1;
@@ -480,8 +442,7 @@ void AO_THAT_DAY() {
                                         hienthiloi(a);
                                     }
                                     else {
-                                        cbtmp = 0, cbcotmp, sotrangtmp = 1;
-                                        timkiemchuyenbay(s, tmpcb, dlcb[1], 2, capnhapchuyenbaycotmp, cbcotmp);
+                                        timkiemchuyenbay(s, tmpcb, dlcb[0], 1, capnhapchuyenbaycotmp, cbcotmp);
                                         capnhapchuyenbaycotmp = cbcotmp;
                                         hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
                                         chuyen_trang_tim_kiem = 1;
@@ -489,40 +450,241 @@ void AO_THAT_DAY() {
                                 }
                             }
                             else {
-                                if (tmpcb == NULL) {
-                                    char a[100] = "khong co chuyen bay nao de tim";
-                                    hienthiloi(a);
-                                }
-                                else {
-                                    cbtmp = 0, cbcotmp, sotrangtmp = 1;
-                                    timkiemchuyenbay1ds(tmpcb, dlcb[1], 2, capnhapchuyenbaycotmp, cbcotmp);
-                                    capnhapchuyenbaycotmp = cbcotmp;
-                                    hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
-                                    chuyen_trang_tim_kiem = 1;
-                                }
+                                timkiemchuyenbay1ds(tmpcb, dlcb[0], 1, capnhapchuyenbaycotmp, cbcotmp);
+                                capnhapchuyenbaycotmp = cbcotmp;
+                                hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                chuyen_trang_tim_kiem = 1;
                             }
-
                         }
                     }
-                    if (isMousenhapMONTH(x, y) == 1) {
+                    if (isMousenhapDAY(x, y) == 1 || isMousenhapMONTH(x, y) == 1 || isMousenhapYEAR(x, y) == 1) {
+                        int b;
+                        if (isMousenhapDAY(x, y) == 1) {
 
-                        do {
+                            do {
 
-                            b = 0;
-                            char a[30] = "nh?p >0 và =<12";
-                            nhapdulieu(553, 150, 552, 597, 141, 179, dl3, 2, 3);
-                            chuyencharsint(dl3, b);
-
-                            if (b > 12 || b <= 0) {
-                                hienthiloi(a);
+                                b = 0;
+                                char a[30] = "nhap >0 va <30";
+                                nhapdulieu(469, 150, 468, 514, 141, 179, dl2, 2, 3);
+                                chuyencharsint(dl2, b);
+                                if (b > 31 || b <= 0) {
+                                    hienthiloi(a);
+                                }
+                            } while (b > 31 || b <= 0);
+                            STRCPYY(dlcb[1], dl2);
+                            if (dlcb[1][0] == '\0') {
+                                continue;
                             }
-                        } while (b > 12 || b <= 0);
-                        STRCPYY(dlcb[2], dl3);
-                        if (dlcb[2][0] == '\0') {
-                            continue;
+                            else {
+                                if (dlcb[0][0] == '\0' && dlcb[2][0] == '\0' && dlcb[3][0] == '\0' && dlcb[4][0] == '\0') {
+                                    if (tmpcb != NULL) {
+                                        while (tmpcb) {
+                                            ds qq;
+                                            qq = tmpcb->next;
+                                            delete tmpcb;
+                                            tmpcb = qq;
+                                        }
+                                        tmpcb = NULL;
+                                        if (s == NULL) {
+                                            char a[100] = "khong co chuyen bay nao de tim";
+                                            hienthiloi(a);
+                                        }
+                                        else {
+                                            timkiemchuyenbay(s, tmpcb, dlcb[1], 2, capnhapchuyenbaycotmp, cbcotmp);
+                                            capnhapchuyenbaycotmp = cbcotmp;
+                                            hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                            chuyen_trang_tim_kiem = 1;
+                                        }
+                                    }
+                                    else {
+                                        if (s == NULL) {
+                                            char a[100] = "khong co chuyen bay nao de tim";
+                                            hienthiloi(a);
+                                        }
+                                        else {
+                                            cbtmp = 0, cbcotmp, sotrangtmp = 1;
+                                            timkiemchuyenbay(s, tmpcb, dlcb[1], 2, capnhapchuyenbaycotmp, cbcotmp);
+                                            capnhapchuyenbaycotmp = cbcotmp;
+                                            hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                            chuyen_trang_tim_kiem = 1;
+                                        }
+                                    }
+                                }
+                                else {
+                                    if (tmpcb == NULL) {
+                                        char a[100] = "khong co chuyen bay nao de tim";
+                                        hienthiloi(a);
+                                    }
+                                    else {
+                                        cbtmp = 0, cbcotmp, sotrangtmp = 1;
+                                        timkiemchuyenbay1ds(tmpcb, dlcb[1], 2, capnhapchuyenbaycotmp, cbcotmp);
+                                        capnhapchuyenbaycotmp = cbcotmp;
+                                        hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                        chuyen_trang_tim_kiem = 1;
+                                    }
+                                }
+
+                            }
+                        }
+                        if (isMousenhapMONTH(x, y) == 1) {
+
+                            do {
+
+                                b = 0;
+                                char a[30] = "nh?p >0 và =<12";
+                                nhapdulieu(553, 150, 552, 597, 141, 179, dl3, 2, 3);
+                                chuyencharsint(dl3, b);
+
+                                if (b > 12 || b <= 0) {
+                                    hienthiloi(a);
+                                }
+                            } while (b > 12 || b <= 0);
+                            STRCPYY(dlcb[2], dl3);
+                            if (dlcb[2][0] == '\0') {
+                                continue;
+                            }
+                            else {
+                                if (dlcb[0][0] == '\0' && dlcb[1][0] == '\0' && dlcb[3][0] == '\0' && dlcb[4][0] == '\0') {
+                                    if (tmpcb != NULL) {
+                                        while (tmpcb) {
+                                            ds qq;
+                                            qq = tmpcb->next;
+                                            delete tmpcb;
+                                            tmpcb = qq;
+                                        }
+                                        tmpcb = NULL;
+                                        if (s == NULL) {
+                                            char a[100] = "khong co chuyen bay nao de tim";
+                                            hienthiloi(a);
+                                        }
+                                        else {
+                                            timkiemchuyenbay(s, tmpcb, dlcb[2], 3, capnhapchuyenbaycotmp, cbcotmp);
+                                            capnhapchuyenbaycotmp = cbcotmp;
+                                            hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                            chuyen_trang_tim_kiem = 1;
+                                        }
+                                    }
+                                    else {
+                                        if (s == NULL) {
+                                            char a[100] = "khong co chuyen bay nao de tim";
+                                            hienthiloi(a);
+                                        }
+                                        else {
+                                            cbtmp = 0, cbcotmp, sotrangtmp = 1;
+                                            timkiemchuyenbay(s, tmpcb, dlcb[2], 3, capnhapchuyenbaycotmp, cbcotmp);
+                                            capnhapchuyenbaycotmp = cbcotmp;
+                                            hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                            chuyen_trang_tim_kiem = 1;
+                                        }
+                                    }
+                                }
+                                else {
+                                    if (tmpcb == NULL) {
+                                        char a[100] = "khong co chuyen bay nao de tim";
+                                        hienthiloi(a);
+                                    }
+                                    else {
+                                        cbtmp = 0, cbcotmp, sotrangtmp = 1;
+                                        timkiemchuyenbay1ds(tmpcb, dlcb[2], 3, capnhapchuyenbaycotmp, cbcotmp);
+                                        capnhapchuyenbaycotmp = cbcotmp;
+                                        hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                        chuyen_trang_tim_kiem = 1;
+                                    }
+                                }
+                            }
+                        }
+                        if (isMousenhapYEAR(x, y) == 1) {
+
+                            do {
+
+                                b = 0;
+                                nhapdulieu(637, 150, 636, 733, 141, 179, dl4, 4, 3);
+
+                                chuyencharsint(dl4, b);
+
+                                if (b < 2024) {
+                                    char a[30] = "nhap >=2024";
+                                    hienthiloi(a);
+                                }
+                            } while (b < 2024);
+                            STRCPYY(dlcb[3], dl4);
+                            if (dlcb[3][0] == '\0') {
+                                continue;
+                            }
+                            else {
+                                if (dlcb[0][0] == '\0' && dlcb[2][0] == '\0' && dlcb[1][0] == '\0' && dlcb[4][0] == '\0') {
+                                    if (tmpcb != NULL) {
+                                        while (tmpcb) {
+                                            ds qq;
+                                            qq = tmpcb->next;
+                                            delete tmpcb;
+                                            tmpcb = qq;
+                                        }
+                                        tmpcb = NULL;
+                                        if (s == NULL) {
+                                            char a[100] = "khong co chuyen bay nao de tim";
+                                            hienthiloi(a);
+                                        }
+                                        else {
+                                            timkiemchuyenbay(s, tmpcb, dlcb[3], 4, capnhapchuyenbaycotmp, cbcotmp);
+                                            capnhapchuyenbaycotmp = cbcotmp;
+                                            hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                            chuyen_trang_tim_kiem = 1;
+                                        }
+                                    }
+                                    else {
+                                        if (s == NULL) {
+                                            char a[100] = "khong co chuyen bay nao de tim";
+                                            hienthiloi(a);
+                                        }
+                                        else {
+                                            cbtmp = 0, cbcotmp, sotrangtmp = 1;
+                                            timkiemchuyenbay(s, tmpcb, dlcb[3], 4, capnhapchuyenbaycotmp, cbcotmp);
+                                            capnhapchuyenbaycotmp = cbcotmp;
+                                            hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                            chuyen_trang_tim_kiem = 1;
+                                        }
+                                    }
+                                }
+                                else {
+                                    if (tmpcb == NULL) {
+                                        char a[100] = "khong co chuyen bay nao de tim";
+                                        hienthiloi(a);
+                                    }
+                                    else {
+                                        cbtmp = 0, cbcotmp, sotrangtmp = 1;
+                                        timkiemchuyenbay1ds(tmpcb, dlcb[3], 4, capnhapchuyenbaycotmp, cbcotmp);
+                                        capnhapchuyenbaycotmp = cbcotmp;
+                                        hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                        chuyen_trang_tim_kiem = 1;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else if (isMousenhapsomaybay(x, y) == 1) {
+
+                        nhapdulieu(886, 150, 886, 1082, 141, 179, dl5, 12, 2);
+                        STRCPYY(dlcb[4], dl5);
+                        if (dlcb[4][0] == '\0') {
+                            while (tmpcb) {
+                                ds qq;
+                                qq = tmpcb->next;
+                                delete tmpcb;
+                                tmpcb = qq;
+                            }
+                            tmpcb = NULL;
+                            tranghientaicb = 1;
+                            sochuyenbayhien = 0;
+                            sotrangcb = 1;
+                            cleardevice();
+                            Screen_Default(TRANG_THAI_TAB);
+                            Flight_design();
+                            hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
+                            chuyen_trang_tim_kiem = 0;
                         }
                         else {
-                            if (dlcb[0][0] == '\0' && dlcb[1][0] == '\0' && dlcb[3][0] == '\0' && dlcb[4][0] == '\0') {
+                            if (dlcb[0][0] == '\0' && dlcb[2][0] == '\0' && dlcb[3][0] == '\0' && dlcb[1][0] == '\0') {
                                 if (tmpcb != NULL) {
                                     while (tmpcb) {
                                         ds qq;
@@ -536,7 +698,7 @@ void AO_THAT_DAY() {
                                         hienthiloi(a);
                                     }
                                     else {
-                                        timkiemchuyenbay(s, tmpcb, dlcb[2], 3, capnhapchuyenbaycotmp, cbcotmp);
+                                        timkiemchuyenbay(s, tmpcb, dlcb[4], 5, capnhapchuyenbaycotmp, cbcotmp);
                                         capnhapchuyenbaycotmp = cbcotmp;
                                         hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
                                         chuyen_trang_tim_kiem = 1;
@@ -549,7 +711,8 @@ void AO_THAT_DAY() {
                                     }
                                     else {
                                         cbtmp = 0, cbcotmp, sotrangtmp = 1;
-                                        timkiemchuyenbay(s, tmpcb, dlcb[2], 3, capnhapchuyenbaycotmp, cbcotmp);
+                                        timkiemchuyenbay(s, tmpcb, dlcb[4], 5, capnhapchuyenbaycotmp, cbcotmp);
+
                                         capnhapchuyenbaycotmp = cbcotmp;
                                         hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
                                         chuyen_trang_tim_kiem = 1;
@@ -563,164 +726,512 @@ void AO_THAT_DAY() {
                                 }
                                 else {
                                     cbtmp = 0, cbcotmp, sotrangtmp = 1;
-                                    timkiemchuyenbay1ds(tmpcb, dlcb[2], 3, capnhapchuyenbaycotmp, cbcotmp);
+                                    timkiemchuyenbay1ds(tmpcb, dlcb[4], 5, capnhapchuyenbaycotmp, cbcotmp);
                                     capnhapchuyenbaycotmp = cbcotmp;
                                     hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
                                     chuyen_trang_tim_kiem = 1;
                                 }
                             }
+
                         }
                     }
-                    if (isMousenhapYEAR(x, y) == 1) {
-
-                        do {
-
-                            b = 0;
-                            nhapdulieu(637, 150, 636, 733, 141, 179, dl4, 4, 3);
-
-                            chuyencharsint(dl4, b);
-
-                            if (b < 2024) {
-                                char a[30] = "nhap >=2024";
-                                hienthiloi(a);
-                            }
-                        } while (b < 2024);
-                        STRCPYY(dlcb[3], dl4);
-                        if (dlcb[3][0] == '\0') {
-                            continue;
-                        }
-                        else {
-                        if (dlcb[0][0] == '\0' && dlcb[2][0] == '\0' && dlcb[1][0] == '\0' && dlcb[4][0] == '\0') {
-                            if (tmpcb != NULL) {
-                                while (tmpcb) {
-                                    ds qq;
-                                    qq = tmpcb->next;
-                                    delete tmpcb;
-                                    tmpcb = qq;
-                                }
-                                tmpcb = NULL;
-                                if (s == NULL) {
-                                    char a[100] = "khong co chuyen bay nao de tim";
-                                    hienthiloi(a);
-                                }
-                                else {
-                                    timkiemchuyenbay(s, tmpcb, dlcb[3], 4, capnhapchuyenbaycotmp, cbcotmp);
-                                    capnhapchuyenbaycotmp = cbcotmp;
-                                    hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
-                                    chuyen_trang_tim_kiem = 1;
-                                }
-                            }
-                            else {
-                                if (s == NULL) {
-                                    char a[100] = "khong co chuyen bay nao de tim";
-                                    hienthiloi(a);
-                                }
-                                else {
-                                    cbtmp = 0, cbcotmp, sotrangtmp = 1;
-                                    timkiemchuyenbay(s, tmpcb, dlcb[3], 4, capnhapchuyenbaycotmp, cbcotmp);
-                                    capnhapchuyenbaycotmp = cbcotmp;
-                                    hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
-                                    chuyen_trang_tim_kiem = 1;
-                                }
-                            }
-                        }
-                        else {
-                            if (tmpcb == NULL) {
-                                char a[100] = "khong co chuyen bay nao de tim";
-                                hienthiloi(a);
-                            }
-                            else {
-                                cbtmp = 0, cbcotmp, sotrangtmp = 1;
-                                timkiemchuyenbay1ds(tmpcb, dlcb[3], 4, capnhapchuyenbaycotmp, cbcotmp);
-                                capnhapchuyenbaycotmp = cbcotmp;
-                                hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
-                                chuyen_trang_tim_kiem = 1;
-                            }
-                        }
+                    else if (isMouseaddFlight(x, y) == 1) {
+                            cleardevice();
+                            hienthemchuyebay();
+                            addchuyenbay = true;
                     }
                 }
-            }
-                else if (isMousenhapsomaybay(x, y) == 1) {
-
-                    nhapdulieu(886, 150, 886, 1082, 141, 179, dl5, 12, 2);
-                    STRCPYY(dlcb[4], dl5);
-                    if (dlcb[4][0] == '\0') {
-                        while (tmpcb) {
-                            ds qq;
-                            qq = tmpcb->next;
-                            delete tmpcb;
-                            tmpcb = qq;
-                        }
-                        tmpcb = NULL;
-                        tranghientaicb = 1;
-                        sochuyenbayhien = 0;
-                        sotrangcb = 1;
-                        cleardevice();
-                        Screen_Default(TRANG_THAI_TAB);
-                        Flight_design();
-                        hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
-                        chuyen_trang_tim_kiem = 0;
-                    }
-                    else {
-                        if (dlcb[0][0] == '\0' && dlcb[2][0] == '\0' && dlcb[3][0] == '\0' && dlcb[1][0] == '\0') {
-                            if (tmpcb != NULL) {
-                                while (tmpcb) {
-                                    ds qq;
-                                    qq = tmpcb->next;
-                                    delete tmpcb;
-                                    tmpcb = qq;
-                                }
-                                tmpcb = NULL;
-                                if (s == NULL) {
-                                    char a[100] = "khong co chuyen bay nao de tim";
-                                    hienthiloi(a);
-                                }
-                                else {
-                                    timkiemchuyenbay(s, tmpcb, dlcb[4], 5, capnhapchuyenbaycotmp, cbcotmp);
-                                    capnhapchuyenbaycotmp = cbcotmp;
-                                    hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
-                                    chuyen_trang_tim_kiem = 1;
-                                }
+                else {
+                    char dl1[30], dl2[30], dl3[30], dl4[30], dl5[30];
+                    dl1[0] = '\0'; dl2[0] = '\0'; dl3[0] = '\0'; dl4[0] = '\0'; dl5[0] = '\0';
+                    if (isMousenhapidFlight(x, y) == 1&& dangmuab1 == 0 && dangmuab2 == 0 && dang_chon_chuyen_bay == 0 && chon_ghe == 0) {
+                        cbtmp = 0, cbcotmp, sotrangtmp = 1;
+                        nhapdulieu(185, 150, 184, 382, 141, 179, dl1, 12, 2);
+                        STRCPYY(dlcb[0], dl1);
+                        if (dlcb[0][0] == '\0') {
+                            while (tmpcb) {
+                                ds qq;
+                                qq = tmpcb->next;
+                                delete tmpcb;
+                                tmpcb = qq;
                             }
-                            else {
-                                if (s == NULL) {
-                                    char a[100] = "khong co chuyen bay nao de tim";
-                                    hienthiloi(a);
-                                }
-                                else {
-                                    cbtmp = 0, cbcotmp, sotrangtmp = 1;
-                                    timkiemchuyenbay(s, tmpcb, dlcb[4], 5, capnhapchuyenbaycotmp, cbcotmp);
-
-                                    capnhapchuyenbaycotmp = cbcotmp;
-                                    hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
-                                    chuyen_trang_tim_kiem = 1;
-                                }
-                            }
+                            tmpcb = NULL;
+                            tranghientaicb1 = 1;
+                            sochuyenbayhien1 = 0;
+                            sotrangcb1 = 1;
+                            cleardevice();
+                            Screen_Default(TRANG_THAI_TAB);
+                            Ticket_design();
+                            hientrangdau(chuyenbaycothedat, sochuyenbayhien1, sochuyenbayco1, sotrangcb1);
+                            chuyen_trang_tim_kiem = 0;
                         }
                         else {
-                            if (tmpcb == NULL) {
-                                char a[100] = "khong co chuyen bay nao de tim";
-                                hienthiloi(a);
+                            if (dlcb[1][0] == '\0' && dlcb[2][0] == '\0' && dlcb[3][0] == '\0' && dlcb[4][0] == '\0') {
+                                if (tmpcb != NULL) {
+                                    while (tmpcb) {
+                                        ds qq;
+                                        qq = tmpcb->next;
+                                        delete tmpcb;
+                                        tmpcb = qq;
+                                    }
+                                    tmpcb = NULL;
+                                    if (s == NULL) {
+                                        char a[100] = "khong co chuyen bay nao de tim";
+                                        hienthiloi(a);
+                                    }
+                                    else {
+                                        timkiemchuyenbay(chuyenbaycothedat, tmpcb, dlcb[0], 1, capnhapchuyenbaycotmp, cbcotmp);
+                                        capnhapchuyenbaycotmp = cbcotmp;
+                                        hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                        chuyen_trang_tim_kiem = 1;
+                                    }
+                                }
+                                else {
+                                    if (s == NULL) {
+                                        char a[100] = "khong co chuyen bay nao de tim";
+                                        hienthiloi(a);
+                                    }
+                                    else {
+                                        timkiemchuyenbay(chuyenbaycothedat, tmpcb, dlcb[0], 1, capnhapchuyenbaycotmp, cbcotmp);
+                                        capnhapchuyenbaycotmp = cbcotmp;
+                                        hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                        chuyen_trang_tim_kiem = 1;
+                                    }
+                                }
                             }
                             else {
-                                cbtmp = 0, cbcotmp, sotrangtmp = 1;
-                                timkiemchuyenbay1ds(tmpcb, dlcb[4], 5, capnhapchuyenbaycotmp, cbcotmp);
+                                timkiemchuyenbay1ds(tmpcb, dlcb[0], 1, capnhapchuyenbaycotmp, cbcotmp);
                                 capnhapchuyenbaycotmp = cbcotmp;
                                 hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
                                 chuyen_trang_tim_kiem = 1;
                             }
                         }
 
+                       
+                        
                     }
-                }
-                else if (isMouseaddFlight(x, y) == 1) {
-                    if (TRANG_THAI_TAB == 2)
-                    {
-                        cleardevice();
-                        hienthemchuyebay();
-                        addchuyenbay = true;
+                    if (isMousenhapidFlight(x, y) == 1 && dangmuab1 == 0 && dangmuab2 == 0 && dang_chon_chuyen_bay == 1 && chon_ghe == 0) {
+                        cbtmp = 0, cbcotmp, sotrangtmp = 1;
+                        nhapdulieu(185, 150, 184, 382, 141, 179, dl1, 12, 2);
+                        STRCPYY(dlcb[0], dl1);
+                        if (dlcb[0][0] == '\0') {
+                            while (tmpcb) {
+                                ds qq;
+                                qq = tmpcb->next;
+                                delete tmpcb;
+                                tmpcb = qq;
+                            }
+                            tmpcb = NULL;
+                            tranghientaicb1 = 1;
+                            sochuyenbayhien1 = 0;
+                            sotrangcb1 = 1;
+                            cleardevice();
+                            Screen_Default(TRANG_THAI_TAB);
+                            Man_hinh_mua_ticket_b3();
+                            hientrangdau(chuyenbaycothedat, sochuyenbayhien1, sochuyenbayco1, sotrangcb1);
+                            chuyen_trang_tim_kiem = 0;
+                        }
+                        else {
+                            if (dlcb[1][0] == '\0' && dlcb[2][0] == '\0' && dlcb[3][0] == '\0' && dlcb[4][0] == '\0') {
+                                if (tmpcb != NULL) {
+                                    while (tmpcb) {
+                                        ds qq;
+                                        qq = tmpcb->next;
+                                        delete tmpcb;
+                                        tmpcb = qq;
+                                    }
+                                    tmpcb = NULL;
+                                    if (s == NULL) {
+                                        char a[100] = "khong co chuyen bay nao de tim";
+                                        hienthiloi(a);
+                                    }
+                                    else {
+                                        timkiemchuyenbay(chuyenbaycothedat, tmpcb, dlcb[0], 1, capnhapchuyenbaycotmp, cbcotmp);
+                                        capnhapchuyenbaycotmp = cbcotmp;
+                                        hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                        chuyen_trang_tim_kiem = 1;
+                                    }
+                                }
+                                else {
+                                    if (s == NULL) {
+                                        char a[100] = "khong co chuyen bay nao de tim";
+                                        hienthiloi(a);
+                                    }
+                                    else {
+                                        timkiemchuyenbay(chuyenbaycothedat, tmpcb, dlcb[0], 1, capnhapchuyenbaycotmp, cbcotmp);
+                                        capnhapchuyenbaycotmp = cbcotmp;
+                                        hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                        chuyen_trang_tim_kiem = 1;
+                                    }
+                                }
+                            }
+                            else {
+                                timkiemchuyenbay1ds(tmpcb, dlcb[0], 1, capnhapchuyenbaycotmp, cbcotmp);
+                                capnhapchuyenbaycotmp = cbcotmp;
+                                hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                chuyen_trang_tim_kiem = 1;
+                            }
+                        }
+
+
+
                     }
-                    else if (TRANG_THAI_TAB == 4 && dang_chon_chuyen_bay == 0 && chon_ghe == 0) {
+
+
+                    if (isMousenhapDAY(x, y) == 1 || isMousenhapMONTH(x, y) == 1 || isMousenhapYEAR(x, y) == 1) {
+                        int b;
+                        if (isMousenhapDAY(x, y) == 1) {
+
+                            do {
+
+                                b = 0;
+                                char a[30] = "nhap >0 va <30";
+                                nhapdulieu(469, 150, 468, 514, 141, 179, dl2, 2, 3);
+                                chuyencharsint(dl2, b);
+                                if (b > 31 || b <= 0) {
+                                    hienthiloi(a);
+                                }
+                            } while (b > 31 || b <= 0);
+                            STRCPYY(dlcb[1], dl2);
+                            if (dlcb[1][0] == '\0') {
+                                continue;
+                            }
+                            else {
+                                if (dlcb[0][0] == '\0' && dlcb[2][0] == '\0' && dlcb[3][0] == '\0' && dlcb[4][0] == '\0') {
+                                    if (tmpcb != NULL) {
+                                        while (tmpcb) {
+                                            ds qq;
+                                            qq = tmpcb->next;
+                                            delete tmpcb;
+                                            tmpcb = qq;
+                                        }
+                                        tmpcb = NULL;
+                                        if (s == NULL) {
+                                            char a[100] = "khong co chuyen bay nao de tim";
+                                            hienthiloi(a);
+                                        }
+                                        else {
+                                            timkiemchuyenbay(chuyenbaycothedat, tmpcb, dlcb[1], 2, capnhapchuyenbaycotmp, cbcotmp);
+                                            capnhapchuyenbaycotmp = cbcotmp;
+                                            hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                            chuyen_trang_tim_kiem = 1;
+                                        }
+                                    }
+                                    else {
+                                        if (s == NULL) {
+                                            char a[100] = "khong co chuyen bay nao de tim";
+                                            hienthiloi(a);
+                                        }
+                                        else {
+                                            cbtmp = 0, cbcotmp, sotrangtmp = 1;
+                                            timkiemchuyenbay(chuyenbaycothedat, tmpcb, dlcb[1], 2, capnhapchuyenbaycotmp, cbcotmp);
+                                            capnhapchuyenbaycotmp = cbcotmp;
+                                            hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                            chuyen_trang_tim_kiem = 1;
+                                        }
+                                    }
+                                }
+                                else {
+                                    if (tmpcb == NULL) {
+                                        char a[100] = "khong co chuyen bay nao de tim";
+                                        hienthiloi(a);
+                                    }
+                                    else {
+                                        cbtmp = 0, cbcotmp, sotrangtmp = 1;
+                                        timkiemchuyenbay1ds(tmpcb, dlcb[1], 2, capnhapchuyenbaycotmp, cbcotmp);
+                                        capnhapchuyenbaycotmp = cbcotmp;
+                                        hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                        chuyen_trang_tim_kiem = 1;
+                                    }
+                                }
+
+                            }
+                        }
+                        if (isMousenhapMONTH(x, y) == 1) {
+
+                            do {
+
+                                b = 0;
+                                char a[30] = "nh?p >0 và =<12";
+                                nhapdulieu(553, 150, 552, 597, 141, 179, dl3, 2, 3);
+                                chuyencharsint(dl3, b);
+
+                                if (b > 12 || b <= 0) {
+                                    hienthiloi(a);
+                                }
+                            } while (b > 12 || b <= 0);
+                            STRCPYY(dlcb[2], dl3);
+                            if (dlcb[2][0] == '\0') {
+                                continue;
+                            }
+                            else {
+                                if (dlcb[0][0] == '\0' && dlcb[1][0] == '\0' && dlcb[3][0] == '\0' && dlcb[4][0] == '\0') {
+                                    if (tmpcb != NULL) {
+                                        while (tmpcb) {
+                                            ds qq;
+                                            qq = tmpcb->next;
+                                            delete tmpcb;
+                                            tmpcb = qq;
+                                        }
+                                        tmpcb = NULL;
+                                        if (s == NULL) {
+                                            char a[100] = "khong co chuyen bay nao de tim";
+                                            hienthiloi(a);
+                                        }
+                                        else {
+                                            timkiemchuyenbay(chuyenbaycothedat, tmpcb, dlcb[2], 3, capnhapchuyenbaycotmp, cbcotmp);
+                                            capnhapchuyenbaycotmp = cbcotmp;
+                                            hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                            chuyen_trang_tim_kiem = 1;
+                                        }
+                                    }
+                                    else {
+                                        if (s == NULL) {
+                                            char a[100] = "khong co chuyen bay nao de tim";
+                                            hienthiloi(a);
+                                        }
+                                        else {
+                                            cbtmp = 0, cbcotmp, sotrangtmp = 1;
+                                            timkiemchuyenbay(chuyenbaycothedat, tmpcb, dlcb[2], 3, capnhapchuyenbaycotmp, cbcotmp);
+                                            capnhapchuyenbaycotmp = cbcotmp;
+                                            hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                            chuyen_trang_tim_kiem = 1;
+                                        }
+                                    }
+                                }
+                                else {
+                                    if (tmpcb == NULL) {
+                                        char a[100] = "khong co chuyen bay nao de tim";
+                                        hienthiloi(a);
+                                    }
+                                    else {
+                                        cbtmp = 0, cbcotmp, sotrangtmp = 1;
+                                        timkiemchuyenbay1ds(tmpcb, dlcb[2], 3, capnhapchuyenbaycotmp, cbcotmp);
+                                        capnhapchuyenbaycotmp = cbcotmp;
+                                        hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                        chuyen_trang_tim_kiem = 1;
+                                    }
+                                }
+                            }
+                        }
+                        if (isMousenhapYEAR(x, y) == 1) {
+
+                            do {
+
+                                b = 0;
+                                nhapdulieu(637, 150, 636, 733, 141, 179, dl4, 4, 3);
+
+                                chuyencharsint(dl4, b);
+
+                                if (b < 2024) {
+                                    char a[30] = "nhap >=2024";
+                                    hienthiloi(a);
+                                }
+                            } while (b < 2024);
+                            STRCPYY(dlcb[3], dl4);
+                            if (dlcb[3][0] == '\0') {
+                                continue;
+                            }
+                            else {
+                                if (dlcb[0][0] == '\0' && dlcb[2][0] == '\0' && dlcb[1][0] == '\0' && dlcb[4][0] == '\0') {
+                                    if (tmpcb != NULL) {
+                                        while (tmpcb) {
+                                            ds qq;
+                                            qq = tmpcb->next;
+                                            delete tmpcb;
+                                            tmpcb = qq;
+                                        }
+                                        tmpcb = NULL;
+                                        if (s == NULL) {
+                                            char a[100] = "khong co chuyen bay nao de tim";
+                                            hienthiloi(a);
+                                        }
+                                        else {
+                                            timkiemchuyenbay(chuyenbaycothedat, tmpcb, dlcb[3], 4, capnhapchuyenbaycotmp, cbcotmp);
+                                            capnhapchuyenbaycotmp = cbcotmp;
+                                            hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                            chuyen_trang_tim_kiem = 1;
+                                        }
+                                    }
+                                    else {
+                                        if (s == NULL) {
+                                            char a[100] = "khong co chuyen bay nao de tim";
+                                            hienthiloi(a);
+                                        }
+                                        else {
+                                            cbtmp = 0, cbcotmp, sotrangtmp = 1;
+                                            timkiemchuyenbay(chuyenbaycothedat, tmpcb, dlcb[3], 4, capnhapchuyenbaycotmp, cbcotmp);
+                                            capnhapchuyenbaycotmp = cbcotmp;
+                                            hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                            chuyen_trang_tim_kiem = 1;
+                                        }
+                                    }
+                                }
+                                else {
+                                    if (tmpcb == NULL) {
+                                        char a[100] = "khong co chuyen bay nao de tim";
+                                        hienthiloi(a);
+                                    }
+                                    else {
+                                        cbtmp = 0, cbcotmp, sotrangtmp = 1;
+                                        timkiemchuyenbay1ds(tmpcb, dlcb[3], 4, capnhapchuyenbaycotmp, cbcotmp);
+                                        capnhapchuyenbaycotmp = cbcotmp;
+                                        hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                        chuyen_trang_tim_kiem = 1;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else if (isMousenhapsomaybay(x, y) == 1 && dangmuab1 == 0 && dangmuab2 == 0 && dang_chon_chuyen_bay == 0 && chon_ghe == 0) {
+
+                        nhapdulieu(886, 150, 886, 1082, 141, 179, dl5, 12, 2);
+                        STRCPYY(dlcb[4], dl5);
+                        if (dlcb[4][0] == '\0') {
+                            while (tmpcb) {
+                                ds qq;
+                                qq = tmpcb->next;
+                                delete tmpcb;
+                                tmpcb = qq;
+                            }
+                            tmpcb = NULL;
+                            tranghientaicb1 = 1;
+                            sochuyenbayhien1 = 0;
+                            sotrangcb1 = 1;
+                            cleardevice();
+                            Screen_Default(TRANG_THAI_TAB);
+                            Ticket_design();
+                            hientrangdau(chuyenbaycothedat, sochuyenbayhien1, sochuyenbayco1, sotrangcb1);
+                            chuyen_trang_tim_kiem = 0;
+                        }
+                        else {
+                            if (dlcb[0][0] == '\0' && dlcb[2][0] == '\0' && dlcb[3][0] == '\0' && dlcb[1][0] == '\0') {
+                                if (tmpcb != NULL) {
+                                    while (tmpcb) {
+                                        ds qq;
+                                        qq = tmpcb->next;
+                                        delete tmpcb;
+                                        tmpcb = qq;
+                                    }
+                                    tmpcb = NULL;
+                                    if (s == NULL) {
+                                        char a[100] = "khong co chuyen bay nao de tim";
+                                        hienthiloi(a);
+                                    }
+                                    else {
+                                        timkiemchuyenbay(chuyenbaycothedat, tmpcb, dlcb[4], 5, capnhapchuyenbaycotmp, cbcotmp);
+                                        capnhapchuyenbaycotmp = cbcotmp;
+                                        hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                        chuyen_trang_tim_kiem = 1;
+                                    }
+                                }
+                                else {
+                                    if (s == NULL) {
+                                        char a[100] = "khong co chuyen bay nao de tim";
+                                        hienthiloi(a);
+                                    }
+                                    else {
+                                        cbtmp = 0, cbcotmp, sotrangtmp = 1;
+                                        timkiemchuyenbay(chuyenbaycothedat, tmpcb, dlcb[4], 5, capnhapchuyenbaycotmp, cbcotmp);
+
+                                        capnhapchuyenbaycotmp = cbcotmp;
+                                        hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                        chuyen_trang_tim_kiem = 1;
+                                    }
+                                }
+                            }
+                            else {
+                                if (tmpcb == NULL) {
+                                    char a[100] = "khong co chuyen bay nao de tim";
+                                    hienthiloi(a);
+                                }
+                                else {
+                                    cbtmp = 0, cbcotmp, sotrangtmp = 1;
+                                    timkiemchuyenbay1ds(tmpcb, dlcb[4], 5, capnhapchuyenbaycotmp, cbcotmp);
+                                    capnhapchuyenbaycotmp = cbcotmp;
+                                    hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                    chuyen_trang_tim_kiem = 1;
+                                }
+                            }
+
+                        }
+                    }
+                    else if (isMousenhapsomaybay(x, y) == 1 && dangmuab1 == 0 && dangmuab2 == 0 && dang_chon_chuyen_bay == 1 && chon_ghe == 0) {
+
+                        nhapdulieu(886, 150, 886, 1082, 141, 179, dl5, 12, 2);
+                        STRCPYY(dlcb[4], dl5);
+                        if (dlcb[4][0] == '\0') {
+                            while (tmpcb) {
+                                ds qq;
+                                qq = tmpcb->next;
+                                delete tmpcb;
+                                tmpcb = qq;
+                            }
+                            tmpcb = NULL;
+                            tranghientaicb1 = 1;
+                            sochuyenbayhien1 = 0;
+                            sotrangcb1 = 1;
+                            cleardevice();
+                            Screen_Default(TRANG_THAI_TAB);
+                            Man_hinh_mua_ticket_b3();
+                            hientrangdau(chuyenbaycothedat, sochuyenbayhien1, sochuyenbayco1, sotrangcb1);
+                            chuyen_trang_tim_kiem = 0;
+                        }
+                        else {
+                            if (dlcb[0][0] == '\0' && dlcb[2][0] == '\0' && dlcb[3][0] == '\0' && dlcb[1][0] == '\0') {
+                                if (tmpcb != NULL) {
+                                    while (tmpcb) {
+                                        ds qq;
+                                        qq = tmpcb->next;
+                                        delete tmpcb;
+                                        tmpcb = qq;
+                                    }
+                                    tmpcb = NULL;
+                                    if (s == NULL) {
+                                        char a[100] = "khong co chuyen bay nao de tim";
+                                        hienthiloi(a);
+                                    }
+                                    else {
+                                        timkiemchuyenbay(chuyenbaycothedat, tmpcb, dlcb[4], 5, capnhapchuyenbaycotmp, cbcotmp);
+                                        capnhapchuyenbaycotmp = cbcotmp;
+                                        hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                        chuyen_trang_tim_kiem = 1;
+                                    }
+                                }
+                                else {
+                                    if (s == NULL) {
+                                        char a[100] = "khong co chuyen bay nao de tim";
+                                        hienthiloi(a);
+                                    }
+                                    else {
+                                        cbtmp = 0, cbcotmp, sotrangtmp = 1;
+                                        timkiemchuyenbay(chuyenbaycothedat, tmpcb, dlcb[4], 5, capnhapchuyenbaycotmp, cbcotmp);
+
+                                        capnhapchuyenbaycotmp = cbcotmp;
+                                        hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                        chuyen_trang_tim_kiem = 1;
+                                    }
+                                }
+                            }
+                            else {
+                                if (tmpcb == NULL) {
+                                    char a[100] = "khong co chuyen bay nao de tim";
+                                    hienthiloi(a);
+                                }
+                                else {
+                                    cbtmp = 0, cbcotmp, sotrangtmp = 1;
+                                    timkiemchuyenbay1ds(tmpcb, dlcb[4], 5, capnhapchuyenbaycotmp, cbcotmp);
+                                    capnhapchuyenbaycotmp = cbcotmp;
+                                    hientrangdau(tmpcb, cbtmp, cbcotmp, sotrangtmp);
+                                    chuyen_trang_tim_kiem = 1;
+                                }
+                            }
+
+                        }
+                        }
+
+
+                    else if (isMouseaddFlight(x, y) == 1&&dangmuab1==0&&dangmuab2==0&&dang_chon_chuyen_bay==0&&chon_ghe==0) {
                         dangmuab1 = 1;
                         dangmuab2 = 0;
                         dang_chon_chuyen_bay = 0;
@@ -728,9 +1239,9 @@ void AO_THAT_DAY() {
                         cleardevice();
                         Screen_Default(TRANG_THAI_TAB);
                         Man_hinh_mua_ticket_b1();
+
                     }
                 }
-
             }
             //them cb
             else if (TRANG_THAI_TAB == 2 && addchuyenbay && chon_may_bay == false && suathongtin == false && sua_cb == 0 && (isMouseaddidflight(x, y) == 1 || isMouseaddmamaybay(x, y) == 1 || isMouseback(x, y) == 1 || isMouseaddnoiden(x, y) == 1 || isMouseaddday(x, y) == 1 || isMouseaddthang(x, y) == 1 || isMouseaddyear(x, y) == 1 || isMouseaddgio(x, y) == 1 || isMouseaddphut(x, y) == 1 || isMousetimmaybay(x, y) == 1 || isMousesave(x, y) == 1 || isMousechonmaybay(x, y) == 1)) {
@@ -996,7 +1507,7 @@ void AO_THAT_DAY() {
 
             }
             // xem danh sach ve         
-            else if (TRANG_THAI_TAB == 2 && chuyen_trang_xem_ds==true ) {
+            else if (TRANG_THAI_TAB == 2 && chuyen_trang_xem_ds == true) {
                 if (isMouseback(x, y) == 1) {
                     for (int i = 0; i < 13; i++) {
                         dlcb[i][0] = '\0';
@@ -1019,7 +1530,7 @@ void AO_THAT_DAY() {
                     muaticket = false;
                     delete dsvtmp; delete vitrighe;
                     sotrangxemdsv = 1, tranghientaixemdsv = 1, sophantudsv = 0, sophantuhiendsv = 0;
-                }                
+                }
                 if (isMousexemtrangsau(x, y) == 1) {
                     chuyen_trang_xem_ds = true;
                     if (tranghientaixemdsv < sotrangxemdsv) {
@@ -1041,30 +1552,56 @@ void AO_THAT_DAY() {
                         hienthidanhsachve(xemds, dsvtmp, 2, sophantuhiendsv, sophantudsv, vitrighe);
                     }
                 }
-            }           
+            }
             //chuyentrang
             else if ((TRANG_THAI_TAB == 2 || (TRANG_THAI_TAB == 4 && dangmuab1 == 0 && dangmuab2 == 0 && dang_chon_chuyen_bay == 0 && chon_ghe == 0) || (TRANG_THAI_TAB == 4 && dang_chon_chuyen_bay == 1 && chon_ghe == 0)) && chuyen_trang_tim_kiem == 0 && chuyen_trang_xem_ds == false && (isMousexemtrangsau(x, y) == 1 || isMousexemtrangtruoc(x, y) == 1)) {
-                if (isMousexemtrangsau(x, y) == 1) {
-                    if (tranghientaicb < sotrangcb) {
-                        tranghientaicb++;
-                        sochuyenbayhien = (tranghientaicb - 1) * 10;
-                        if (tranghientaicb == sotrangcb) {
-                            hienthidschuyenbay(s, sochuyenbayhien, 3);
+                if (TRANG_THAI_TAB == 2) {
+
+                    if (isMousexemtrangsau(x, y) == 1) {
+                        if (tranghientaicb < sotrangcb) {
+                            tranghientaicb++;
+                            sochuyenbayhien = (tranghientaicb - 1) * 10;
+                            if (tranghientaicb == sotrangcb) {
+                                hienthidschuyenbay(s, sochuyenbayhien, 3);
+                            }
+                            else {
+                                hienthidschuyenbay(s, sochuyenbayhien, 2);
+                            }
                         }
-                        else {
+                    }
+                    else if (isMousexemtrangtruoc(x, y) == 1) {
+                        //tranghientaicb,sotrangcb,sochuyenbayco
+                        if (tranghientaicb > 1) {
+                            tranghientaicb--;
+                            sochuyenbayhien = (tranghientaicb - 1) * 10;
                             hienthidschuyenbay(s, sochuyenbayhien, 2);
                         }
                     }
                 }
-                else if (isMousexemtrangtruoc(x, y) == 1) {
-                    //tranghientaicb,sotrangcb,sochuyenbayco
-                    if (tranghientaicb > 1) {
-                        tranghientaicb--;
-                        sochuyenbayhien = (tranghientaicb - 1) * 10;
-                        hienthidschuyenbay(s, sochuyenbayhien, 2);
+                else {
+                    cout << "dell" << endl;
+
+                    if (isMousexemtrangsau(x, y) == 1) {
+                        if (tranghientaicb1 < sotrangcb1) {
+                            tranghientaicb1++;
+                            sochuyenbayhien1 = (tranghientaicb1 - 1) * 10;
+                            if (tranghientaicb1 == sotrangcb1) {
+                                hienthidschuyenbay(chuyenbaycothedat, sochuyenbayhien1, 3);
+                            }
+                            else {
+                                hienthidschuyenbay(chuyenbaycothedat, sochuyenbayhien1, 2);
+                            }
+                        }
+                    }
+                    else if (isMousexemtrangtruoc(x, y) == 1) {
+                        //tranghientaicb,sotrangcb,sochuyenbayco
+                        if (tranghientaicb1 > 1) {
+                            tranghientaicb1--;
+                            sochuyenbayhien1 = (tranghientaicb1 - 1) * 10;
+                            hienthidschuyenbay(chuyenbaycothedat, sochuyenbayhien1, 2);
+                        }
                     }
                 }
-
             }
             else if ((TRANG_THAI_TAB == 2 || (TRANG_THAI_TAB == 4 && dangmuab1 == 0 && dangmuab2 == 0 && dang_chon_chuyen_bay == 0 && chon_ghe == 0) || (TRANG_THAI_TAB == 4 && dang_chon_chuyen_bay == 1 && chon_ghe == 0)) && chuyen_trang_tim_kiem == 1 && chuyen_trang_xem_ds == false && (isMousexemtrangsau(x, y) == 1 || isMousexemtrangtruoc(x, y) == 1)) {
 
@@ -1116,114 +1653,114 @@ void AO_THAT_DAY() {
                 }
             }*/
             //tra trang thai bang 1
-            else if (TRANG_THAI_TAB == 2 && chuyen_trang_xem_ds == false && chuyen_trang_tim_kiem == 0 && addchuyenbay == false && suathongtin == false ) {               
-                 int sothutu;
-                 if (x >= 100 && x <= 1232 && y <= 689 && y >= 289) {
-                     sothutu = 0;
-                     sothutu = (y - 289) / 40 + 10 * (tranghientaicb - 1);
-                     if (sothutu >= sochuyenbayco) {
-                         continue;
-                     }
-                     else {
-                         ds duyet = NULL; duyet = s; int dem = 0;
-                         while (duyet != NULL) {
-                             if (dem == sothutu) {                               
-                                 if (duyet->cb.trangthai == 4 || duyet->cb.trangthai == 1) {
-                                     char a[200] = "chuyen bay ko the huy";
-                                     hienthiloi(a);                                                                        
-                                     dem++;
-                                     break;
-                                 }
-                                 else {
-                                     dem++;
-                                     string n = "ban co chac muon xoa cb ";
-                                     string m=duyet->cb.macb;
-                                     n += m;
-                                     n += "khong";
-                                     are_you_sure(n);
-                                     while (1) {
-                                         if (ismouseclick(WM_LBUTTONDOWN)) {
-                                             int xx, yy;
-                                             getmouseclick(WM_LBUTTONDOWN, xx, yy);
-                                             if (isMouse_Yes_huy_ve(xx, yy)) {
-                                                 duyet->cb.trangthai = 1;
+            else if (TRANG_THAI_TAB == 2 && chuyen_trang_xem_ds == false && chuyen_trang_tim_kiem == 0 && addchuyenbay == false && suathongtin == false) {
+                int sothutu;
+                if (x >= 100 && x <= 1232 && y <= 689 && y >= 289) {
+                    sothutu = 0;
+                    sothutu = (y - 289) / 40 + 10 * (tranghientaicb - 1);
+                    if (sothutu >= sochuyenbayco) {
+                        continue;
+                    }
+                    else {
+                        ds duyet = NULL; duyet = s; int dem = 0;
+                        while (duyet != NULL) {
+                            if (dem == sothutu) {
+                                if (duyet->cb.trangthai == 4 || duyet->cb.trangthai == 1) {
+                                    char a[200] = "chuyen bay ko the huy";
+                                    hienthiloi(a);
+                                    dem++;
+                                    break;
+                                }
+                                else {
+                                    dem++;
+                                    string n = "ban co chac muon xoa cb ";
+                                    string m = duyet->cb.macb;
+                                    n += m;
+                                    n += "khong";
+                                    are_you_sure(n);
+                                    while (1) {
+                                        if (ismouseclick(WM_LBUTTONDOWN)) {
+                                            int xx, yy;
+                                            getmouseclick(WM_LBUTTONDOWN, xx, yy);
+                                            if (isMouse_Yes_huy_ve(xx, yy)) {
+                                                duyet->cb.trangthai = 1;
                                                 /* char a[30] = "chuyen bay da huy";
                                                  hienthiloi(a);*/
-                                                 capnhatdulieu(s);                                                 
-                                                 break;
-                                             }
-                                             else if (isMouse_No_huy_ve(xx, yy)) {
-                                                 break;                                                 
-                                             }
-                                         }
-                                     }
- /*                                    duyet->cb.trangthai = 1;
-                                     char a[30] = "chuyen bay da huy";
-                                     hienthiloi(a);
-                                     capnhatdulieu(s);
-                                     break;*/
-                                  
-                                 }
-                             }
-                             else {
-                                 dem++;
-                             }
-                             duyet = duyet->next;
-                         }
+                                                capnhatdulieu(s);
+                                                break;
+                                            }
+                                            else if (isMouse_No_huy_ve(xx, yy)) {
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    /*                                    duyet->cb.trangthai = 1;
+                                                                        char a[30] = "chuyen bay da huy";
+                                                                        hienthiloi(a);
+                                                                        capnhatdulieu(s);
+                                                                        break;*/
 
-                         cleardevice();
-                         Screen_Default(TRANG_THAI_TAB);
-                         Flight_design();
-                         sochuyenbayhien = 0;
-                         tranghientaicb = 1;
-                         hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
+                                }
+                            }
+                            else {
+                                dem++;
+                            }
+                            duyet = duyet->next;
+                        }
 
-                     }
-                 }
-                 if (x >= 1232 && x <= 1439 && y <= 689 && y >= 289) {
-                     sothutu = 0;
-                     sothutu = (y - 289) / 40 + 10 * (tranghientaicb - 1);
-                     if (sothutu >= sochuyenbayco) {                     
-                         chuyen_trang_xem_ds = false; 
-                         continue;
-                     }
-                     else {
-                         xemds = laychuyenbay(s, sothutu);
-                         int j = 0;
-                         dsvtmp = new char* [xemds.sove];
-                         vitrighe = new int[xemds.sove];
-                         for (int i = 0; i < xemds.sove; i++) {
-                             dsvtmp[i] = new char[30];
-                             dsvtmp[i][0] = '\0';
-                             vitrighe[i] = 0;
-                         }
-                         for (int i = 0; i < xemds.sove; i++) {
-                             if (xemds.danhsachve[i][0] == '\0') {
-                                 continue;
-                             }
-                             else {
-                                 sophantudsv++;
-                                 vitrighe[j] = i + 1;
-                                 STRCPYY(dsvtmp[j], xemds.danhsachve[i]);
-                                 j++;
-                             }
-                         }
-                         float c = sophantudsv / 10.0;
-                         if (sotrangxemdsv < c) {
-                             sotrangxemdsv = (int)c + 1;
-                             hienthidanhsachve(xemds, dsvtmp, 2, sophantuhiendsv, sophantudsv, vitrighe);
-                             chuyen_trang_xem_ds = true;
-                             chuyen_trang_tim_kiem = false;
-                         }
-                         else {
-                             hienthidanhsachve(xemds, dsvtmp, 3, sophantuhiendsv, sophantudsv, vitrighe);
-                             chuyen_trang_xem_ds = true;
-                             chuyen_trang_tim_kiem = false;
-                         }
-                     }
-                 }
+                        cleardevice();
+                        Screen_Default(TRANG_THAI_TAB);
+                        Flight_design();
+                        sochuyenbayhien = 0;
+                        tranghientaicb = 1;
+                        hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
+
+                    }
+                }
+                if (x >= 1232 && x <= 1439 && y <= 689 && y >= 289) {
+                    sothutu = 0;
+                    sothutu = (y - 289) / 40 + 10 * (tranghientaicb - 1);
+                    if (sothutu >= sochuyenbayco) {
+                        chuyen_trang_xem_ds = false;
+                        continue;
+                    }
+                    else {
+                        xemds = laychuyenbay(s, sothutu);
+                        int j = 0;
+                        dsvtmp = new char* [xemds.sove];
+                        vitrighe = new int[xemds.sove];
+                        for (int i = 0; i < xemds.sove; i++) {
+                            dsvtmp[i] = new char[30];
+                            dsvtmp[i][0] = '\0';
+                            vitrighe[i] = 0;
+                        }
+                        for (int i = 0; i < xemds.sove; i++) {
+                            if (xemds.danhsachve[i][0] == '\0') {
+                                continue;
+                            }
+                            else {
+                                sophantudsv++;
+                                vitrighe[j] = i + 1;
+                                STRCPYY(dsvtmp[j], xemds.danhsachve[i]);
+                                j++;
+                            }
+                        }
+                        float c = sophantudsv / 10.0;
+                        if (sotrangxemdsv < c) {
+                            sotrangxemdsv = (int)c + 1;
+                            hienthidanhsachve(xemds, dsvtmp, 2, sophantuhiendsv, sophantudsv, vitrighe);
+                            chuyen_trang_xem_ds = true;
+                            chuyen_trang_tim_kiem = false;
+                        }
+                        else {
+                            hienthidanhsachve(xemds, dsvtmp, 3, sophantuhiendsv, sophantudsv, vitrighe);
+                            chuyen_trang_xem_ds = true;
+                            chuyen_trang_tim_kiem = false;
+                        }
+                    }
+                }
             }
-            else if (TRANG_THAI_TAB == 2 && chuyen_trang_xem_ds == false && chuyen_trang_tim_kiem == 1 && addchuyenbay == false && suathongtin == false ) {
+            else if (TRANG_THAI_TAB == 2 && chuyen_trang_xem_ds == false && chuyen_trang_tim_kiem == 1 && addchuyenbay == false && suathongtin == false) {
                 int sothutu;
                 if (x >= 100 && x <= 1232 && y <= 689 && y >= 289) {
                     sothutu = 0;
@@ -1237,7 +1774,7 @@ void AO_THAT_DAY() {
                         ds duyet = NULL; duyet = s;
                         while (duyet != NULL) {
                             if (strcmp(duyet->cb.macb, xoa.macb) == 0) {
-                                if (duyet->cb.trangthai == 4|| duyet->cb.trangthai == 1) {
+                                if (duyet->cb.trangthai == 4 || duyet->cb.trangthai == 1) {
                                     char a[130] = "chuyen bay ko the huy";
                                     hienthiloi(a);
                                     chuyen_trang_tim_kiem = 0;
@@ -1282,7 +1819,7 @@ void AO_THAT_DAY() {
                 if (x >= 1232 && x <= 1439 && y <= 689 && y >= 289) {
                     sothutu = 0;
                     sothutu = (y - 289) / 40 + 10 * (tranghientmp - 1);
-                    if (sothutu >= cbcotmp) {                       
+                    if (sothutu >= cbcotmp) {
                         chuyen_trang_xem_ds = false;
                         continue;
                     }
@@ -1380,6 +1917,7 @@ void AO_THAT_DAY() {
                     sochuyenbayhien = 0;
                     sotrangcb = 1;
                     capnhapchuyenbaycotmp = sochuyenbayco;
+                    tranghientaicb=1;
                     cleardevice();
                     Screen_Default(TRANG_THAI_TAB);
                     Flight_design();
@@ -1560,7 +2098,7 @@ void AO_THAT_DAY() {
             }
 
 
-//------------------CUSTOMER
+            //------------------CUSTOMER
 
             else if (TRANG_THAI_TAB == 3) {//hanhkhach
                 char SearchID[30], SearchLastName[30], SearchFirstName[30];
@@ -1569,7 +2107,7 @@ void AO_THAT_DAY() {
                     nhapdulieu(205, 140, 201, 399, 131, 169, SearchID, 12, 3);
 
                     STRCPYY(Search[0], SearchID);
-                    Search_hanh_khach(Search[0], Search[1], Search[2], danh_sach_HK_O_tren_man_hinh, so_luong_hanh_khach_tim_thay, trang_curr, trang_max,xuat_search,cout_for_search);
+                    Search_hanh_khach(Search[0], Search[1], Search[2], danh_sach_HK_O_tren_man_hinh, so_luong_hanh_khach_tim_thay, trang_curr, trang_max, xuat_search, cout_for_search);
                     PRINTF_SEARCH_CUSTOMER(so_luong_hanh_khach_tim_thay, trang_curr, trang_max, xuat_search, cout_for_search);
                     da_search_hk = 1;
                     trang_hien_tai = 0;
@@ -1610,13 +2148,13 @@ void AO_THAT_DAY() {
                     trang_curr--;
                     PRINTF_SEARCH_CUSTOMER(so_luong_hanh_khach_tim_thay, trang_curr, trang_max, xuat_search, cout_for_search);
                 }
-                
+
             }
 
 
-//------------------TICKET
+            //------------------TICKET
 
-            //chuyen qua buoc 1:
+                        //chuyen qua buoc 1:
             else if (TRANG_THAI_TAB == 4 && dangmuab1 == 0 && dangmuab2 == 0 && dang_chon_chuyen_bay == 0 && chon_ghe == 0) {
                 if (isMouseaddFlight(x, y)) {
 
@@ -1725,15 +2263,15 @@ void AO_THAT_DAY() {
                         Screen_Default(TRANG_THAI_TAB);
                         Man_hinh_mua_ticket_b3();
                         Ticket_design();
-                        sochuyenbayco = 0;
+                        sochuyenbayco1 = 0;
                         s = nullptr;
                         docdulieu(s, sochuyenbayco);
                         tmpcb = s; addchuyenbay = false; suachuyenbay = false;
                         chuyen_trang_tim_kiem = 0;
-                        sochuyenbayhien = 0;
-                        sotrangcb = 1;
-                        capnhapchuyenbaycotmp = sochuyenbayco;
-                        hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
+                        sochuyenbayhien1 = 0;
+                        sotrangcb1 = 1;
+                        capnhapchuyenbaycotmp = sochuyenbayco1;
+                        hientrangdau(chuyenbaycothedat, sochuyenbayhien1, sochuyenbayco1, sotrangcb1);
                     }
                 }
                 if (isMouse_dang_mua_ve_back_ve_chon_cb(x, y)) {
@@ -1763,17 +2301,17 @@ void AO_THAT_DAY() {
                     for (int i = 0; i < 13; i++) {
                         dlcb[i][0] = '\0';
                     }
-                    tranghientaicb = 1;
-                    sochuyenbayco = 0;
+                    tranghientaicb1 = 1;
+                    /*sochuyenbayco1 = 0;*/
                     s = NULL;
                     docdulieu(s, sochuyenbayco);
                     tmpcb = NULL; addchuyenbay = false; suathongtin = false; chuyen_trang_xem_ds = false;
                     chuyen_trang_tim_kiem = 0;
-                    sochuyenbayhien = 0;
-                    sotrangcb = 1;
+                    sochuyenbayhien1 = 0;
+                    sotrangcb1 = 1;
                     muaticket = false;
-                    capnhapchuyenbaycotmp = sochuyenbayco;
-                    hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
+                    capnhapchuyenbaycotmp = sochuyenbayco1;
+                    hientrangdau(chuyenbaycothedat, sochuyenbayhien1, sochuyenbayco1, sotrangcb1);
                 }
                 else if (isMouse_dang_mua_ve_back_ve_chon_cb(x, y)) {
                     dangmuab1 = 1;
@@ -1800,6 +2338,18 @@ void AO_THAT_DAY() {
                         ghe += atoi(&so_ghe[1]) - 1;
                         them_hanh_khach(s, tmpsua.macb, CMND, ghe);
                         capnhatdulieu(s);
+                        while (chuyenbaycothedat!=NULL) {
+                            ds qq;
+                            qq = chuyenbaycothedat->next;
+                            delete chuyenbaycothedat;
+                            chuyenbaycothedat = qq;
+                        }
+                        sochuyenbayco1 = 0;
+                        tranghientaicb1 = 0;
+                        sotrangcb1 = 0;
+                        sochuyenbayhien1 = 0;
+
+                        lay_chuyen_bay_co_the_dat_ve(s, chuyenbaycothedat, sochuyenbayco1);
                         Man_hinh_mua_ticket_b4(tmpsua, ds_mb.nodes[timkiem(ds_mb, tmpsua.sohieu)]->soday, ds_mb.nodes[timkiem(ds_mb, tmpsua.sohieu)]->sodong);
                     }
                     else {
@@ -1821,16 +2371,16 @@ void AO_THAT_DAY() {
                     for (int i = 0; i < 13; i++) {
                         dlcb[i][0] = '\0';
                     }
-                    sochuyenbayco = 0;
+                    /*sochuyenbayco1 = 0;*/
                     s = NULL;
                     docdulieu(s, sochuyenbayco);
                     tmpcb = NULL; addchuyenbay = false; suathongtin = false; chuyen_trang_xem_ds = false;
                     chuyen_trang_tim_kiem = 0;
-                    sochuyenbayhien = 0;
-                    sotrangcb = 1;
+                    sochuyenbayhien1 = 0;
+                    sotrangcb1 = 1;
                     muaticket = false;
-                    capnhapchuyenbaycotmp = sochuyenbayco;
-                    hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
+                    capnhapchuyenbaycotmp = sochuyenbayco1;
+                    hientrangdau(chuyenbaycothedat, sochuyenbayhien1, sochuyenbayco1, sotrangcb1);
                 }
             }
         }
@@ -1846,16 +2396,11 @@ void AO_THAT_DAY() {
                     sua_thong_tin_mb(stt, ds_mb, trang_mb_hientai, s);
                 }
             }
-            if (TRANG_THAI_TAB == 2 && chuyen_trang_tim_kiem == 0 && addchuyenbay == false && suathongtin == false ) {
+            if (TRANG_THAI_TAB == 2 && chuyen_trang_tim_kiem == 0 && addchuyenbay == false && suathongtin == false) {
                 if (x >= 100 && x <= 1232 && y <= 689 && y >= 289) {
                     vitrisua = 0;
                     vitrisua = (y - 289) / 40 + 10 * (tranghientaicb - 1);
-                    if (vitrisua >= sochuyenbayco) {
-                        char a[30] = "khong co phan tu de sua";
-                        hienthiloi(a);
-                        suathongtin = false;
-                    }
-                    else {
+                    if (vitrisua < sochuyenbayco) {
                         int demvedadat = 0;
                         tmpsua = laychuyenbay(s, vitrisua);
                         for (int i = 0; i < tmpsua.sove; i++) {
@@ -1896,19 +2441,14 @@ void AO_THAT_DAY() {
                         }
                     }
                 }
-               
+
 
             }
-            else if (TRANG_THAI_TAB == 2 && chuyen_trang_tim_kiem == 1 && addchuyenbay == false && suathongtin == false ) {
+            else if (TRANG_THAI_TAB == 2 && chuyen_trang_tim_kiem == 1 && addchuyenbay == false && suathongtin == false) {
                 if (x >= 100 && x <= 1232 && y <= 689 && y >= 289) {
                     vitrisua = 0;
                     vitrisua = (y - 289) / 40 + 10 * (tranghientmp - 1);
-                    if (vitrisua >= cbcotmp) {
-                        char a[30] = "khong co phan tu de sua";
-                        hienthiloi(a);
-                        suathongtin = false;
-                    }
-                    else {
+                    if (vitrisua < cbcotmp) {
                         int demvedadat = 0;
                         tmpsua = laychuyenbay(tmpcb, vitrisua);
                         for (int i = 0; i < tmpsua.sove; i++) {
@@ -1949,62 +2489,101 @@ void AO_THAT_DAY() {
                         }
                     }
                 }
-                
+
 
             }
             //chuot phai de tim ghe    
             else if (((TRANG_THAI_TAB == 4 && dang_chon_chuyen_bay == 1 && chon_ghe == 0)) && chuyen_trang_tim_kiem == 0 && addchuyenbay == false && suathongtin == false && (isMousechuyenbay1(x, y) == 1 || isMousechuyenbay2(x, y) == 1 || isMousechuyenbay3(x, y) == 1 || isMousechuyenbay4(x, y) == 1 || isMousechuyenbay5(x, y) == 1 || isMousechuyenbay6(x, y) == 1 || isMousechuyenbay7(x, y) == 1 || isMousechuyenbay8(x, y) == 1 || isMousechuyenbay9(x, y) == 1 || isMousechuyenbay10(x, y) == 1)) {
-                if (isMousechuyenbay1(x, y) == 1) {
+                if (x >= 100 && x <= 1232 && y <= 689 && y >= 289) {
                     vitrisua = 0;
-                    vitrisua = 0 + 10 * (tranghientaicb - 1);
-                    click_r_de_chon_ghe_chua_search(vitrisua, suathongtin, chon_ghe, dang_chon_chuyen_bay, tmpsua, sochuyenbayco);
-                }
-                else if (isMousechuyenbay2(x, y) == 1) {
-                    vitrisua = 0;
-                    vitrisua = 1 + 10 * (tranghientaicb - 1);
-                    click_r_de_chon_ghe_chua_search(vitrisua, suathongtin, chon_ghe, dang_chon_chuyen_bay, tmpsua, sochuyenbayco);
-                }
-                else if (isMousechuyenbay3(x, y) == 1) {
-                    vitrisua = 0;
-                    vitrisua = 2 + 10 * (tranghientaicb - 1);
-                    click_r_de_chon_ghe_chua_search(vitrisua, suathongtin, chon_ghe, dang_chon_chuyen_bay, tmpsua, sochuyenbayco);
-                }
-                else if (isMousechuyenbay4(x, y) == 1) {
-                    vitrisua = 0;
-                    vitrisua = 3 + 10 * (tranghientaicb - 1);
-                    click_r_de_chon_ghe_chua_search(vitrisua, suathongtin, chon_ghe, dang_chon_chuyen_bay, tmpsua, sochuyenbayco);
-                }
-                else if (isMousechuyenbay5(x, y) == 1) {
-                    vitrisua = 0;
-                    vitrisua = 4 + 10 * (tranghientaicb - 1);
-                    click_r_de_chon_ghe_chua_search(vitrisua, suathongtin, chon_ghe, dang_chon_chuyen_bay, tmpsua, sochuyenbayco);
-                }
-                else if (isMousechuyenbay6(x, y) == 1) {
-                    vitrisua = 0;
-                    vitrisua = 5 + 10 * (tranghientaicb - 1);
-                    click_r_de_chon_ghe_chua_search(vitrisua, suathongtin, chon_ghe, dang_chon_chuyen_bay, tmpsua, sochuyenbayco);
-                }
-                else if (isMousechuyenbay7(x, y) == 1) {
-                    vitrisua = 0;
-                    vitrisua = 6 + 10 * (tranghientaicb - 1);
-                    click_r_de_chon_ghe_chua_search(vitrisua, suathongtin, chon_ghe, dang_chon_chuyen_bay, tmpsua, sochuyenbayco);
-                }
-                else if (isMousechuyenbay8(x, y) == 1) {
-                    vitrisua = 0;
-                    vitrisua = 7 + 10 * (tranghientaicb - 1);
-                    click_r_de_chon_ghe_chua_search(vitrisua, suathongtin, chon_ghe, dang_chon_chuyen_bay, tmpsua, sochuyenbayco);
-                }
-                else if (isMousechuyenbay9(x, y) == 1) {
-                    vitrisua = 0;
-                    vitrisua = 8 + 10 * (tranghientaicb - 1);
-                    click_r_de_chon_ghe_chua_search(vitrisua, suathongtin, chon_ghe, dang_chon_chuyen_bay, tmpsua, sochuyenbayco);
-                }
-                else if (isMousechuyenbay10(x, y) == 1) {
-                    vitrisua = 0;
-                    vitrisua = 9 + 10 * (tranghientaicb - 1);
-                    click_r_de_chon_ghe_chua_search(vitrisua, suathongtin, chon_ghe, dang_chon_chuyen_bay, tmpsua, sochuyenbayco);
-                }
+                    vitrisua = (y - 289) / 40 + 10 * (tranghientaicb1 - 1);
+                    if (vitrisua >= sochuyenbayco1) {
+                        chon_ghe = 0;
+                        continue;
+                    }
+                    else {
+                        chuyenbay b;
+                        b = laychuyenbay(chuyenbaycothedat, vitrisua);
+                        ds duyet = NULL; duyet = s;
+                        while (strcmp(duyet->cb.macb, b.macb) != 0) {
+                            duyet = duyet->next;
+                        }
+                        tmpsua = duyet->cb;
+                        TRC_30p(b);
+                        if (duyet->cb.trangthai == 1) {
+                            char a[30] = "chuyen bay da huy";
+                            hienthiloi(a);
+                        }
+                        else if (duyet->cb.trangthai == 4) {
+                            char a[30] = "chuyen bay da hoan thanh";
+                            hienthiloi(a);
+                        }
+                        else {
+                            cleardevice();
 
+                            Screen_Default(4);
+                            int soday = 10, sodong = 5;
+                            soday = ds_mb.nodes[timkiem(ds_mb, duyet->cb.sohieu)]->soday;
+                            sodong = ds_mb.nodes[timkiem(ds_mb, duyet->cb.sohieu)]->sodong;
+                            Man_hinh_mua_ticket_b4(duyet->cb, soday, sodong);
+                            dang_chon_chuyen_bay = 0;
+                            chon_ghe = 1;
+                            suathongtin = true;
+                        }
+                    }
+                    /*if (isMousechuyenbay1(x, y) == 1) {
+                        vitrisua = 0;
+                        vitrisua = 0 + 10 * (tranghientaicb - 1);
+                        click_r_de_chon_ghe_chua_search(vitrisua, suathongtin, chon_ghe, dang_chon_chuyen_bay, tmpsua, sochuyenbayco);
+                    }
+                    else if (isMousechuyenbay2(x, y) == 1) {
+                        vitrisua = 0;
+                        vitrisua = 1 + 10 * (tranghientaicb - 1);
+                        click_r_de_chon_ghe_chua_search(vitrisua, suathongtin, chon_ghe, dang_chon_chuyen_bay, tmpsua, sochuyenbayco);
+                    }
+                    else if (isMousechuyenbay3(x, y) == 1) {
+                        vitrisua = 0;
+                        vitrisua = 2 + 10 * (tranghientaicb - 1);
+                        click_r_de_chon_ghe_chua_search(vitrisua, suathongtin, chon_ghe, dang_chon_chuyen_bay, tmpsua, sochuyenbayco);
+                    }
+                    else if (isMousechuyenbay4(x, y) == 1) {
+                        vitrisua = 0;
+                        vitrisua = 3 + 10 * (tranghientaicb - 1);
+                        click_r_de_chon_ghe_chua_search(vitrisua, suathongtin, chon_ghe, dang_chon_chuyen_bay, tmpsua, sochuyenbayco);
+                    }
+                    else if (isMousechuyenbay5(x, y) == 1) {
+                        vitrisua = 0;
+                        vitrisua = 4 + 10 * (tranghientaicb - 1);
+                        click_r_de_chon_ghe_chua_search(vitrisua, suathongtin, chon_ghe, dang_chon_chuyen_bay, tmpsua, sochuyenbayco);
+                    }
+                    else if (isMousechuyenbay6(x, y) == 1) {
+                        vitrisua = 0;
+                        vitrisua = 5 + 10 * (tranghientaicb - 1);
+                        click_r_de_chon_ghe_chua_search(vitrisua, suathongtin, chon_ghe, dang_chon_chuyen_bay, tmpsua, sochuyenbayco);
+                    }
+                    else if (isMousechuyenbay7(x, y) == 1) {
+                        vitrisua = 0;
+                        vitrisua = 6 + 10 * (tranghientaicb - 1);
+                        click_r_de_chon_ghe_chua_search(vitrisua, suathongtin, chon_ghe, dang_chon_chuyen_bay, tmpsua, sochuyenbayco);
+                    }
+                    else if (isMousechuyenbay8(x, y) == 1) {
+                        vitrisua = 0;
+                        vitrisua = 7 + 10 * (tranghientaicb - 1);
+                        click_r_de_chon_ghe_chua_search(vitrisua, suathongtin, chon_ghe, dang_chon_chuyen_bay, tmpsua, sochuyenbayco);
+                    }
+                    else if (isMousechuyenbay9(x, y) == 1) {
+                        vitrisua = 0;
+                        vitrisua = 8 + 10 * (tranghientaicb - 1);
+                        click_r_de_chon_ghe_chua_search(vitrisua, suathongtin, chon_ghe, dang_chon_chuyen_bay, tmpsua, sochuyenbayco);
+                    }
+                    else if (isMousechuyenbay10(x, y) == 1) {
+                        vitrisua = 0;
+                        vitrisua = 9 + 10 * (tranghientaicb - 1);
+                        click_r_de_chon_ghe_chua_search(vitrisua, suathongtin, chon_ghe, dang_chon_chuyen_bay, tmpsua, sochuyenbayco);
+                    }
+
+                }*/
+                }
             }
             else if (((TRANG_THAI_TAB == 4 && dang_chon_chuyen_bay == 1 && chon_ghe == 0)) && chuyen_trang_tim_kiem == 1 && addchuyenbay == false && suathongtin == false && (isMousechuyenbay1(x, y) == 1 || isMousechuyenbay2(x, y) == 1 || isMousechuyenbay3(x, y) == 1 || isMousechuyenbay4(x, y) == 1 || isMousechuyenbay5(x, y) == 1 || isMousechuyenbay6(x, y) == 1 || isMousechuyenbay7(x, y) == 1 || isMousechuyenbay8(x, y) == 1 || isMousechuyenbay9(x, y) == 1 || isMousechuyenbay10(x, y) == 1)) {
                 if (isMousechuyenbay1(x, y) == 1) {
@@ -2075,7 +2654,7 @@ void AO_THAT_DAY() {
 
         }
         if (kbhit()) {
-            
+
             char endct;
             endct = getch();
             if (endct == 27) {
@@ -2089,7 +2668,7 @@ void AO_THAT_DAY() {
 
 int main() {
 
-
+    cout << "no" << endl;
 
     initwindow(1540, 800, "install_graphics_h");
     Screen_Default(0);
@@ -2109,7 +2688,7 @@ int main() {
 
     //QLHK tmp = ds_hk;
     //ds_hk.printf_ds(ds_hk.getRoot());
-    
+
     //dem = 0;
     //printf_dshk(tmp.getRoot(), 1, dem);
     //dem = 0;

@@ -114,7 +114,7 @@ private:
         return newnode;
     }
     Node* rightRotate(Node* y) {
-        //chat gbt
+        
         Node* x = y->left;
         Node* T2 = x->right;
         x->right = y;
@@ -124,7 +124,7 @@ private:
         return x;
     }
     Node* leftRotate(Node* x) {
-        //chat gbt
+        
         Node* y = x->right;
         Node* T2 = y->left;
         y->left = x;
@@ -152,9 +152,7 @@ private:
             node->right = insertUtil(node->right, hanhkhach);
         }
         else {
-            // Handle duplicates if needed
-            // For example, update existing node with new data
-            // node->data = hanhkhach;
+            //trung nhau bao loi 
             return node;
         }
 
@@ -224,7 +222,7 @@ public:
         empty.ho = "";
         empty.ten = "";
         empty.phai = "";
-        cout << "!trung" << endl;
+        //cout << "k trung" << endl;
         return empty;
     }
 
@@ -276,13 +274,13 @@ public:
         if (balance > 1 && getBlance(run->left) >= 0)
             return rightRotate(run);
 
-        if (balance < -1 && getBlance(run->right) <= 0)
-            return leftRotate(run);
-
         if (balance > 1 && getBlance(run->left) < 0) {
             run->left = leftRotate(run->left);
             return rightRotate(run);
         }
+
+        if (balance < -1 && getBlance(run->right) <= 0)
+            return leftRotate(run);
 
         if (balance < -1 && getBlance(run->right) > 0) {
             run->right = rightRotate(run->right);
@@ -291,7 +289,7 @@ public:
         return run;
     }
 
-    // Hàm hỗ trợ tìm nút nhỏ nhất (phải nhất) trong cây con bên phải
+    // Hàm hỗ trợ tìm nút nhỏ nhất 
     Node* minValueNode(Node* node) {
         Node* current = node;
         while (current && current->left != NULL) {

@@ -50,7 +50,7 @@ void hienthiloi(char a[]) {
     LPCWSTR messagePtr = message.c_str();
 
 
-    MessageBox(NULL, messagePtr, L"loi", MB_OK);
+    MessageBox(NULL, messagePtr, L"notification", MB_OK);
 }
 void nhapdulieu(int x, int y, int xdau, int xcuoi, int yd, int yt, char a[], int sokitu, int dang) {
     setcolor(0);
