@@ -767,6 +767,7 @@ void AO_THAT_DAY() {
                     }
                 }
                 }            //them cb
+            //them
             else if (TRANG_THAI_TAB == 2 && addchuyenbay && chon_may_bay == false && suathongtin == false && sua_cb == 0 && (isMouseaddidflight(x, y) == 1 || isMouseaddmamaybay(x, y) == 1 || isMouseback(x, y) == 1 || isMouseaddnoiden(x, y) == 1 || isMouseaddday(x, y) == 1 || isMouseaddthang(x, y) == 1 || isMouseaddyear(x, y) == 1 || isMouseaddgio(x, y) == 1 || isMouseaddphut(x, y) == 1 || isMousetimmaybay(x, y) == 1 || isMousesave(x, y) == 1 || isMousechonmaybay(x, y) == 1)) {
                 if (isMouseback(x, y) == 1) {
                     for (int i = 0; i < 13; i++) {
@@ -956,20 +957,70 @@ void AO_THAT_DAY() {
                                             hienthiloi(a);
                                         }
                                         else {
-                                            a.trangthai = 2; int soday = 0, sodong = 0;
-                                            soday = ds_mb.nodes[timkiem(ds_mb, a.sohieu)]->soday;
-                                            sodong = ds_mb.nodes[timkiem(ds_mb, a.sohieu)]->sodong;
-                                            a.sove = soday * sodong;
-                                            a.danhsachve = new char* [a.sove];
-                                            for (int i = 0; i < a.sove; i++) {
-                                                a.danhsachve[i] = new char[30];
-                                                a.danhsachve[i][0] = '\0';
+                                            if (a.tg.thang == 4 || a.tg.thang == 6 || a.tg.thang == 9 || a.tg.thang == 11) {
+                                                if (a.tg.ngay > 30) {
+                                                    char a[30] = "loi thoi gian";
+                                                    hienthiloi(a);
+                                                }
+                                                else {
+                                                    a.trangthai = 2; int soday = 0, sodong = 0;
+                                                    soday = ds_mb.nodes[timkiem(ds_mb, a.sohieu)]->soday;
+                                                    sodong = ds_mb.nodes[timkiem(ds_mb, a.sohieu)]->sodong;
+                                                    a.sove = soday * sodong;
+                                                    a.danhsachve = new char* [a.sove];
+                                                    for (int i = 0; i < a.sove; i++) {
+                                                        a.danhsachve[i] = new char[30];
+                                                        a.danhsachve[i][0] = '\0';
 
+                                                    }
+                                                    push(s, a);
+                                                    capnhatdulieu(s);
+                                                    char tc[30] = "da them thanh cong";
+                                                    hienthiloi(tc);
+                                                }
                                             }
-                                            push(s, a);
-                                            capnhatdulieu(s);
-                                            char tc[30] = "da them thanh cong";
-                                            hienthiloi(tc);
+                                             else if (a.tg.thang == 2) {                                                   
+                                                        if (a.tg.ngay > 29) {
+                                                            char a[30] = "loi thoi gian";
+                                                            hienthiloi(a);
+                                                        }
+                                                        else {
+                                                            a.trangthai = 2; int soday = 0, sodong = 0;
+                                                            soday = ds_mb.nodes[timkiem(ds_mb, a.sohieu)]->soday;
+                                                            sodong = ds_mb.nodes[timkiem(ds_mb, a.sohieu)]->sodong;
+                                                            a.sove = soday * sodong;
+                                                            a.danhsachve = new char* [a.sove];
+                                                            for (int i = 0; i < a.sove; i++) {
+                                                                a.danhsachve[i] = new char[30];
+                                                                a.danhsachve[i][0] = '\0';
+
+                                                            }
+                                                            push(s, a);
+                                                            capnhatdulieu(s);
+                                                            char tc[30] = "da them thanh cong";
+                                                            hienthiloi(tc);
+                                                        }
+                                             }
+                                             else {
+                                                        a.trangthai = 2; int soday = 0, sodong = 0;
+                                                        soday = ds_mb.nodes[timkiem(ds_mb, a.sohieu)]->soday;
+                                                        sodong = ds_mb.nodes[timkiem(ds_mb, a.sohieu)]->sodong;
+                                                        a.sove = soday * sodong;
+                                                        a.danhsachve = new char* [a.sove];
+                                                        for (int i = 0; i < a.sove; i++) {
+                                                            a.danhsachve[i] = new char[30];
+                                                            a.danhsachve[i][0] = '\0';
+
+                                                        }
+                                                        push(s, a);
+                                                        capnhatdulieu(s);
+                                                        char tc[30] = "da them thanh cong";
+                                                        hienthiloi(tc);
+                                             }
+                                                
+                                                
+                                            
+                                            
                                         }
 
 
@@ -1586,20 +1637,66 @@ void AO_THAT_DAY() {
 
                                 }
                                 else {
-                                    tmpsua.trangthai = 2; int soday = 0, sodong = 0;
-                                    soday = ds_mb.nodes[timkiem(ds_mb, tmpsua.sohieu)]->soday;
-                                    sodong = ds_mb.nodes[timkiem(ds_mb, tmpsua.sohieu)]->sodong;
-                                    tmpsua.sove = soday * sodong;
-                                    tmpsua.danhsachve = new char* [tmpsua.sove];
-                                    for (int i = 0; i < tmpsua.sove; i++) {
-                                        tmpsua.danhsachve[i] = new char[30];
-                                        tmpsua.danhsachve[i][0] = '\0';
+                                    if (tmpsua.tg.thang == 4 || tmpsua.tg.thang == 6 || tmpsua.tg.thang == 9 || tmpsua.tg.thang == 11) {
+                                        if (tmpsua.tg.ngay > 30) {
+                                            char a[30] = "loi thoi gian";
+                                            hienthiloi(a);
+                                        }
+                                        else {
+                                            tmpsua.trangthai = 2; int soday = 0, sodong = 0;
+                                            soday = ds_mb.nodes[timkiem(ds_mb, tmpsua.sohieu)]->soday;
+                                            sodong = ds_mb.nodes[timkiem(ds_mb, tmpsua.sohieu)]->sodong;
+                                            tmpsua.sove = soday * sodong;
+                                            tmpsua.danhsachve = new char* [tmpsua.sove];
+                                            for (int i = 0; i < tmpsua.sove; i++) {
+                                                tmpsua.danhsachve[i] = new char[30];
+                                                tmpsua.danhsachve[i][0] = '\0';
 
+                                            }
+                                            sua_thong_tin_cb(s, tmpsua);
+                                            capnhatdulieu(s);
+                                            char tc[30] = "da sua thanh cong";
+                                            hienthiloi(tc);
+                                        }
                                     }
-                                    sua_thong_tin_cb(s, tmpsua);
-                                    capnhatdulieu(s);
-                                    char tc[30] = "da sua thanh cong";
-                                    hienthiloi(tc);
+                                    else if (tmpsua.tg.thang == 2) {
+                                        if (tmpsua.tg.ngay > 29) {
+                                            char a[30] = "loi thoi gian";
+                                            hienthiloi(a);
+                                        }
+                                        else {
+                                            tmpsua.trangthai = 2; int soday = 0, sodong = 0;
+                                            soday = ds_mb.nodes[timkiem(ds_mb, tmpsua.sohieu)]->soday;
+                                            sodong = ds_mb.nodes[timkiem(ds_mb, tmpsua.sohieu)]->sodong;
+                                            tmpsua.sove = soday * sodong;
+                                            tmpsua.danhsachve = new char* [tmpsua.sove];
+                                            for (int i = 0; i < tmpsua.sove; i++) {
+                                                tmpsua.danhsachve[i] = new char[30];
+                                                tmpsua.danhsachve[i][0] = '\0';
+
+                                            }
+                                            sua_thong_tin_cb(s, tmpsua);
+                                            capnhatdulieu(s);
+                                            char tc[30] = "da sua thanh cong";
+                                            hienthiloi(tc);
+                                        }
+                                    }
+                                    else {
+                                        tmpsua.trangthai = 2; int soday = 0, sodong = 0;
+                                        soday = ds_mb.nodes[timkiem(ds_mb, tmpsua.sohieu)]->soday;
+                                        sodong = ds_mb.nodes[timkiem(ds_mb, tmpsua.sohieu)]->sodong;
+                                        tmpsua.sove = soday * sodong;
+                                        tmpsua.danhsachve = new char* [tmpsua.sove];
+                                        for (int i = 0; i < tmpsua.sove; i++) {
+                                            tmpsua.danhsachve[i] = new char[30];
+                                            tmpsua.danhsachve[i][0] = '\0';
+
+                                        }
+                                        sua_thong_tin_cb(s, tmpsua);
+                                        capnhatdulieu(s);
+                                        char tc[30] = "da sua thanh cong";
+                                        hienthiloi(tc);
+                                    }                                   
                                 }
                             }
 
