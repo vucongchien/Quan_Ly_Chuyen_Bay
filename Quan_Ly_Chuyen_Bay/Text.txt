@@ -1,1 +1,4 @@
+24 0 31 2 2025 12 2 HANOI VAIO C  a 1 a 2 a 3 a 4 a 5 a 6 a 7 a 8 a 9 a 10 a 11 a 12 
 12 1 1 2 2025 12 2 ASDLFJLAS FASDF C  a 1 a 2 a 3 a 4 a 5 a 6 a 7 a 8 a 9 a 10 a 11 a 12 
+24 0 27 6 2024 12 2 HANOI CHIENDEPZ C  a 1 a 2 a 3 a 4 a 5 a 6 a 7 a 8 a 9 a 10 a 11 a 12 
+24 0 31 6 2024 12 2 HANOI CHIENDEPC C  a 1 a 2 a 3 a 4 a 5 a 6 a 7 a 8 a 9 a 10 a 11 a 12 
