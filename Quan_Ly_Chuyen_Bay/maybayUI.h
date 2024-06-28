@@ -60,16 +60,19 @@ void hienthemmaybay() {
     outtextxy(1349, 677, b10);
 
 }
-bool check_mb(int stt, listmb dsmb, ds dscb) {
+bool check_mb(int stt, listmb dsmb, ds dscb,int trang_thai=0) {
     while (dscb != NULL) {
         if (strcmp(dsmb.nodes[stt]->sohieu, dscb->cb.sohieu) == 0) {
-            ve_hinh_vuong(833, 205 - 3, 898, 205 + 22, COLOR(205, 250, 219), COLOR(205, 250, 219), const_cast<char*>("ko the xoa"), 1, 0);
-            delay(20);
-            ve_hinh_vuong(833, 205 - 3, 898, 205 + 22, COLOR(250, 112, 112), COLOR(250, 112, 112), const_cast<char*>("ko the xoa"), 1, 0);
-            delay(20);
-            ve_hinh_vuong(833, 205 - 3, 898, 205 + 22, COLOR(205, 250, 219), COLOR(205, 250, 219), const_cast<char*>("ko the xoa"), 1, 0);
-            delay(20);
-            ve_hinh_vuong(833, 205 - 3, 898, 205 + 22, COLOR(250, 112, 112), COLOR(250, 112, 112), const_cast<char*>("ko the xoa"), 1, 0);
+            if(trang_thai==0)
+            {
+                ve_hinh_vuong(833, 205 - 3, 898, 205 + 22, COLOR(205, 250, 219), COLOR(205, 250, 219), const_cast<char*>("ko the xoa"), 1, 0);
+                delay(20);
+                ve_hinh_vuong(833, 205 - 3, 898, 205 + 22, COLOR(250, 112, 112), COLOR(250, 112, 112), const_cast<char*>("ko the xoa"), 1, 0);
+                delay(20);
+                ve_hinh_vuong(833, 205 - 3, 898, 205 + 22, COLOR(205, 250, 219), COLOR(205, 250, 219), const_cast<char*>("ko the xoa"), 1, 0);
+                delay(20);
+                ve_hinh_vuong(833, 205 - 3, 898, 205 + 22, COLOR(250, 112, 112), COLOR(250, 112, 112), const_cast<char*>("ko the xoa"), 1, 0);
+            }
 
             return 0;
         }
@@ -101,6 +104,7 @@ void hien_ds_mb(int trangcurr, listmb ds_mb, ds dscb) {
             break;
     }
     x1 = 160, y1 = 205;
+
     for (int i = trangcurr * 10; i < sl_mb; ++i) {
         string m = to_string(i);
         hien_o_giua(x1, y1, const_cast<char*>(m.c_str()));
@@ -115,7 +119,7 @@ void hien_ds_mb(int trangcurr, listmb ds_mb, ds dscb) {
         m = to_string(ds_mb.nodes[i]->soday);
         hien_o_giua(x1, y1, const_cast<char*>(m.c_str()));
 
-        if (check_mb(i, ds_mb, dscb) == 0) {
+        if (check_mb(i, ds_mb, dscb,1) == 0) {
             ve_hinh_vuong(833, y1 - 3, 898, y1 + 22, COLOR(250, 112, 112), COLOR(250, 112, 112), const_cast<char*>("ko the xoa"), 1, 0);
         }
         x1 = 160;

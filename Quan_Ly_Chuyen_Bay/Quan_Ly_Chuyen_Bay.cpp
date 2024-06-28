@@ -278,6 +278,19 @@ void AO_THAT_DAY() {
     //khai bao cho InStatic 
     dsmbc chay; int trangmaxmb = 1, somaybaymax = 0, tranghientaimb = 0, somayhienmb = 0;
     clearmouseclick(WM_LBUTTONDOWN);
+
+
+    //start
+    dieukien = LISTPLANE;
+    TRANG_THAI_TAB = 1;
+    cleardevice();
+    Screen_Default(TRANG_THAI_TAB);
+    Planes_design();
+    trang_mb_hientai = 0;
+    xem_thong_ke_mb = 1;
+    themmb = 0;
+    hien_ds_mb(trang_mb_hientai, ds_mb, s);
+
     while (true) {
         if (ismouseclick(WM_LBUTTONDOWN)) {
             int x = mousex();
