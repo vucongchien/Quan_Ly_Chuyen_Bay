@@ -3,6 +3,7 @@
 #include<fstream>
 #include<iostream>
 #include"hanhkhach.h"
+#include<string>
 #define MAX_MB 300 
 #define yc 3 
 //taoButton(920,370,1130,440,"THEM",11) ;
@@ -21,13 +22,33 @@ struct listmb {
 bool Emptyds(listmb ds) {
 	return ds.n == 0;
 }
+
 bool Full(listmb ds) {
-	return ds.n = MAX_MB;
+	return ds.n == MAX_MB;
+}
+void insertionSort(listmb& list) {
+	if (list.n <= 1) {
+		return;
+	}
+	maybay* key = list.nodes[list.n-1];
+	int j = list.n - 2;
+	while (j >= 0 && strcmp(key->sohieu, list.nodes[j]->sohieu) <0) {
+		list.nodes[j + 1] = list.nodes[j];
+		j--;
+	}
+	list.nodes[j + 1] = key;
+
+
 }
 void addmb(listmb& ds, maybay& x) {
+	if (Full(ds)==1) {
+		hienthiloi(const_cast<char*>("Danh sach da day, khong the them moi."));
+		return;
+	}
 	ds.nodes[ds.n] = new maybay;
 	*ds.nodes[ds.n] = x;
 	ds.n++;
+	insertionSort(ds);
 }
 void deletemb(listmb& ds, int vitri) {
 	delete ds.nodes[vitri];
@@ -116,3 +137,6 @@ void pushmb(dsmbc& a, dsmbchay x) {
 		}
 	}
 }
+
+
+

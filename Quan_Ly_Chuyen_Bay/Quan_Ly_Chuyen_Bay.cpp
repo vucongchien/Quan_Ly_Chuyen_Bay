@@ -1912,7 +1912,7 @@ void AO_THAT_DAY() {
                     dangmuab2 = 0;
                     dang_chon_chuyen_bay = 0;
                     chon_ghe = 0;
-                    trung_cmnd == 0;
+                    trung_cmnd = 0;
                     cleardevice();
                     Screen_Default(TRANG_THAI_TAB);
                     Man_hinh_mua_ticket_b1();
@@ -1953,7 +1953,7 @@ void AO_THAT_DAY() {
                     chon_ghe = 0;
                     cleardevice();
                     Screen_Default(TRANG_THAI_TAB);
-                    trung_cmnd == 0;
+                    trung_cmnd = 0;
                     Man_hinh_mua_ticket_b1();
 
                 }

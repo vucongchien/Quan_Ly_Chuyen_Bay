@@ -42,16 +42,7 @@ void vede(int x, int y, int x1, int y1) {
     setfillstyle(SOLID_FILL, COLOR(217, 234, 211));
     bar(x, y, x1, y1);
 }
-void hienthiloi(char a[]) {
 
-    std::wstring message = std::wstring(a, a + strlen(a));
-
-
-    LPCWSTR messagePtr = message.c_str();
-
-
-    MessageBox(NULL, messagePtr, L"notification", MB_OK);
-}
 void nhapdulieu(int x, int y, int xdau, int xcuoi, int yd, int yt, char a[], int sokitu, int dang) {
     setcolor(0);
     //(dang: 1 nh?p ch?a d?u cách ;2 là nh?p ko ch?a d?u cách;4 nhap ten voi chu dau viet hoa;) 3 nhap so;

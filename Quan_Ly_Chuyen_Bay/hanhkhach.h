@@ -4,7 +4,18 @@
 #include<fstream>
 #include<cstring>
 #include<sstream>
+#include"graphics.h"
 using namespace std;
+void hienthiloi(char a[]) {
+
+    std::wstring message = std::wstring(a, a + strlen(a));
+
+
+    LPCWSTR messagePtr = message.c_str();
+
+
+    MessageBox(NULL, messagePtr, L"notification", MB_OK);
+}
 void STRCPYY(char a[], char b[]) {
     for (int i = 0; i < strlen(b); i++) {
         a[i] = b[i];
