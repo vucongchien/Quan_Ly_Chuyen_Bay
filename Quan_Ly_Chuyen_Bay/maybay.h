@@ -40,6 +40,29 @@ void insertionSort(listmb& list) {
 
 
 }
+void quick_sort(listmb& s, int dau, int cuoi) {
+	int q = dau, p = cuoi;
+	char a[35];
+	STRCPYY(a, s.nodes[(dau + cuoi) / 2]->sohieu);
+	do {
+		while (strcmp(s.nodes[dau]->sohieu, a) < 0)dau++;
+		while (strcmp(s.nodes[cuoi]->sohieu, a) > 0)cuoi--;
+		if (dau <= cuoi) {
+			maybay* tmp;
+			tmp = s.nodes[dau];
+			s.nodes[dau] = s.nodes[cuoi];
+			s.nodes[cuoi] = tmp;
+			dau++;
+			cuoi--;
+		}
+	} while (dau <= cuoi);
+	if (q < cuoi) {
+		quick_sort(s, q, cuoi);
+	}
+	if (p > dau) {
+		quick_sort(s, dau, p);
+	}
+}
 void addmb(listmb& ds, maybay& x) {
 	if (Full(ds)==1) {
 		hienthiloi(const_cast<char*>("Danh sach da day, khong the them moi."));
@@ -81,6 +104,7 @@ void savefile(listmb& dsmb) {
 	}
 	file.close();
 }
+
 void openfile(listmb& dsmb) {
 	ifstream file("MAYBAY.txt", ios::in | ios::binary);
 	maybay mb;
@@ -90,6 +114,7 @@ void openfile(listmb& dsmb) {
 		dsmb.n++;
 	}
 	file.close();
+	quick_sort(dsmb, 0, dsmb.n - 1);
 }
 listmb ds_mb;
 struct dsmbchay
