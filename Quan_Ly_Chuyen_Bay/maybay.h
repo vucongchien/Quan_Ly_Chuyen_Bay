@@ -117,6 +117,8 @@ void openfile(listmb& dsmb) {
 	quick_sort(dsmb, 0, dsmb.n - 1);
 }
 listmb ds_mb;
+
+
 struct dsmbchay
 {
 	char sohieu[30];

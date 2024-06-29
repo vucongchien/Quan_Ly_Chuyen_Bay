@@ -266,7 +266,10 @@ void Man_hinh_mua_ticket_b4(chuyenbay clgt, int soday, int sodong) {
         tmp2 += 35;
     }
     ve_hinh_vuong(500, 130, 600, 170, COLOR(217, 234, 211), 0, const_cast<char*>("nhap so ghe"), 1, COLOR(179, 164, 146));
-
+    string m;
+    m = "chuyen bay: ";
+    m += clgt.sohieu;
+    hien_o_giua(800, 150, const_cast<char*>(m.c_str()));
 }
 void click_r_de_chon_ghe_da_search(int vitrisua, bool& suathongtin, bool& chon_ghe, bool& dang_chon_chuyen_bay, int cbcotmp, chuyenbay& tmpsua, ds& tmpcb) {
     if (vitrisua >= cbcotmp) {

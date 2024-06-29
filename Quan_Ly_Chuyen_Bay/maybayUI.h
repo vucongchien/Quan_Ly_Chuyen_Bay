@@ -61,17 +61,22 @@ void hienthemmaybay() {
 
 }
 bool check_mb(int stt, listmb dsmb, ds dscb,int trang_thai=0) {
+    
+    int tmp=stt;
+    while (tmp > 10) {
+        tmp-=10;
+    }
     while (dscb != NULL) {
         if (strcmp(dsmb.nodes[stt]->sohieu, dscb->cb.sohieu) == 0) {
             if(trang_thai==0)
             {
-                ve_hinh_vuong(833, 205 - 3, 898, 205 + 22, COLOR(205, 250, 219), COLOR(205, 250, 219), const_cast<char*>("ko the xoa"), 1, 0);
-                delay(20);
-                ve_hinh_vuong(833, 205 - 3, 898, 205 + 22, COLOR(250, 112, 112), COLOR(250, 112, 112), const_cast<char*>("ko the xoa"), 1, 0);
-                delay(20);
-                ve_hinh_vuong(833, 205 - 3, 898, 205 + 22, COLOR(205, 250, 219), COLOR(205, 250, 219), const_cast<char*>("ko the xoa"), 1, 0);
-                delay(20);
-                ve_hinh_vuong(833, 205 - 3, 898, 205 + 22, COLOR(250, 112, 112), COLOR(250, 112, 112), const_cast<char*>("ko the xoa"), 1, 0);
+                ve_hinh_vuong(833, 205 - 3+stt*49, 898, 205 + 22+stt*49, COLOR(205, 250, 219), COLOR(205, 250, 219), const_cast<char*>("ko the xoa"), 1, 0);
+                delay(20);            
+                ve_hinh_vuong(833, 205 - 3+stt*49, 898, 205 + 22+stt*49, COLOR(250, 112, 112), COLOR(250, 112, 112), const_cast<char*>("ko the xoa"), 1, 0);
+                delay(20);                          
+                ve_hinh_vuong(833, 205 - 3+stt*49, 898, 205 + 22+stt*49, COLOR(205, 250, 219), COLOR(205, 250, 219), const_cast<char*>("ko the xoa"), 1, 0);
+                delay(20);                                
+                ve_hinh_vuong(833, 205 - 3+stt*49, 898, 205 + 22+stt*49, COLOR(250, 112, 112), COLOR(250, 112, 112), const_cast<char*>("ko the xoa"), 1, 0);
             }
 
             return 0;

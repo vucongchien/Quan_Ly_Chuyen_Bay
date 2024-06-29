@@ -236,10 +236,13 @@ void lay_chuyen_bay_co_the_dat_ve(ds vao, ds& ra, int& dem) {
 //--------------------------------------dieu khien -----------------------------------
 void AO_THAT_DAY() {
     int TRANG_THAI_TAB = 1;
-    bool keepRunning = true;
 
+
+    bool keepRunning = true;
     dieukienpage dieukien = LISTPLANE;
     thread t(threadFunction, ref(TRANG_THAI_TAB), ref(keepRunning), ref(dieukien));
+
+
     //1=PLANEs| 2=FLIGHT| 3=CUSTOMER... 3.1=XEM_THONG_TIN |4=TICKET| 5=STATIC
     // khai bao cho plane
     openfile(ds_mb);
@@ -515,6 +518,7 @@ void AO_THAT_DAY() {
                     }
                 }
                 if (isMouseback(x, y) == 1) {
+                    dieukien = LISTPLANE;
                     themmb = 0;
                     xem_thong_ke_mb = 1;
                     cleardevice();
