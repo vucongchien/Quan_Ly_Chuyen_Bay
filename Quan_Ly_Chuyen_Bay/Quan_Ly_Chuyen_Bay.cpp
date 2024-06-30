@@ -2061,6 +2061,7 @@ void AO_THAT_DAY() {
                     tmpcb = NULL; addchuyenbay = false; suathongtin = false; chuyen_trang_xem_ds = false;
                     chuyen_trang_tim_kiem = 0;
                     sochuyenbayhien1 = 0;
+                    tranghientaicb1 = 1;
                     sotrangcb1 = 1;
                     muaticket = false;
                     capnhapchuyenbaycotmp = sochuyenbayco1;
@@ -2193,7 +2194,8 @@ void AO_THAT_DAY() {
                             duyet = duyet->next;
                         }
                         tmpsua = duyet->cb;
-                        TRC_30p(b);
+                        cout << "--------" << tmpsua.macb<<"------"<<vitrisua << endl;
+                        
                         if (duyet->cb.trangthai == 1) {
                             char a[30] = "chuyen bay da huy";
                             hienthiloi(a);
@@ -2270,7 +2272,53 @@ void AO_THAT_DAY() {
                 }
             }
             else if (((TRANG_THAI_TAB == 4 && dang_chon_chuyen_bay == 1 && chon_ghe == 0)) && chuyen_trang_tim_kiem == 1 && addchuyenbay == false && suathongtin == false && (isMousechuyenbay1(x, y) == 1 || isMousechuyenbay2(x, y) == 1 || isMousechuyenbay3(x, y) == 1 || isMousechuyenbay4(x, y) == 1 || isMousechuyenbay5(x, y) == 1 || isMousechuyenbay6(x, y) == 1 || isMousechuyenbay7(x, y) == 1 || isMousechuyenbay8(x, y) == 1 || isMousechuyenbay9(x, y) == 1 || isMousechuyenbay10(x, y) == 1)) {
-                if (isMousechuyenbay1(x, y) == 1) {
+                
+                
+                
+                if (x >= 100 && x <= 1232 && y <= 689 && y >= 289) {
+                    vitrisua = 0;
+                    vitrisua = (y - 289) / 40 + 10 * (tranghientmp - 1);
+                    if (vitrisua >= cbcotmp) {
+                        chon_ghe = 0;
+                        continue;
+                    }
+                    else {
+                        chuyenbay b;
+                        b = laychuyenbay(tmpcb, vitrisua);
+                        ds duyet = NULL; duyet = s;
+                        while (strcmp(duyet->cb.macb, b.macb) != 0) {
+                            duyet = duyet->next;
+                        }
+                        tmpsua = duyet->cb;
+                        cout << "--------" << tmpsua.macb << "------" << vitrisua << endl;
+                        
+                        if (duyet->cb.trangthai == 1) {
+                            char a[30] = "chuyen bay da huy";
+                            hienthiloi(a);
+                        }
+                        else if (duyet->cb.trangthai == 4) {
+                            char a[30] = "chuyen bay da hoan thanh";
+                            hienthiloi(a);
+                        }
+                        else {
+                            cleardevice();
+
+                            Screen_Default(4);
+                            int soday = 10, sodong = 5;
+                            soday = ds_mb.nodes[timkiem(ds_mb, duyet->cb.sohieu)]->soday;
+                            sodong = ds_mb.nodes[timkiem(ds_mb, duyet->cb.sohieu)]->sodong;
+                            Man_hinh_mua_ticket_b4(duyet->cb, soday, sodong);
+                            dang_chon_chuyen_bay = 0;
+                            chon_ghe = 1;
+                            suathongtin = true;
+                        }
+                    }
+
+                }
+                
+                
+                
+                /*if (isMousechuyenbay1(x, y) == 1) {
                     vitrisua = 0;
                     vitrisua = 0 + 10 * (tranghientmp - 1);
                     click_r_de_chon_ghe_da_search(vitrisua, suathongtin, chon_ghe, dang_chon_chuyen_bay, cbcotmp, tmpsua, tmpcb);
@@ -2329,7 +2377,7 @@ void AO_THAT_DAY() {
                     vitrisua = 9 + 10 * (tranghientmp - 1);
                     click_r_de_chon_ghe_da_search(vitrisua, suathongtin, chon_ghe, dang_chon_chuyen_bay, cbcotmp, tmpsua, tmpcb);
 
-                }
+                }*/
             }
 
         }

@@ -311,7 +311,7 @@ void click_r_de_chon_ghe_chua_search(int vitrisua, bool& suathongtin, bool& chon
     else {
         tmpsua = laychuyenbay(s, vitrisua);
         TRC_30p(tmpsua);
-        if (tmpsua.trangthai == 1) {
+        if (tmpsua.trangthai == 1) {    
             char a[30] = "chuyen bay da huy";
             hienthiloi(a);
         }
