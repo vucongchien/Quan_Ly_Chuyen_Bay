@@ -43,7 +43,7 @@ bool check_so_ghe(int soday, int sodong, char so_ghe[30]) {
     }
     return 0;
 }
-void them_hanh_khach(dschuyenbay* ds, const char* macb, char* cmnd, int seat_number) {
+void them_hanh_khach(dschuyenbay* ds, const char* macb, char* cmnd, int seat_number,bool &checkout) {
     dschuyenbay* temp = ds;
 
     while (temp != nullptr) {
@@ -64,44 +64,11 @@ void them_hanh_khach(dschuyenbay* ds, const char* macb, char* cmnd, int seat_num
                         return;
                     }
                     string m = "Quy khach da dat ve tren chuyen bay nay.\nQuy khach co muon huy ve khong";
-                    ve_hinh_vuong(480, 250, 1000, 520, COLOR(218, 221, 177), COLOR(179, 164, 146), const_cast<char*>(m.c_str()), 1, 0);
-                    ve_hinh_vuong(510, 440, 590, 480, COLOR(217, 234, 211), 0, const_cast<char*>("YES"), 1, 0);
-                    ve_hinh_vuong(850, 440, 920, 480, COLOR(217, 234, 211), 0, const_cast<char*>("NO"), 1, 0);
-                    while (1) {
-                        int xx, yy;
-                        if (ismouseclick(WM_LBUTTONDOWN)) {
-                            
-                            getmouseclick(WM_LBUTTONDOWN, xx, yy);
-                            if (isMouse_Yes_huy_ve(xx, yy)) {
-                                temp->cb.danhsachve[j][0] = '\0';
-                                cout << "huy thanh cong";
-                                return;
-                            }
-                            else if (isMouse_No_huy_ve(xx, yy)) {
-                                return;
-                            }
-                        }
-                        static bool doi_mau = 0;
-                        if (ismouseclick(WM_MOUSEMOVE))
-                        {
-                            getmouseclick(WM_MOUSEMOVE, xx, yy);
-                            if (isMouse_Yes_huy_ve(xx, yy) && doi_mau == 0) {
-                                doi_mau = 1;
-                                ve_hinh_vuong(510, 440, 590, 480, COLOR(160, 196, 157), 0, const_cast<char*>("YES"), 1, 0);
-
-                            }
-                            else if (isMouse_No_huy_ve(xx, yy) && doi_mau == 0) {
-                                doi_mau = 1;
-                                ve_hinh_vuong(850, 440, 920, 480, COLOR(160, 196, 157), 0, const_cast<char*>("NO"), 1, 0);
-                            }
-                            else if (isMouse_Yes_huy_ve(xx, yy) == 0 && isMouse_No_huy_ve(xx, yy) == 0 && doi_mau == 1) {
-
-                                ve_hinh_vuong(510, 440, 590, 480, COLOR(217, 234, 211), 0, const_cast<char*>("YES"), 1, 0);
-                                ve_hinh_vuong(850, 440, 920, 480, COLOR(217, 234, 211), 0, const_cast<char*>("NO"), 1, 0);
-                                doi_mau = 0;
-                            }
-                        }
+                    if(are_you_sure(const_cast<char*>(m.c_str())) == 1){
+                        temp->cb.danhsachve[j][0] = '\0';
+                        return;
                     }
+                    checkout = 1;
                     return;
                 }
             }
@@ -268,7 +235,7 @@ void Man_hinh_mua_ticket_b4(chuyenbay clgt, int soday, int sodong) {
     ve_hinh_vuong(500, 130, 600, 170, COLOR(217, 234, 211), 0, const_cast<char*>("nhap so ghe"), 1, COLOR(179, 164, 146));
     string m;
     m = "chuyen bay: ";
-    m += clgt.sohieu;
+    m += clgt.macb;
     hien_o_giua(800, 150, const_cast<char*>(m.c_str()));
 }
 void click_r_de_chon_ghe_da_search(int vitrisua, bool& suathongtin, bool& chon_ghe, bool& dang_chon_chuyen_bay, int cbcotmp, chuyenbay& tmpsua, ds& tmpcb) {

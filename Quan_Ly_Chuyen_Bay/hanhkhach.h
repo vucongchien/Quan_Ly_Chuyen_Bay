@@ -14,7 +14,32 @@ void hienthiloi(char a[]) {
     LPCWSTR messagePtr = message.c_str();
 
 
-    MessageBox(NULL, messagePtr, L"notification", MB_OK);
+    MessageBox(GetForegroundWindow(), messagePtr, L"notification",  MB_OK);
+}
+
+int drawAnounce() {
+    int msgboxID = -1;
+    msgboxID = MessageBox(
+        GetForegroundWindow(),
+        (LPCWSTR)L"Do you want to go back",
+        (LPCWSTR)L"Warning",
+        MB_ICONEXCLAMATION | MB_OKCANCEL
+    );
+    
+    return msgboxID;
+}
+
+int switchTab() {
+    int msgboxID = -1;
+    msgboxID = MessageBox(
+        GetForegroundWindow(),
+        (LPCWSTR)L"Do you want switch to other tab?",
+        (LPCWSTR)L"Warning",
+        MB_ICONEXCLAMATION | MB_OKCANCEL
+    );
+
+
+    return msgboxID;
 }
 void STRCPYY(char a[], char b[]) {
     for (int i = 0; i < strlen(b); i++) {

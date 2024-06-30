@@ -134,6 +134,8 @@ void hien_ds_mb(int trangcurr, listmb ds_mb, ds dscb) {
     }
 
 }
+
+
 void xoa_mb_theo_stt(int stt, listmb& dsmb, int trangcurr, ds dscb) {
     if (stt >= dsmb.n)
         return;
@@ -144,20 +146,9 @@ void xoa_mb_theo_stt(int stt, listmb& dsmb, int trangcurr, ds dscb) {
     string n = "ban co chac muon xoa mb ";
     n += m;
     n += "khong";
-    are_you_sure(n);
-    while (1) {
-        if (ismouseclick(WM_LBUTTONDOWN)) {
-            int xx, yy;
-            getmouseclick(WM_LBUTTONDOWN, xx, yy);
-            if (isMouse_Yes_huy_ve(xx, yy)) {
-                deletemb(dsmb, stt);
-                savefile(dsmb);
-                break;
-            }
-            else if (isMouse_No_huy_ve(xx, yy)) {
-                break;
-            }
-        }
+    if (are_you_sure(const_cast<char*>(n.c_str())) == 1) {
+        deletemb(dsmb, stt);
+        savefile(dsmb);
     }
     cleardevice();
     Screen_Default(1);
@@ -168,7 +159,10 @@ void xoa_mb_theo_stt(int stt, listmb& dsmb, int trangcurr, ds dscb) {
 void man_hinh_sua_tt_mb(int stt, listmb& dsmb) {
 
     cleardevice();
+
     Screen_Default(1);
+    setfillstyle(SOLID_FILL, 15);
+    bar(260, 8, 1275, 89);
     setfillstyle(SOLID_FILL, COLOR(159, 197, 232));
     setfillstyle(SOLID_FILL, COLOR(217, 234, 211));
     bar(55, 135, 125, 175);
@@ -178,7 +172,10 @@ void man_hinh_sua_tt_mb(int stt, listmb& dsmb) {
     outtextxy(70, 145, b);
     setbkcolor(COLOR(208, 224, 227));
     char b1[30] = "";
-    outtextxy(644, 182, const_cast<char*>(dsmb.nodes[stt]->sohieu));
+    string mmm = "chinh sua may bay co so hieu la: ";
+    mmm += dsmb.nodes[stt]->sohieu;
+
+    outtextxy(644, 182, const_cast<char*>(mmm.c_str()));
     char b2[30] = "ID PLANE: "; char b3[30] = "TYPE PLANES: ";
     //outtextxy(354, 235, b2);
     //bar(374 + 65, 220, 374 + 70 + 600, 265);
@@ -200,8 +197,12 @@ void man_hinh_sua_tt_mb(int stt, listmb& dsmb) {
     bar(1323, 660, 1416, 710);
     char b10[30] = "SAVE";
     outtextxy(1349, 677, b10);
+
 }
 void sua_thong_tin_mb(int stt, listmb& dsmb, int& trangcurr, ds dscb) {
+    //Nhan chuot tai toa do: (260, 8)
+    //    Nhan chuot tai toa do : (1274, 89)
+
     if (stt > dsmb.n)
         return;
     man_hinh_sua_tt_mb(stt, dsmb);
@@ -218,6 +219,7 @@ void sua_thong_tin_mb(int stt, listmb& dsmb, int& trangcurr, ds dscb) {
             char dl1[30], dl2[30], dl3[30], dl4[30];
             dl1[0] = '\0'; dl2[0] = '\0'; dl3[0] = '\0'; dl4[0] = '\0';
             if (isMouseback(xx, yy)) {
+                if (drawAnounce() == 2) continue;
                 cleardevice();
                 Screen_Default(1);
                 Planes_design();
@@ -260,6 +262,12 @@ void sua_thong_tin_mb(int stt, listmb& dsmb, int& trangcurr, ds dscb) {
 
             }
             else if (isMousesave(xx, yy) == 1) {
+                if (dl_mb[1][0] == '\0') {
+                    hienthiloi(const_cast<char*>("vui long nhap du thong tin"));
+                    continue;
+                }
+
+
                 maybay tmp;
                 STRCPYY(tmp.sohieu, dsmb.nodes[stt]->sohieu);
                 STRCPYY(tmp.loai, dl_mb[1]);

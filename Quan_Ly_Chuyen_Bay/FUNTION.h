@@ -498,8 +498,17 @@ void Screen_Default(int TRANGTHAITAB = 0) {
     rectangle(40, 100, 1500, 780);
 
 }
-void are_you_sure(string m) {
-    ve_hinh_vuong(480, 250, 1000, 520, COLOR(218, 221, 177), COLOR(179, 164, 146), const_cast<char*>(m.c_str()), 1, 0);
-    ve_hinh_vuong(510, 440, 590, 480, COLOR(217, 234, 211), 0, const_cast<char*>("YES"), 1, 0);
-    ve_hinh_vuong(850, 440, 920, 480, COLOR(217, 234, 211), 0, const_cast<char*>("NO"), 1, 0);
+int are_you_sure(char a[]) {
+    int msgboxID = -1;
+
+    wstring message = wstring(a, a + strlen(a));
+    LPCWSTR messagePtr = message.c_str();
+
+    msgboxID = MessageBox(
+        GetForegroundWindow(),
+        messagePtr,
+        (LPCWSTR)L"Warning",
+        MB_ICONEXCLAMATION | MB_OKCANCEL
+    );
+    return msgboxID;
 }
