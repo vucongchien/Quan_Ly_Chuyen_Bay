@@ -7,6 +7,7 @@
 #include <iomanip>
 #include<thread>
 #include<chrono>
+#include<math.h>
 
 #include"maybay.h"
 #include"CHUYENBAY.h"
@@ -1857,8 +1858,15 @@ void AO_THAT_DAY() {
                 if (isMouseNhapCMND_MUA_VE(x, y)) {
                     setcolor(0);
                     nhapdulieu(405, 305, 401, 1000, 291, 340, dl1, 12, 3);
-                    if (dl1[11] == '\0') {
-                        hienthiloi(const_cast<char*>("vui long nhap du 12 so"));
+                    long long ddddddddd; chuyencharssint(dl1,ddddddddd);
+                    if (ddddddddd<pow(10,11)||ddddddddd>=pow(10,12)) {
+                        char a2[30] = "Nhap CCCD:"; char a3[30] = "gom 12 chu so";
+                        setbkcolor(COLOR(208, 224, 227));
+                        outtextxy(300, 305, a2);
+                        ve_hinh_vuong(400, 290, 1000, 340, COLOR(217, 234, 211), 0, a3, 0, COLOR(179, 164, 146));
+                        
+                        hienthiloi(const_cast<char*>("nhap lai"));
+
                     }
                     else
                     {
