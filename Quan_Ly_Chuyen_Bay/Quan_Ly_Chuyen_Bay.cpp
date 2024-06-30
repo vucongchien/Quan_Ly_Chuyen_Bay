@@ -41,15 +41,31 @@ void hien(char cb[], char ngay[], char thang[], char nam[], char noiden[], ds s,
         sotrangcb = 1;
         cleardevice();
         Screen_Default(TRANG_THAI_TAB);
-        if(TICKETT==0)
-        Flight_design();
+        if (TICKETT == 0)
+        {
+            tranghientaicb1 = 1;
+            sochuyenbayhien1 = 0;
+            sotrangcb1 = 1;
+            Flight_design();
+            hientrangdau(s, sochuyenbayhien1, sochuyenbayco1, sotrangcb1);
+        }
         else if (TICKETT == 1) {
+            tranghientaicb1 = 1;
+            sochuyenbayhien1 = 0;
+            sotrangcb1 = 1;
             Ticket_design();
+            hientrangdau(s, sochuyenbayhien1, sochuyenbayco1, sotrangcb1);
         }
-        else {
+        else if(TICKETT==2) {
+            tranghientaicb1 = 1;
+            sochuyenbayhien1 = 0;
+            sotrangcb1 = 1;
             Man_hinh_mua_ticket_b3();
+            hientrangdau(s, sochuyenbayhien1, sochuyenbayco1, sotrangcb1);
+        }else{
+            hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
         }
-        hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
+        
         chuyen_trang_tim_kiem = 0;
 
     }
@@ -274,7 +290,7 @@ void AO_THAT_DAY() {
 
     string* xuat_search = new string[ds_hk.getSo_luong_hk() * 4];
     int cout_for_search = 0;
-    ds chuyenbaycothedat; chuyenbaycothedat = NULL; int sochuyenbayhien1, sochuyenbayco1, sotrangcb1, tranghientaicb1;
+    ds chuyenbaycothedat; chuyenbaycothedat = NULL; 
     //khai bao cho tiket...........................................
     bool dangmuab1 = 0, dangmuab2 = 0, dang_chon_chuyen_bay = 0, da_chon_phai = 0, da_nhap_du_in4 = 0, da_nhap_CMND = 0, trung_cmnd = 0, chon_ghe = 0;
     char ho[60], ten[30], CMND[30], idFlight_mua_ve[30]; bool phai; ho[0] = '\0'; ten[0] = '\0'; CMND[0] = '\0', idFlight_mua_ve[0] = '\0';
@@ -808,7 +824,7 @@ void AO_THAT_DAY() {
                 }
                 else if (isMouseaddidflight(x, y) == 1 || isMouseaddmamaybay(x, y) == 1 || isMouseaddnoiden(x, y) == 1 || isMouseaddday(x, y) == 1 || isMouseaddthang(x, y) == 1 || isMouseaddyear(x, y) == 1 || isMouseaddgio(x, y) == 1 || isMouseaddphut(x, y) == 1 || isMousetimmaybay(x, y) == 1 || isMousesave(x, y) == 1 || isMousechonmaybay(x, y) == 1) {
                     char tmp[8][30];
-                    for (int i = 0; i < 7; i++) {
+                    for (int i = 0; i <= 7; i++) {
                         tmp[i][0] = '\0';
                     }
                     int b = 0;
@@ -994,6 +1010,10 @@ void AO_THAT_DAY() {
                                                     capnhatdulieu(s);
                                                     char tc[30] = "da them thanh cong";
                                                     hienthiloi(tc);
+                                                    for (int i = 0; i < a.sove; i++) {
+                                                        delete a.danhsachve[i];
+                                                    }
+                                                    delete a.danhsachve;
                                                 }
                                             }
                                              else if (a.tg.thang == 2) {                                                   
@@ -1016,6 +1036,11 @@ void AO_THAT_DAY() {
                                                             capnhatdulieu(s);
                                                             char tc[30] = "da them thanh cong";
                                                             hienthiloi(tc);
+                                                            for (int i = 0; i < a.sove; i++) {
+                                                                delete a.danhsachve[i];
+                                                            }
+                                                            delete a.danhsachve;
+
                                                         }
                                              }
                                              else {
@@ -1033,6 +1058,10 @@ void AO_THAT_DAY() {
                                                         capnhatdulieu(s);
                                                         char tc[30] = "da them thanh cong";
                                                         hienthiloi(tc);
+                                                        for (int i = 0; i < a.sove; i++) {
+                                                            delete a.danhsachve[i];
+                                                        }
+                                                        delete a.danhsachve;
                                              }
                                                 
                                                 
@@ -1119,7 +1148,11 @@ void AO_THAT_DAY() {
                     Flight_design();
                     hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
                     muaticket = false;
-                    delete dsvtmp; delete vitrighe;
+                    for (int i = 0; i < xemds.sove; i++) {
+                        delete dsvtmp[i];
+                    }
+                    delete dsvtmp;
+                    delete vitrighe;
                     sotrangxemdsv = 1, tranghientaixemdsv = 1, sophantudsv = 0, sophantuhiendsv = 0;
                 }
                 if (isMousexemtrangsau(x, y) == 1) {
@@ -1517,7 +1550,7 @@ void AO_THAT_DAY() {
                 }
                 else if (isMouseaddidflight(x, y) == 1 || isMouseaddmamaybay(x, y) == 1 || isMouseaddnoiden(x, y) == 1 || isMouseaddday(x, y) == 1 || isMouseaddthang(x, y) == 1 || isMouseaddyear(x, y) == 1 || isMouseaddgio(x, y) == 1 || isMouseaddphut(x, y) == 1 || isMousetimmaybay(x, y) == 1 || isMousesave(x, y) == 1 || isMousechonmaybay(x, y) == 1) {
                     char tmp[8][30];
-                    for (int i = 0; i < 7; i++) {
+                    for (int i = 0; i <= 7; i++) {
                         tmp[i][0] = '\0';
                     }
                     int b = 0;
@@ -1599,7 +1632,7 @@ void AO_THAT_DAY() {
                             b = 0;
                             char a[30] = "nhap >0 va <60";
                             nhapdulieu(788, 535, 785, 854, 519, 563, tmp[7], 2, 3);
-                            chuyencharsint(tmp[7], b);
+                           chuyencharsint(tmp[7], b);                          
                             if (b > 60 || b < 0) {
                                 hienthiloi(a);
                             }
@@ -1609,7 +1642,7 @@ void AO_THAT_DAY() {
                     else if (isMousesave(x, y) == 1) {
                         int demptr = 0, b;
                         for (int i = 5; i < 13; i++) {
-                            if (dlcb[i][0] == '\0') {
+                            if (dlcb[i][0] == '\0') {                             
                                 demptr++;
                             }
                         }
@@ -1674,6 +1707,10 @@ void AO_THAT_DAY() {
                                             capnhatdulieu(s);
                                             char tc[30] = "da sua thanh cong";
                                             hienthiloi(tc);
+                                            for (int i = 0; i < tmpsua.sove; i++) {
+                                                delete tmpsua.danhsachve[i];
+                                            }
+                                            delete tmpsua.danhsachve;
                                         }
                                     }
                                     else if (tmpsua.tg.thang == 2) {
@@ -1696,6 +1733,10 @@ void AO_THAT_DAY() {
                                             capnhatdulieu(s);
                                             char tc[30] = "da sua thanh cong";
                                             hienthiloi(tc);
+                                            for (int i = 0; i < tmpsua.sove; i++) {
+                                                delete tmpsua.danhsachve[i];
+                                            }
+                                            delete tmpsua.danhsachve;
                                         }
                                     }
                                     else {
@@ -1713,6 +1754,10 @@ void AO_THAT_DAY() {
                                         capnhatdulieu(s);
                                         char tc[30] = "da sua thanh cong";
                                         hienthiloi(tc);
+                                        for (int i = 0; i < tmpsua.sove; i++) {
+                                            delete tmpsua.danhsachve[i];
+                                        }
+                                        delete tmpsua.danhsachve;
                                     }                                   
                                 }
                             }
@@ -1724,11 +1769,12 @@ void AO_THAT_DAY() {
 
 
                         }
+                         else {
+                            char l[30] = "ban can nhap du thong tin";
+                            hienthiloi(l);
+                         }
                     }
-                    else {
-                        char l[30] = "ban can nhap du thong tin";
-                        hienthiloi(l);
-                    }
+                    
 
                 }
 
@@ -2004,6 +2050,7 @@ void AO_THAT_DAY() {
                     chon_ghe = 0;
                     cleardevice();
                     Screen_Default(TRANG_THAI_TAB);
+                    TRANG_THAI_TAB = 4;
                     Man_hinh_mua_ticket_b3();
                     for (int i = 0; i < 13; i++) {
                         dlcb[i][0] = '\0';
@@ -2305,7 +2352,7 @@ void AO_THAT_DAY() {
 
 int main() {
 
-    cout << "no000000000" << endl;
+    cout << "no000000001" << endl;
 
     initwindow(1540, 800, "install_graphics_h");
     Screen_Default(0);

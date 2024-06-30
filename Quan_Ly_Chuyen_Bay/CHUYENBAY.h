@@ -495,6 +495,6 @@ int sochuyenbayhien = 0, sochuyenbayco = 0;
 float tmp;
 int tranghientaicb = 1;
 ds s;
-
+int sochuyenbayhien1, sochuyenbayco1, sotrangcb1, tranghientaicb1;
 
 

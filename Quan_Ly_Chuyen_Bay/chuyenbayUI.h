@@ -196,7 +196,8 @@ void hienthidanhsachve(chuyenbay a, char** dsvtmp, int trangthai, int& phantuhie
             chuyenintschar(tmpcc[0], phantuhien);
             hienchinhgiua(100, y, 190, y + 40, tmpcc[0]);
             int vitri = 65;
-            while (vitrighe[i] > sodong) { vitrighe[i] -= sodong;  vitri++; }
+            int demghe= vitrighe[i];
+            while (demghe > sodong) { demghe -= sodong;  vitri++; }
             string m;
             m += static_cast<char>(vitri);
             m += to_string(vitrighe[i]);
@@ -250,7 +251,8 @@ void hienthidanhsachve(chuyenbay a, char** dsvtmp, int trangthai, int& phantuhie
             chuyenintschar(tmpcc[0], phantuhien);
             hienchinhgiua(100, y, 190, y + 40, tmpcc[0]);
             int vitri = 65;
-            while (vitrighe[i] > sodong) { vitrighe[i] -= sodong;  vitri++; }
+            int demghe = vitrighe[i];
+            while (demghe > sodong) { demghe -= sodong;  vitri++; }
             string m;
             m += static_cast<char>(vitri);
             m += to_string(vitrighe[i]);
