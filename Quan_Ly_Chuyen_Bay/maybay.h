@@ -41,6 +41,7 @@ void insertionSort(listmb& list) {
 
 }
 void quick_sort(listmb& s, int dau, int cuoi) {
+	if (dau > cuoi)  return;
 	int q = dau, p = cuoi;
 	char a[35];
 	STRCPYY(a, s.nodes[(dau + cuoi) / 2]->sohieu);
@@ -107,6 +108,11 @@ void savefile(listmb& dsmb) {
 
 void openfile(listmb& dsmb) {
 	ifstream file("MAYBAY.txt", ios::in | ios::binary);
+	if (!file.is_open()) {
+
+		return;  
+	}
+
 	maybay mb;
 	while (file.read(reinterpret_cast<char*>(&mb), sizeof(maybay))) {
 		dsmb.nodes[dsmb.n] = new maybay;

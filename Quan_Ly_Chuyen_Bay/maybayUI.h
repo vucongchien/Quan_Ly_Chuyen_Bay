@@ -86,6 +86,9 @@ bool check_mb(int stt, listmb dsmb, ds dscb,int trang_thai=0) {
     return 1;
 }
 void hien_ds_mb(int trangcurr, listmb ds_mb, ds dscb) {
+    if (ds_mb.n == 0) {
+        return;
+    }
     setfillstyle(SOLID_FILL, COLOR(208, 224, 227));
     bar(132, 193, 899, 679);
     if (Emptyds(ds_mb)) {
@@ -278,7 +281,7 @@ void sua_thong_tin_mb(int stt, listmb& dsmb, int& trangcurr, ds dscb) {
                 savefile(dsmb);                ds duyet = NULL; duyet = dscb;
                 for (; duyet != NULL; duyet = duyet->next) {
                     chuyenbay tmp;
-                    cout << strcmp(duyet->cb.sohieu, dsmb.nodes[stt]->sohieu) << endl;
+                   // cout << strcmp(duyet->cb.sohieu, dsmb.nodes[stt]->sohieu) << endl;
                     if (strcmp(duyet->cb.sohieu, dsmb.nodes[stt]->sohieu) == 0) {
                         int ghemoi = dsmb.nodes[stt]->sodong * dsmb.nodes[stt]->soday;
                         char** new_danhsachve = new char* [ghemoi];

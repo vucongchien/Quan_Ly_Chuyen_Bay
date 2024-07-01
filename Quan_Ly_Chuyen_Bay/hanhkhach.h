@@ -232,10 +232,10 @@ public:
             return;
         }
         printf_ds(run->left); // Duyệt qua cây con trái
-        cout << "CMND: " << run->data.soCMND << endl;
-        cout << "ho: " << run->data.ho << endl << "ten: " << run->data.ten << endl;
-        cout << "Gen: " << run->data.phai << endl;
-        cout << "---------------------" << endl;
+        //cout << "CMND: " << run->data.soCMND << endl;
+        //cout << "ho: " << run->data.ho << endl << "ten: " << run->data.ten << endl;
+        //cout << "Gen: " << run->data.phai << endl;
+        //cout << "---------------------" << endl;
         printf_ds(run->right); // Duyệt qua cây con phải
     }
     HanhKhach search(char CMND[]) {
@@ -249,7 +249,7 @@ public:
                 curr = curr->right;
             }
             else {
-                cout << curr->data.soCMND << endl;
+                /*cout << curr->data.soCMND << endl;*/
                 return curr->data;
             }
         }
@@ -353,7 +353,6 @@ public:
         ofstream file;
         file.open("hanhkhach.txt", ios::app);
         string tmp(run->data.soCMND);
-        cout << run->data.soCMND;
         file << tmp << ",";
         file << run->data.ho << "," << run->data.ten << ",";
         file << run->data.phai << endl;
@@ -364,7 +363,7 @@ public:
     void lay_du_lieu_tu_file() {
         ifstream file("hanhkhach.txt");
         if (!file.is_open()) {
-            cout << "Khong the mo file hanhkhach.h!" << endl;
+            //cout << "Khong the mo file hanhkhach.h!" << endl;
             return;
         }
         string line;

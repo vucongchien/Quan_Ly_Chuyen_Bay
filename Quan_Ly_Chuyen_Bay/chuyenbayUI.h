@@ -187,7 +187,7 @@ void hienthidanhsachve(chuyenbay a, char** dsvtmp, int trangthai, int& phantuhie
         line(836, 726, 866, 742);
         line(866, 742, 836, 760);
         int dem = phantuhien;
-        /*cout << dem << "cocaidaubui" << endl;*/
+        
         for (int i = dem; i < dem + 10; i++) {
             phantuhien++;
             int sodong, soday;
@@ -200,7 +200,8 @@ void hienthidanhsachve(chuyenbay a, char** dsvtmp, int trangthai, int& phantuhie
             while (demghe > sodong) { demghe -= sodong;  vitri++; }
             string m;
             m += static_cast<char>(vitri);
-            m += to_string(vitrighe[i]);
+            
+            m += to_string(demghe);
             hienchinhgiua(190, y, 326, y + 40, const_cast<char*>(m.c_str()));
             HanhKhach tmp;
             tmp = ds_hk.search(dsvtmp[i]);
@@ -255,7 +256,7 @@ void hienthidanhsachve(chuyenbay a, char** dsvtmp, int trangthai, int& phantuhie
             while (demghe > sodong) { demghe -= sodong;  vitri++; }
             string m;
             m += static_cast<char>(vitri);
-            m += to_string(vitrighe[i]);
+            m += to_string(demghe);
             hienchinhgiua(190, y, 326, y + 40, const_cast<char*>(m.c_str()));
             HanhKhach tmp;
             tmp = ds_hk.search(dsvtmp[i]);

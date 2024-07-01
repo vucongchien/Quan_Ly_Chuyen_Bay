@@ -71,7 +71,6 @@ void hien(char cb[], char ngay[], char thang[], char nam[], char noiden[], ds s,
 
     }
     else {
-        cout << cb << endl;
         if (cb[0] == '\0' || ngay[0] == '\0' || noiden[0] == '\0' || nam[0] == '\0' || thang[0] == '\0') {
             while (tmpcb) {
                 ds qq;
@@ -309,6 +308,7 @@ void AO_THAT_DAY() {
     trang_mb_hientai = 0;
     xem_thong_ke_mb = 1;
     themmb = 0;
+    
     hien_ds_mb(trang_mb_hientai, ds_mb, s);
 
     while (true) {
@@ -498,7 +498,6 @@ void AO_THAT_DAY() {
                     if (tranghientaimb < trangmaxmb) {
                         tranghientaimb++;
                         somayhienmb = (tranghientaimb - 1) * 10;
-                        cout << somaybaymax << endl;
                         if (tranghientaimb == trangmaxmb) {
                             hiendsmbchay(chay, somayhienmb, 2);
                         }
@@ -1083,6 +1082,24 @@ void AO_THAT_DAY() {
                                                         delete a.danhsachve[i];
                                                     }
                                                     delete a.danhsachve;
+                                                    for (int i = 0; i < 13; i++) {
+                                                        dlcb[i][0] = '\0';
+                                                    }
+                                                    sochuyenbayco = 0;
+                                                    s = NULL;
+                                                    tmpcb = NULL;
+                                                    docdulieu(s, sochuyenbayco);
+                                                    tmpcb = NULL; addchuyenbay = false; suathongtin = false; chuyen_trang_xem_ds = false;
+                                                    chuyen_trang_tim_kiem = 0;
+                                                    TRANG_THAI_TAB = 2;
+                                                    sochuyenbayhien = 0;
+                                                    sotrangcb = 1;
+                                                    capnhapchuyenbaycotmp = sochuyenbayco;
+                                                    cleardevice();
+                                                    Screen_Default(TRANG_THAI_TAB);
+                                                    Flight_design();
+                                                    hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
+                                                    muaticket = false;
                                                 }
                                             }
                                              else if (a.tg.thang == 2) {                                                   
@@ -1111,6 +1128,24 @@ void AO_THAT_DAY() {
                                                             delete a.danhsachve;
 
                                                         }
+                                                        for (int i = 0; i < 13; i++) {
+                                                            dlcb[i][0] = '\0';
+                                                        }
+                                                        sochuyenbayco = 0;
+                                                        s = NULL;
+                                                        tmpcb = NULL;
+                                                        docdulieu(s, sochuyenbayco);
+                                                        tmpcb = NULL; addchuyenbay = false; suathongtin = false; chuyen_trang_xem_ds = false;
+                                                        chuyen_trang_tim_kiem = 0;
+                                                        TRANG_THAI_TAB = 2;
+                                                        sochuyenbayhien = 0;
+                                                        sotrangcb = 1;
+                                                        capnhapchuyenbaycotmp = sochuyenbayco;
+                                                        cleardevice();
+                                                        Screen_Default(TRANG_THAI_TAB);
+                                                        Flight_design();
+                                                        hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
+                                                        muaticket = false;
                                              }
                                              else {
                                                         a.trangthai = 2; int soday = 0, sodong = 0;
@@ -1131,6 +1166,24 @@ void AO_THAT_DAY() {
                                                             delete a.danhsachve[i];
                                                         }
                                                         delete a.danhsachve;
+                                                        for (int i = 0; i < 13; i++) {
+                                                            dlcb[i][0] = '\0';
+                                                        }
+                                                        sochuyenbayco = 0;
+                                                        s = NULL;
+                                                        tmpcb = NULL;
+                                                        docdulieu(s, sochuyenbayco);
+                                                        tmpcb = NULL; addchuyenbay = false; suathongtin = false; chuyen_trang_xem_ds = false;
+                                                        chuyen_trang_tim_kiem = 0;
+                                                        TRANG_THAI_TAB = 2;
+                                                        sochuyenbayhien = 0;
+                                                        sotrangcb = 1;
+                                                        capnhapchuyenbaycotmp = sochuyenbayco;
+                                                        cleardevice();
+                                                        Screen_Default(TRANG_THAI_TAB);
+                                                        Flight_design();
+                                                        hientrangdau(s, sochuyenbayhien, sochuyenbayco, sotrangcb);
+                                                        muaticket = false;
                                              }
                                                 
                                                 
@@ -1273,7 +1326,6 @@ void AO_THAT_DAY() {
                     }
                 }
                 else {
-                    cout << "dell" << endl;
 
                     if (isMousexemtrangsau(x, y) == 1) {
                         if (tranghientaicb1 < sotrangcb1) {
@@ -1858,6 +1910,7 @@ void AO_THAT_DAY() {
                     trang_hien_tai = 0;
                 }
                 else if (da_search_hk == 0 && isMouseCHUYEN_TRANG_SANG_PHAI(x, y) && trang_hien_tai < so_trang_hanh_khach) {
+                    /*cout << trang_hien_tai << " ---------" << so_trang_hanh_khach<<endl;*/
                     trang_hien_tai++;
                     cleardevice();
                     Screen_Default(TRANG_THAI_TAB);
@@ -2265,7 +2318,6 @@ void AO_THAT_DAY() {
                             duyet = duyet->next;
                         }
                         tmpsua = duyet->cb;
-                        cout << "--------" << tmpsua.macb<<"------"<<vitrisua << endl;
                         
                         if (duyet->cb.trangthai == 1) {
                             char a[30] = "chuyen bay da huy";
@@ -2361,7 +2413,7 @@ void AO_THAT_DAY() {
                             duyet = duyet->next;
                         }
                         tmpsua = duyet->cb;
-                        cout << "--------" << tmpsua.macb << "------" << vitrisua << endl;
+
                         
                         if (duyet->cb.trangthai == 1) {
                             char a[30] = "chuyen bay da huy";
@@ -2466,11 +2518,14 @@ void AO_THAT_DAY() {
             }
         }
     }
+
+    delete[]xuat_search;
+    delete[]danh_sach_HK_O_tren_man_hinh;
 }
 
 int main() {
 
-    cout << "no000000001" << endl;
+
 
     initwindow(1540, 800, "install_graphics_h");
     Screen_Default(0);
