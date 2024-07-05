@@ -1,6 +1,8 @@
 # Quan_ly_Chuyen_Bay
-**af**
-** 3. Quản lý các chuyến bay nội địa thuộc 1 hăng hàng không: Ta toå chöùc caùc danh saùch sau: 
+
+**Mình làm đề tài 3 của thầy Thư:**
+```c++
+3. Quản lý các chuyến bay nội địa thuộc 1 hăng hàng không: Ta toå chöùc caùc danh saùch sau: 
 - Máy bay : mảng con trỏ có tối đa 300 máy bay. Mỗi máy bay có các thông tin (Số hiệu MB (C15), loại máy bay (C40),  số dãy, số dòng) ;  Mỗi máy bay có 1 số hiệu duy nhất; (số chỗ = số dãy * số dòng ), số chỗ >=20
 Nếu số dãy = 5 nghĩa là máy bay có các dãy A, B, C, D, E; Nếu số dòng = 20 nghĩa là máy bay có các hàng ghế được đánh số từ 1 đến 20. Kết hợp dãy và hàng ghế ta sẽ có số vé.
 Theo ví dụ trên, ta có 100 vé với các số vé A01, A02, ...., A19, A20, …, E19, E20
@@ -19,7 +21,8 @@ Ngày giờ khởi hành: dd/mm/yyyy hh:mm.  Nơi đến : xxxxxxxxxxx
 f/ In danh sách các chuyến bay khởi hành trong  ngày dd/mm/yyyy đến nơi XXXX   (cho biết cụ thể số lượng các vé còn trống và giờ khởi hành)
 g/ In danh sách các vé còn trống của 1 chuyến bay có mã chuyến bay là X. 
 h/ Thống kê số lượt thực hiện chuyến bay của từng máy bay theo thứ tự  số lượt thực hiện giảm dần. Kết xuất:
-	Số hiệu máy bay		Số lượt thực hiện chuyến bay **
+	Số hiệu máy bay		Số lượt thực hiện chuyến bay
+```
 
 ## Tính năng
 
