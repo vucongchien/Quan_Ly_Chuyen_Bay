@@ -84,38 +84,27 @@ e/ In danh sách các hành khách thuộc 1 chuyến bay dựa vào mã chuyế
 h/ Thống kê số lượt thực hiện chuyến bay của từng máy bay
 - Tạo một mảng mới lưu vị trí, và sắp xếp vị trí trên mảng đó ko làm ảnh hưởng đến danh sách máy bay
 
-<img width="960" alt="Untitled" src="https://user-images.githubusercontent.com/32415728/172219427-f555ef0f-c171-49a8-8b37-6d1a3faab90f.png">
+<img width="960" alt="Untitled" src="https://i.imgur.com/AicCz5q.png">
 Màn hình danh sách máy bay
 
 
-<img width="960" alt="Untitled" src="https://user-images.githubusercontent.com/32415728/172219504-e38bb713-4a75-4223-a3c2-96c032cde957.png">
+<img width="960" alt="Untitled" src="https://i.imgur.com/1dwCAQ7.png">
 Màn hình thêm  máy bay
 
 
-<img width="960" alt="image" src="https://user-images.githubusercontent.com/32415728/172219548-f2994491-45cc-4feb-891b-20525f2def20.png">
+<img width="960" alt="image" src="https://i.imgur.com/EMKDCRk.png">
 Màn hình danh sách chuyến bay
 
-<img width="960" alt="image" src="https://user-images.githubusercontent.com/32415728/172219591-25d9c7cd-1837-4a04-9d36-6d4081ef1b2f.png">
+<img width="960" alt="image" src="https://i.imgur.com/pilGTRO.png">
 Thêm danh chuyến bay
 
-
-<img width="960" alt="Untitled" src="https://user-images.githubusercontent.com/32415728/172219737-1a91e899-e465-4668-b16a-543669da9951.png">
+<img width="960" alt="Untitled" src="https://i.imgur.com/hwTTLzG.png">
 Danh sách hành khách
 
-
-<img width="960" alt="image" src="https://user-images.githubusercontent.com/32415728/172219797-092ca7cb-8c77-4683-bbf6-e81141c9dc70.png">
+<img width="960" alt="image" src="https://i.imgur.com/pIAekgs.png">
 Danh sách vé
 
-
-<img width="960" alt="image" src="https://user-images.githubusercontent.com/32415728/172219823-b7e7da69-75ad-40ad-a544-3e6f8c038c4a.png">
-Màn hình đặt vé
-
-
-<img width="960" alt="image" src="https://user-images.githubusercontent.com/32415728/172219883-cd4d8849-d67f-45a3-968a-459451541ab9.png">
-Màn hình hủy vé
-
-
-<img width="960" alt="image" src="https://user-images.githubusercontent.com/32415728/172219907-72d54a5d-2bfb-4691-8982-09173840a631.png">
+<img width="960" alt="image" src="https://i.imgur.com/qRF0ZZS.png">
 Thống kê số lượt thực hiện máy bay
 
 
@@ -127,23 +116,21 @@ Thống kê số lượt thực hiện máy bay
 
 ## THẦY NHẬN XÉT <a name="4"></a>
 - Khen
-  - Chức năng lọc chuyến bay
-  - Sắp xếp dsmb không làm ảnh hưởng đến danh sách gốc
-
+  - giao diện tạm 
+  
 - Chê
-  - Trường nơi đến phải viết hoa chữ cái đầu
-  - Chưa có chức năng xem toàn bộ danh sách hành khách và chỉnh sửa
-  - Danh sách vé khi nào có người đặt mới cấp phát bộ nhớ 
+  - Đặt vé phải gõ tay chứ chưa có chọn vé bằng click vô ghế 
 
 - Câu hỏi phụ
-  - Cho một danh sách gồm 30000 phần tử trong đó chứa dữ liệu từ [1-32000] hỏi làm sao để load vào bộ nhớ tối ưu nhất và sắp xếp nhanh nhất
+  - Cho một danh sách gồm 100000 sinh viên [mã sv, tên, tuổi, giới tính ,...] trong file NHỊ PHÂN hỏi làm sao để sắp xếp file ngoài file nhanh nhất biết bộ nhớ chỉ lưu được 10000 sinh viên..... ( mình nhớ là vậy ) 
  
  ## CÀI THƯ VIỆN <a name="5"></a>
+ - Đồ án của mình thì code mình tự viết, còn về phần trình bày... thì mình tham khảo của chị này, siêu siêu đỉnh đọc code chị này siêu thích luôn https://github.com/ahuynh359/Quan_Ly_Chuyen_Bay_PTITHCM
+ - Kể cả phần readme.md này mình cũng copy của chị ta, chị ấy siêu đỉnh hi vọng các bạn xem chị đó,
+
  - Tham khảo thêm link https://github.com/ahuynh359/Graphics
- - Demo https://www.youtube.com/watch?v=rGFWxpukt2s
+ - Demo đồ án của chị ánh: https://www.youtube.com/watch?v=rGFWxpukt2s
 
 ## ĐIỂM SỐ
-- Tui được 9 điểm
-- Bạn kia chung nhóm 7 điểm
-- Bạn còn lại rớt môn :>
+- 2 bọn tui được 8 điểm tại câu cuối không trả lời được vì liên quan đến file nhị phân , hơi tiếc 1 chút
 Quan trọng do quá trình các bạn vấn đáp với thầy thôi nhé :3. Good luck !
